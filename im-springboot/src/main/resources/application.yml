@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/json,text/plain,text/html
+    min-response-size: 1024
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/zzz-im-server?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: 47.111.22.183
+      port: 6379
+      password: 123456
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 1
+          time-between-eviction-runs: 10s
+  # 文件传输配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+jwt:
+  AccessSecret-key: qwertyuiopasdfghjklzxcvbnmqzzzlew
+  FreshSecret-key: freshqwertyuiopzxcvbnmasdfqzzzlew
+  # 短期token过期时间，默认1小时 3600000
+  AccessExpiration: 3600000
+  # token过期时间，单位毫秒，默认1年 31536000000
+  RefreshExpiration: 31536000000
+  token-name: Authorization
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zzzlew.pojo.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com:
+      zzzlew:
+          mapper: debug
+          server: info
+          controller: info
+knife4j:
+  enable: true
+springdoc:
+  api-docs:
+    enabled: true # 生成OpenAPI 3.0的JSON数据源
+
+minio:
+#  endpoint: http://192.168.100.10:9001
+#  accessKey: minio
+#  secretKey: minio1234
+#  endpoint: http://100.112.106.41:9000
+#  accessKey: minioadmin
+#  secretKey: minioadmin
+  endpoint: http://47.111.22.183:9000
+  accessKey: admin
+  secretKey: 12345678
+  avatarBucket: zzz-im-avatar
+  imageBucket: zzz-im-image
+  videoBucket: zzz-im-video
+  audioBucket: zzz-im-audio
+  fileBucket: zzz-im-file
+  imagePath: image
+  videoPath: video
+  expireIn: 180 # 过期时间，单位天

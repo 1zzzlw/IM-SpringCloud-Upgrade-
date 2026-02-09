@@ -4,7 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="" />
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/impl/MessageHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/listener/BroadCastListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/result/MessageResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/constant/RedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/target/classes/com/zzzlew/constant/RedisConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/target/classes/com/zzzlew/constant/RedisConstant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/FileRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/FileResponseVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/BinaryWebSocketFrameToByteBufHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/BinaryWebSocketFrameToByteBufHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/ConnectSuccessMessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/ConnectSuccessMessageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/ApplySendHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/ApplySendHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/GroupApplySendHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/GroupApplySendHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/GroupChatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/GroupChatHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/PrivateChatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/PrivateChatHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/websocket/NettyWebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/websocket/NettyWebSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/request/FileRequestDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/response/FileResponseVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/BinaryWebSocketFrameToByteBufHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/BinaryWebSocketFrameToByteBufHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/MessageDispatcherHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/MessageDispatcherHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/ApplySendHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/ApplySendHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/GroupApplySendHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/GroupApplySendHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/GroupChatHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/GroupChatHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/PrivateChatHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/messageHandler/PrivateChatHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +44,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -20,6 +52,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;1zzzlw&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/1zzzlw/IM-SpringCloud-Upgrade-.git&quot;,
+    &quot;accountId&quot;: &quot;9b7c3ef3-66d5-46fc-9b3c-e3d9e8a6a17d&quot;
+  }
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -34,6 +78,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="39KUIyCFKCtFg3VWP4xolRLD256" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -47,7 +94,13 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.IMNetyApplication(8000).executor": "Run",
+    "Spring Boot.IMNetyApplication(8001).executor": "Run",
+    "Spring Boot.IMNetyApplication(8002).executor": "Run",
+    "Spring Boot.IMNetyApplication(8082).executor": "Run",
     "Spring Boot.IMNetyApplication.executor": "Run",
     "Spring Boot.ZzzImServerApplication.executor": "Run",
     "git-widget-placeholder": "master",
@@ -55,6 +108,11 @@
     "last_opened_file_path": "E:/JavaProject/IM-SpringCloud/im-server/src/main/resources",
     "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -84,7 +142,9 @@
         <entry key="SpringBootApplicationConfigurationType">
           <value>
             <map>
-              <entry key="IMNetyApplication" value="STOPPED" />
+              <entry key="IMNetyApplication(8000)" value="STOPPED" />
+              <entry key="IMNetyApplication(8001)" value="STOPPED" />
+              <entry key="IMNetyApplication(8002)" value="STOPPED" />
               <entry key="ZzzImServerApplication" value="STOPPED" />
             </map>
           </value>
@@ -106,9 +166,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="IMNetyApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="IMNetyApplication(8000)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="false" temporary="true">
       <module name="im-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.zzzlew.IMNetyApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zzzlew.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IMNetyApplication(8001)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="false" temporary="true">
+      <module name="im-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zzzlew.IMNetyApplication" />
+      <option name="VM_PARAMETERS" value="-Dws.port=8001" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zzzlew.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IMNetyApplication(8002)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="false" temporary="true">
+      <module name="im-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zzzlew.IMNetyApplication" />
+      <option name="VM_PARAMETERS" value="-Dws.port=8002" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.zzzlew.*" />
@@ -134,8 +222,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.IMNetyApplication" />
         <item itemvalue="Spring Boot.ZzzImServerApplication" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
         <item itemvalue="Application.ZzzImServerApplication" />
       </list>
     </recent_temporary>
@@ -156,11 +246,25 @@
       <option name="presentableId" value="Default" />
       <updated>1770444179882</updated>
       <workItem from="1770444183954" duration="6817000" />
-      <workItem from="1770550747557" duration="2039000" />
+      <workItem from="1770550747557" duration="15581000" />
+      <workItem from="1770608274280" duration="2480000" />
     </task>
+    <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
+      <option name="closed" value="true" />
+      <created>1770554279441</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1770554279441</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。" />
+    <option name="LAST_COMMIT_MESSAGE" value="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。" />
   </component>
 </project>

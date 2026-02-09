@@ -29,7 +29,6 @@ public class BinaryWebSocketFrameToByteBufHandler extends ChannelInboundHandlerA
                 int magicNum = content.getInt(content.readerIndex());
                 log.info("消息魔数: {}", magicNum);
             }
-
             // 将frame内容传递给下一个处理器
             ctx.fireChannelRead(frame.content());
         } else {

@@ -30,8 +30,8 @@ public class ConnectSuccessMessageHandler extends ChannelInboundHandlerAdapter {
 
     private StringRedisTemplate stringRedisTemplate;
 
-    // 需要手动注入 WebSocketService，不能使用 @Autowired 注解，因为 NettyWebSocketServerHandler 是手动创建的，
-    // 而不是由 Spring 管理的，并且 handler不能注入到spring 容器中，所以需要手动注入 WebSocketService
+    // 需要手动注入 StringRedisTemplate，不能使用 @Autowired 注解，因为 NettyWebSocketServerHandler 是手动创建的，
+    // 而不是由 Spring 管理的，并且 handler不能注入到spring 容器中，所以需要手动注入 StringRedisTemplate
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         if (stringRedisTemplate == null) {

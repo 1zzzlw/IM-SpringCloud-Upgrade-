@@ -4,11 +4,11 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import com.zzzlew.domain.request.PrivateChatRequestDTO;
 import com.zzzlew.domain.response.PrivateChatResponseVO;
+import com.zzzlew.handler.impl.MessageHandler;
+import com.zzzlew.result.MessageResult;
 import com.zzzlew.utils.ChannelManageUtil;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -21,11 +21,10 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @ChannelHandler.Sharable
-public class PrivateChatHandler extends SimpleChannelInboundHandler<PrivateChatRequestDTO> {
+public class PrivateChatHandler implements MessageHandler<PrivateChatRequestDTO> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, PrivateChatRequestDTO privateChatRequestDTO)
-            throws Exception {
+    public MessageResult handle(ChannelHandlerContext ctx, PrivateChatRequestDTO privateChatRequestDTO) {
         // 处理私聊消息
         log.info("收到私聊消息：{}", privateChatRequestDTO);
         // 获得当前登录用户id
@@ -38,18 +37,11 @@ public class PrivateChatHandler extends SimpleChannelInboundHandler<PrivateChatR
         // 获得接收者id
         Long receiverId = privateChatRequestDTO.getReceiverId();
         log.info("私信消息:{}", privateChatRequestDTO);
-        // 获取接收者的channel
-        Channel channel = ChannelManageUtil.getChannel(receiverId);
-        if (channel != null) {
-            // 发送消息
-            PrivateChatResponseVO privateChatResponseVO =
-                    BeanUtil.copyProperties(privateChatRequestDTO, PrivateChatResponseVO.class);
-            privateChatResponseVO.setSendTime(LocalDateTime.now());
-            channel.writeAndFlush(privateChatResponseVO);
-            log.info("已向接收者{}的channel写入私聊消息:{}", receiverId, privateChatResponseVO);
-        } else {
-            // 接收者不在线
-            log.info("接收者{}不在线", receiverId);
-        }
+        // 封装回应消息
+        PrivateChatResponseVO privateChatResponseVO =
+                BeanUtil.copyProperties(privateChatRequestDTO, PrivateChatResponseVO.class);
+        privateChatResponseVO.setSendTime(LocalDateTime.now());
+        log.info("已向接收者{}的channel写入私聊消息:{}", receiverId, privateChatResponseVO);
+        return MessageResult.single(privateChatResponseVO, receiverId);
     }
 }

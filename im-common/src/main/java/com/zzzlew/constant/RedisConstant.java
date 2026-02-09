@@ -39,4 +39,6 @@ public class RedisConstant {
     public static final Long FILE_CHUNK_INDEX_KEY_TTL = 5L;
 
     public static final String USER_OFFLINE_INFO_KEY = "user:offline:quitTime";
+
+    public static final String SYSTEM_MESSAGE_BROADCAST = "system:message:broadcast";
 }

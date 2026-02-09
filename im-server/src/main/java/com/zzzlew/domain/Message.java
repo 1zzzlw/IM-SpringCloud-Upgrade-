@@ -39,9 +39,6 @@ public abstract class Message implements Serializable {
 
     public static final int LoginSuccessMessage = 9;
 
-    public static final int FileRequestDTO = 10;
-    public static final int FileResponseVO = 11;
-
     /**
      * 根据消息类型字节，获得对应的消息 class
      *
@@ -62,8 +59,5 @@ public abstract class Message implements Serializable {
         messageClasses.put(GroupApplyRequestDTO, GroupApplyRequestDTO.class);
         messageClasses.put(GroupApplyResponseVO, GroupApplyResponseVO.class);
         messageClasses.put(LoginSuccessMessage, LoginSuccessMessage.class);
-        messageClasses.put(FileRequestDTO, FileRequestDTO.class);
-        messageClasses.put(FileResponseVO, FileResponseVO.class);
     }
-
 }

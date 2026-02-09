@@ -23,6 +23,7 @@ import io.netty.util.NettyRuntime;
 import io.netty.util.concurrent.Future;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jodd.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -107,6 +108,10 @@ public class NettyWebSocketServer {
                     }
                 });
         // 启动Netty服务器
+        String wsPortStr = System.getProperty("ws.port");
+        if (!StringUtil.isBlank(wsPortStr)) {
+            port = Integer.parseInt(wsPortStr);
+        }
         serverBootstrap.bind(port).sync();
     }
 

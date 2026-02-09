@@ -3,11 +3,11 @@ package com.zzzlew.handler.messageHandler;
 import com.alibaba.fastjson.JSON;
 import com.zzzlew.domain.request.GroupApplyRequestDTO;
 import com.zzzlew.domain.response.GroupApplyResponseVO;
+import com.zzzlew.handler.impl.MessageHandler;
+import com.zzzlew.result.MessageResult;
 import com.zzzlew.utils.ChannelManageUtil;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -20,10 +20,10 @@ import java.util.List;
  */
 @Slf4j
 @ChannelHandler.Sharable
-public class GroupApplySendHandler extends SimpleChannelInboundHandler<GroupApplyRequestDTO> {
+public class GroupApplySendHandler implements MessageHandler<GroupApplyRequestDTO> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GroupApplyRequestDTO groupApplyRequestDTO) throws Exception {
+    public MessageResult handle(ChannelHandlerContext ctx, GroupApplyRequestDTO groupApplyRequestDTO) {
         log.info("收到群聊申请请求：{}", groupApplyRequestDTO);
         // 获得当前登录用户id
         Long userId = ChannelManageUtil.getUser(ctx.channel()).getId();
@@ -36,18 +36,7 @@ public class GroupApplySendHandler extends SimpleChannelInboundHandler<GroupAppl
         groupApplyResponseVO.setUserAvatar(groupApplyRequestDTO.getUserAvatar());
         groupApplyResponseVO.setGroupName(groupApplyRequestDTO.getGroupName());
         groupApplyResponseVO.setStatus(1);
-        for (Long id : ids) {
-            // 获得接收者的channel
-            Channel channel = ChannelManageUtil.getChannel(id);
-            if (channel != null) {
-                // 发送消息
-                channel.writeAndFlush(groupApplyResponseVO);
-                log.info("已向接收者{}的channel写入群聊申请消息", id);
-            } else {
-                // 接收者不在线
-                log.info("接收者{}不在线", id);
-            }
-        }
+        return MessageResult.multiple(groupApplyResponseVO, ids);
     }
 
 }

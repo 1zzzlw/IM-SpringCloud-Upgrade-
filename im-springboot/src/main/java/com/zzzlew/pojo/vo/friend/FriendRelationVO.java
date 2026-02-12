@@ -1,8 +1,10 @@
 package com.zzzlew.pojo.vo.friend;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @Auther: zzzlew
@@ -19,7 +21,20 @@ public class FriendRelationVO implements Serializable {
 
     private String username;
 
+    private String account;
+
     private String avatar;
+
+    private String gender;
+
+    private String phone;
+
+    private String email;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime birthday;
+
+    private String address;
 
     private String remark;
 

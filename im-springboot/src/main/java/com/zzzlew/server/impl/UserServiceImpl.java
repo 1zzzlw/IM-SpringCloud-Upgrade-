@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 从redis中获取验证码，并进行判断
-        String code = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY);
+        String code = stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY + verifyCode);
         if (code == null || !code.equals(verifyCode)) {
             throw new PasswordErrorException(MessageConstant.VERIFYCODE_ERROR);
         }
@@ -138,8 +138,10 @@ public class UserServiceImpl implements UserService {
         // 生成验证码图片
         BufferedImage captchaImage = KaptchaConfig.kaptchaProducer().createImage(code);
 
+        String key = LOGIN_CODE_KEY + code;
+
         // 将验证码信息存入到redis中
-        stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(key, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);
 
         log.info("生成的验证为：{}", code);
 
@@ -328,6 +330,7 @@ public class UserServiceImpl implements UserService {
         // 首先检查该用户id下是否有已登录的短期token数据集合
         Set<String> oldTokens = stringRedisTemplate.opsForSet().members(userKey);
         // 如果不存在，需要考虑之前的用户信息是否需要清空，因为token不一样会导致垃圾数据堆积
+        // TODO 后期用上lua脚本处理这里吧，感觉还是有问题，旧的token还是清理不干净
         if (oldTokens != null && !oldTokens.isEmpty()) {
             // 将旧Token转换为对应的用户信息key集合
             // 遍历删除可能影响效率，考虑批量删除，一次删除多个token对应的用户信息

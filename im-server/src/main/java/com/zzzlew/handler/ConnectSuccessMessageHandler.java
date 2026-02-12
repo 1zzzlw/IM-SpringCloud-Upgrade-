@@ -68,9 +68,9 @@ public class ConnectSuccessMessageHandler extends ChannelInboundHandlerAdapter {
                     log.info("用户 {} 不在线", friendId);
                 }
             }
-            String onlineStatusKey = RedisConstant.USER_ONLINE_STATUS_KEY + userId;
+            String onlineStatusKey = RedisConstant.USER_ONLINE_STATUS_KEY;
             // 修改redis中的用户状态为在线
-            stringRedisTemplate.opsForSet().add(onlineStatusKey, "online");
+            stringRedisTemplate.opsForSet().add(onlineStatusKey, userId.toString());
             // 设置过期时间为270秒，因为用户在270秒内没有操作，就可以判断为用户不在线，对应心跳时间90秒
             stringRedisTemplate.expire(onlineStatusKey, RedisConstant.USER_ONLINE_STATUS_KEY_TTL, TimeUnit.SECONDS);
         }

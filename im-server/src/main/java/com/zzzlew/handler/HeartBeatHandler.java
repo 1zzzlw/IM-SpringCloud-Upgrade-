@@ -25,7 +25,7 @@ public class HeartBeatHandler extends ChannelDuplexHandler {
             // 处理心跳事件
             if (e.state() == IdleState.READER_IDLE) {
                 // 处理读空闲事件
-                log.info("心跳超时（30秒未读），关闭连接：{}", ctx.channel().remoteAddress());
+                log.info("心跳超时（90秒未读），关闭连接：{}", ctx.channel().remoteAddress());
                 ctx.close();
             }
         }

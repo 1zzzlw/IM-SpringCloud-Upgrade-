@@ -25,6 +25,8 @@ public abstract class Message implements Serializable {
 
     public abstract int getMessageType();
 
+    public static final int HeartRequestDTO = 0;
+
     public static final int PrivateChatRequestDTO = 1;
     public static final int PrivateChatResponseVO = 2;
 
@@ -50,7 +52,7 @@ public abstract class Message implements Serializable {
     }
 
     static {
-        messageClasses.put(PrivateChatRequestDTO, PrivateChatRequestDTO.class);
+        messageClasses.put(HeartRequestDTO, HeartRequestDTO.class);
         messageClasses.put(PrivateChatResponseVO, PrivateChatResponseVO.class);
         messageClasses.put(GroupChatRequestDTO, GroupChatRequestDTO.class);
         messageClasses.put(GroupChatResponseVO, GroupChatResponseVO.class);

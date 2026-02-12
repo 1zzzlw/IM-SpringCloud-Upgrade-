@@ -26,7 +26,7 @@ public class RedisConstant {
     public static final String USER_FRIEND_LIST_KEY = "user:friend:list:";
     public static final Long USER_FRIEND_LIST_KEY_TTL = 2L;
 
-    public static final String USER_ONLINE_STATUS_KEY = "user:online:status:";
+    public static final String USER_ONLINE_STATUS_KEY = "user:online:status";
     // 270秒过期时间，因为用户在270秒内没有操作，就可以判断为用户不在线，对应心跳时间90秒
     public static final Long USER_ONLINE_STATUS_KEY_TTL = 270L;
 

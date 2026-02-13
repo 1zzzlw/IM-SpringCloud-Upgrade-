@@ -4,26 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="写了一下广播的代码，实现了集群部署的功能，使用了redisson的订阅发布的模式，然后监听队列，广播消息到所有服务中，实现了Netty的集群部署。">
-      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/HeartRequestDTO.java" afterDir="false" />
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="准备写右键菜单和在线状态">
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/OnlineStatusListResponseVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/constant/RedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-common/target/classes/com/zzzlew/constant/RedisConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/target/classes/com/zzzlew/constant/RedisConstant.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/LoginSuccessMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/LoginSuccessResponseVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/ConnectSuccessMessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/ConnectSuccessMessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/HeartBeatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/HeartBeatHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/QuitLoginHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/QuitLoginHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/response/LoginSuccessMessage.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/ConnectSuccessMessageHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/ConnectSuccessMessageHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/HeartBeatHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/HeartBeatHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/MessageDispatcherHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/MessageDispatcherHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/FriendController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/friend/FriendRelationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/friend/FriendRelationVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/FriendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/FriendMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/friend/FriendRelationVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/friend/FriendRelationVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/mapper/FriendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/mapper/FriendMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/QuitLoginHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/QuitLoginHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/Conversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/Conversation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/message.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/conversation/ConversationVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/conversation/ConversationVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/entity/message.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/entity/message.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,10 +208,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
         <item itemvalue="Spring Boot.ZzzImServerApplication" />
-        <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
         <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
         <item itemvalue="Application.ZzzImServerApplication" />
       </list>
     </recent_temporary>
@@ -239,6 +236,9 @@
       <workItem from="1770608274280" duration="5384000" />
       <workItem from="1770710658034" duration="16164000" />
       <workItem from="1770800188619" duration="1046000" />
+      <workItem from="1770902712103" duration="35000" />
+      <workItem from="1770904206268" duration="8975000" />
+      <workItem from="1770955108794" duration="3585000" />
     </task>
     <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
       <option name="closed" value="true" />
@@ -256,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770623895509</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="准备写右键菜单和在线状态">
+      <option name="closed" value="true" />
+      <created>1770902739279</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1770902739279</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +273,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。" />
     <MESSAGE value="写了一下广播的代码，实现了集群部署的功能，使用了redisson的订阅发布的模式，然后监听队列，广播消息到所有服务中，实现了Netty的集群部署。" />
-    <option name="LAST_COMMIT_MESSAGE" value="写了一下广播的代码，实现了集群部署的功能，使用了redisson的订阅发布的模式，然后监听队列，广播消息到所有服务中，实现了Netty的集群部署。" />
+    <MESSAGE value="准备写右键菜单和在线状态" />
+    <option name="LAST_COMMIT_MESSAGE" value="准备写右键菜单和在线状态" />
   </component>
 </project>

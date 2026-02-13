@@ -33,7 +33,7 @@ public class message implements Serializable {
     /**
      * 接收人id
      */
-    private Long receiverId;
+    private String receiverId;
 
     /**
      * 消息类型

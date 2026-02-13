@@ -68,7 +68,6 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
                 // 心跳消息
                 Long userId = ChannelManageUtil.getUser(ctx.channel()).getId();
                 handleHeartMessage(userId);
-                return;
             }
             // 根据消息类型，分发给对应的 Handler 处理
             MessageHandler handler = handlerMap.get(message.getMessageType());

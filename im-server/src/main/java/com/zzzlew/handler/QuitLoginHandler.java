@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static com.zzzlew.constant.RedisConstant.USER_OFFLINE_INFO_KEY;
+import static com.zzzlew.constant.RedisConstant.USER_ONLINE_STATUS_KEY;
 
 
 /**
@@ -86,9 +87,11 @@ public class QuitLoginHandler extends ChannelInboundHandlerAdapter {
         LocalDateTime offlineTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String offlineTimeStr = offlineTime.format(formatter);
-        stringRedisTemplate.opsForHash().put(USER_OFFLINE_INFO_KEY, userBaseDTO.getId().toString(),
+        String userId = userBaseDTO.getId().toString();
+        stringRedisTemplate.opsForHash().put(USER_OFFLINE_INFO_KEY, userId,
                 offlineTimeStr);
-
+        // 移除该用户的在线状态
+        stringRedisTemplate.opsForSet().remove(USER_ONLINE_STATUS_KEY, userId);
         ChannelManageUtil.removeChannel(ctx.channel());
         offLine(ctx);
     }

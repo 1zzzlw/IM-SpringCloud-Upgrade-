@@ -45,6 +45,11 @@ public class Conversation implements Serializable {
     private Integer isTop;
 
     /**
+     * 是否免打扰
+     * */
+    private  Integer isMute;
+
+    /**
      * 未读消息数量
      */
     private Integer unreadCount;

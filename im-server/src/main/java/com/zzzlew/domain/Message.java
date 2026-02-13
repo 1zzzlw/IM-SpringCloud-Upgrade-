@@ -39,7 +39,9 @@ public abstract class Message implements Serializable {
     public static final int GroupApplyRequestDTO = 7;
     public static final int GroupApplyResponseVO = 8;
 
-    public static final int LoginSuccessMessage = 9;
+    public static final int LoginSuccessResponseVO = 9;
+
+    public static final int OnlineStatusListResponseVO = 10;
 
     /**
      * 根据消息类型字节，获得对应的消息 class
@@ -53,6 +55,7 @@ public abstract class Message implements Serializable {
 
     static {
         messageClasses.put(HeartRequestDTO, HeartRequestDTO.class);
+        messageClasses.put(PrivateChatRequestDTO, PrivateChatRequestDTO.class);
         messageClasses.put(PrivateChatResponseVO, PrivateChatResponseVO.class);
         messageClasses.put(GroupChatRequestDTO, GroupChatRequestDTO.class);
         messageClasses.put(GroupChatResponseVO, GroupChatResponseVO.class);
@@ -60,6 +63,7 @@ public abstract class Message implements Serializable {
         messageClasses.put(ApplyResponseVO, ApplyResponseVO.class);
         messageClasses.put(GroupApplyRequestDTO, GroupApplyRequestDTO.class);
         messageClasses.put(GroupApplyResponseVO, GroupApplyResponseVO.class);
-        messageClasses.put(LoginSuccessMessage, LoginSuccessMessage.class);
+        messageClasses.put(LoginSuccessResponseVO, LoginSuccessResponseVO.class);
+        messageClasses.put(OnlineStatusListResponseVO, OnlineStatusListResponseVO.class);
     }
 }

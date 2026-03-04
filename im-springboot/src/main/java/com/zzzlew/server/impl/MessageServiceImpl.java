@@ -107,7 +107,7 @@ public class MessageServiceImpl implements MessageService {
 
         // 转换为消息VO列表
         List<MessageVO> messageVOList = messageList.stream()
-            .map(message -> BeanUtil.copyProperties(message, MessageVO.class)).collect(Collectors.toList());
+                .map(message -> BeanUtil.copyProperties(message, MessageVO.class)).collect(Collectors.toList());
 
         log.info("从数据库中查询到的消息列表为：{}", messageVOList);
 

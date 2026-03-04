@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 public enum ConversationTypeEnum {
-    USER(0, "单聊会话"), GROUP(1, "群聊会话");
+    USER(0, "单聊会话"), GROUP(1, "群聊会话"), AI(2, "ai会话");
 
     /**
      * 会话类型的数值编码

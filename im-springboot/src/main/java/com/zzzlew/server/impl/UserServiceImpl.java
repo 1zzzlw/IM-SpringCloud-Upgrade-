@@ -7,6 +7,7 @@ import com.zzzlew.config.KaptchaConfig;
 import com.zzzlew.constant.JwtClaimsConstant;
 import com.zzzlew.constant.MessageConstant;
 import com.zzzlew.exception.*;
+import com.zzzlew.mapper.ConversationMapper;
 import com.zzzlew.mapper.FriendMapper;
 import com.zzzlew.mapper.UserInfoMapper;
 import com.zzzlew.mapper.UserMapper;
@@ -59,6 +60,8 @@ public class UserServiceImpl implements UserService {
     private UserInfoMapper userInfoMapper;
     @Resource
     private FriendMapper friendMapper;
+    @Resource
+    private ConversationMapper conversationMapper;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
@@ -213,6 +216,10 @@ public class UserServiceImpl implements UserService {
 
         response.setHeader("Authorization", "Bearer " + tokenResult.getAccessToken());
         response.setHeader("refreshtoken", tokenResult.getRefreshToken());
+
+        // 生成ai会话信息
+        String conversationId = "ai_" + userId;
+        conversationMapper.insertConversation(conversationId, userId, "ai_system", 2);
 
         return userAuth;
     }

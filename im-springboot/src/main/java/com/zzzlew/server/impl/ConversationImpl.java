@@ -73,12 +73,12 @@ public class ConversationImpl implements ConversationService {
         }
 
         List<Long> targetUserIdList = conversationList.stream()
-            .filter(conversation -> conversation.getType() == ConversationTypeEnum.USER.getType())
-            .map(conversation -> Long.parseLong(conversation.getTargetId())).toList();
+                .filter(conversation -> conversation.getType() == ConversationTypeEnum.USER.getType())
+                .map(conversation -> Long.parseLong(conversation.getTargetId())).toList();
 
         List<String> groupIdList = conversationList.stream()
-            .filter(conversation -> conversation.getType() == ConversationTypeEnum.GROUP.getType())
-            .map(Conversation::getTargetId).toList();
+                .filter(conversation -> conversation.getType() == ConversationTypeEnum.GROUP.getType())
+                .map(Conversation::getTargetId).toList();
 
         // 以用户id为键，用户信息为值
         Map<Long, UserAuth> userMap;
@@ -99,7 +99,7 @@ public class ConversationImpl implements ConversationService {
         if (!groupIdList.isEmpty()) {
             // 查询群聊会话信息
             List<GroupConversation> groupConversationList =
-                groupConversationMapper.selectGroupConversationListByConversationIdList(groupIdList);
+                    groupConversationMapper.selectGroupConversationListByConversationIdList(groupIdList);
             // 以群聊会话id为键，群聊会话信息为值
             groupMap = groupConversationList.stream().collect(Collectors.toMap(GroupConversation::getId, g -> g));
         } else {
@@ -133,6 +133,13 @@ public class ConversationImpl implements ConversationService {
                 conversationVO.setName(groupConversation.getGroupName());
                 conversationVO.setUserId(userId);
                 return conversationVO;
+            } else if (conversation.getType() == ConversationTypeEnum.AI.getType()) {
+                // ai会话
+                ConversationVO conversationVO = BeanUtil.copyProperties(conversation, ConversationVO.class);
+                conversationVO.setAvatar(null);
+                conversationVO.setName("ai助手");
+                conversationVO.setUserId(userId);
+                return conversationVO;
             } else {
                 throw new IllegalArgumentException("会话类型不存在");
             }
@@ -145,7 +152,7 @@ public class ConversationImpl implements ConversationService {
     public List<GroupMemberVO> getGroupMemberList(String conversationId) {
         // 根据用户id和会话id查询登录用户的会话列表
         List<GroupMemberVO> groupMemberVOList =
-            conversationMapper.selectGroupMemberListByConversationId(conversationId);
+                conversationMapper.selectGroupMemberListByConversationId(conversationId);
         return groupMemberVOList;
     }
 

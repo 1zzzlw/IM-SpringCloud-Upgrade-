@@ -119,7 +119,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO sendMessage(MessageDTO messageDTO) {
         // 获取当前登录用户id
         Long userId = UserHolder.getUser().getId();
-        messageDTO.setId(IdUtil.getSnowflakeNextId());
+
         messageDTO.setSenderId(userId);
         // 重置发送时间，让数据库可以自动填充
         messageDTO.setSendTime(null);

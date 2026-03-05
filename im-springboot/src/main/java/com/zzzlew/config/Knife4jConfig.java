@@ -20,7 +20,7 @@ public class Knife4jConfig {
     @Bean
     public OpenAPI imOpenApi() {
         return new OpenAPI().info(new Info().title("IM 即时通信项目").description("IM 项目接口文档").version("v1.0.0")
-            .contact(new Contact().name("zzzzlew").email("1400377637@qq.com")));
+                .contact(new Contact().name("zzzzlew").email("1400377637@qq.com")));
     }
 
     // 指定扫描 controller 包

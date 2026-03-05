@@ -30,8 +30,6 @@ public class GroupChatHandler implements MessageHandler<GroupChatRequestDTO> {
         log.info("收到群聊消息: {}", groupChatRequestDTO);
         // 获得当前登录用户id
         Long userId = ChannelManageUtil.getUser(ctx.channel()).getId();
-        // 后端重新生成雪花id
-        groupChatRequestDTO.setId(IdUtil.getSnowflakeNextId());
         groupChatRequestDTO.setSenderId(userId);
         // 重置发送时间，数据库可以自动填充
         groupChatRequestDTO.setSendTime(null);

@@ -34,9 +34,9 @@ public class MessageController {
 
     /**
      * 根据前端传来的需要初始化的会话id列表，增量更新并热数据预加载消息列表，当前限额100条
-     * 
+     *
      * @param conversationIds 会话id列表
-     * @param isInit 是否初始化
+     * @param isInit          是否初始化
      * @return 消息列表
      */
     @Operation(summary = "根据前端传来的需要初始化的会话id列表，增量更新并热数据预加载消息列表，当前限额100条")
@@ -56,7 +56,7 @@ public class MessageController {
     @Operation(summary = "根据前端最旧消息拉取旧消息到前端数据库中")
     @GetMapping("/pull/list")
     public Result<List<MessageVO>> pullMessageList(@RequestParam String conversationId,
-        @RequestParam Long maxMessageId) {
+                                                   @RequestParam Long maxMessageId) {
         log.info("需要拉取旧消息的会话id为：{}，最旧消息id为：{}", conversationId, maxMessageId);
         List<MessageVO> messageVOList = messageService.pullMessageList(conversationId, maxMessageId);
         return Result.success(messageVOList);
@@ -64,7 +64,7 @@ public class MessageController {
 
     /**
      * 发送消息
-     * 
+     *
      * @return 消息id
      */
     @Operation(summary = "发送消息")
@@ -99,7 +99,7 @@ public class MessageController {
     public Result<FileMessageVO> uploadFile(@RequestParam("chunkBlob") MultipartFile chunkBlob,
                                             @ModelAttribute FileChunkInfoDTO fileChunkInfoDTO) {
         log.info("上传文件分块消息的索引：{}，分块哈希值：{}，文件md5值：{}", fileChunkInfoDTO.getChunkIndex(), fileChunkInfoDTO.getChunkHash(),
-            fileChunkInfoDTO.getFileId());
+                fileChunkInfoDTO.getFileId());
         messageService.uploadFileChunk(chunkBlob, fileChunkInfoDTO);
         return Result.success();
     }
@@ -114,7 +114,7 @@ public class MessageController {
     @Operation(summary = "获取上传成功的文件分块索引列表")
     @GetMapping("/checkUploaded")
     public Result<List<Integer>> checkUploaded(@RequestParam("verify") String verify,
-        @RequestParam("fileId") String fileId) {
+                                               @RequestParam("fileId") String fileId) {
         log.info("检查文件分块是否上传完成：{},{}", verify, fileId);
         List<Integer> uploadedChunkIndices = messageService.checkUploaded(verify, fileId);
         log.info("上传过的文件分块集合：{}", uploadedChunkIndices);

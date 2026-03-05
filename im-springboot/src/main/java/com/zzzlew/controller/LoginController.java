@@ -28,7 +28,7 @@ public class LoginController {
 
     /**
      * 用户登录
-     * 
+     *
      * @param userLoginDTO 用户登录信息
      * @return 用户登录vo
      */
@@ -43,7 +43,7 @@ public class LoginController {
 
     /**
      * 生成登录验证码
-     * 
+     *
      * @param response HttpServletResponse
      */
     @Operation(summary = "生成登录验证码")
@@ -55,8 +55,8 @@ public class LoginController {
 
     /**
      * 用户登录确认
-     * 
-     * @param token 登录凭证
+     *
+     * @param token  登录凭证
      * @param userId 用户id
      * @return 登录确认结果
      */

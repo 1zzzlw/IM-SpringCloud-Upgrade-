@@ -5,6 +5,12 @@ server:
     mime-types: application/json,text/plain,text/html
     min-response-size: 1024
 spring:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: qwen3-vl:8b
+        #model: gemma3:4b
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/zzz-im-server?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -46,9 +52,9 @@ logging:
   level:
     com:
       zzzlew:
-          mapper: debug
-          server: info
-          controller: info
+        mapper: debug
+        server: info
+        controller: info
 knife4j:
   enable: true
 springdoc:
@@ -56,12 +62,12 @@ springdoc:
     enabled: true # 生成OpenAPI 3.0的JSON数据源
 
 minio:
-#  endpoint: http://192.168.100.10:9001
-#  accessKey: minio
-#  secretKey: minio1234
-#  endpoint: http://100.112.106.41:9000
-#  accessKey: minioadmin
-#  secretKey: minioadmin
+  #  endpoint: http://192.168.100.10:9001
+  #  accessKey: minio
+  #  secretKey: minio1234
+  #  endpoint: http://100.112.106.41:9000
+  #  accessKey: minioadmin
+  #  secretKey: minioadmin
   endpoint: http://47.111.22.183:9000
   accessKey: admin
   secretKey: 12345678

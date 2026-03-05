@@ -29,8 +29,6 @@ public class PrivateChatHandler implements MessageHandler<PrivateChatRequestDTO>
         log.info("收到私聊消息：{}", privateChatRequestDTO);
         // 获得当前登录用户id
         Long userId = ChannelManageUtil.getUser(ctx.channel()).getId();
-        // 后端重新生成雪花id
-        privateChatRequestDTO.setId(IdUtil.getSnowflakeNextId());
         privateChatRequestDTO.setSenderId(userId);
         // 重置发送时间，让数据库可以自动填充
         privateChatRequestDTO.setSendTime(null);

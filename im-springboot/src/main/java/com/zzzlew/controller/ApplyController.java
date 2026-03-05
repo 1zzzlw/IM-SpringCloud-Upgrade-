@@ -36,7 +36,7 @@ public class ApplyController {
 
     /**
      * 发送好友申请
-     * 
+     *
      * @param sendApplyDTO 好友申请信息
      */
     @Operation(summary = "发送好友申请")
@@ -51,7 +51,7 @@ public class ApplyController {
      * 创建群聊
      *
      * @param groupApplyDTO 群聊申请信息
-     * @param groupAvatar 群聊头像文件信息
+     * @param groupAvatar   群聊头像文件信息
      * @return 创建的会话信息
      */
     @Operation(summary = "创建群聊")
@@ -67,7 +67,7 @@ public class ApplyController {
 
     /**
      * TODO 获取好友申请发送历史
-     * 
+     *
      * @return 好友申请发送历史
      */
     @Operation(summary = "获取好友申请发送历史")
@@ -78,7 +78,7 @@ public class ApplyController {
 
     /**
      * 获取好友申请列表
-     * 
+     *
      * @return 好友申请列表
      */
     @Operation(summary = "获取好友申请列表")
@@ -102,7 +102,7 @@ public class ApplyController {
 
     /**
      * 处理好友申请
-     * 
+     *
      * @param dealApplyDTO 好友申请处理信息
      */
     @Operation(summary = "处理好友申请")

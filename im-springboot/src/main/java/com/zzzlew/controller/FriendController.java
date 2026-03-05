@@ -32,7 +32,7 @@ public class FriendController {
 
     /**
      * 全量更新并初始化好友列表
-     * 
+     *
      * @param isInit 是否初始化
      * @return 好友列表
      */
@@ -46,7 +46,7 @@ public class FriendController {
 
     /**
      * 搜索用户
-     * 
+     *
      * @param phone 手机号
      * @return 用户搜索vo
      */
@@ -57,7 +57,6 @@ public class FriendController {
         UserSearchVO userSearchVO = friendService.search(phone);
         return Result.success(userSearchVO);
     }
-
 
 
 }

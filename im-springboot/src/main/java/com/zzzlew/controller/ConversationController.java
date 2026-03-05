@@ -29,7 +29,7 @@ public class ConversationController {
 
     /**
      * 全量更新并初始化会话列表
-     * 
+     *
      * @param isInit 是否初始化
      * @return 会话列表
      */

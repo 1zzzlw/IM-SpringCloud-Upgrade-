@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzzlew.mapper.AIMessageMapper">
+
+    <select id="selectHistory" resultType="com.zzzlew.pojo.vo.message.AIMessageVO">
+        select *
+        from ai_message
+        where user_id = #{userId}
+        order by id desc limit 20
+    </select>
+
+    <insert id="saveMessage">
+        insert into ai_message (id, user_id, role, msg_type, content, image_url, personality_id)
+        values (#{id}, #{userId}, #{role}, #{msgType}, #{content}, #{imageUrl}, #{personalityId})
+    </insert>
+
+    <select id="getPersonality" resultType="com.zzzlew.pojo.vo.user.AIPersonalityVO">
+        select *
+        from ai_personality
+        where user_id = #{userId}
+    </select>
+
+</mapper>

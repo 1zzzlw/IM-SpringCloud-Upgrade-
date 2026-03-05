@@ -39,8 +39,7 @@ public class UserController {
      */
     @Operation(summary = "用户注册")
     @PostMapping("/register")
-    public Result<UserAuth> register(UserRegisterDTO userRegisterDTO,
-                                     @RequestParam(value = "avatarFile") MultipartFile avatarFile, HttpServletResponse response) {
+    public Result<UserAuth> register(UserRegisterDTO userRegisterDTO, @RequestParam(value = "avatarFile") MultipartFile avatarFile, HttpServletResponse response) {
         log.info("注册用户信息为 {}，头像信息为 {}", userRegisterDTO, avatarFile);
         UserAuth userAuth = userService.register(userRegisterDTO, avatarFile, response);
         return Result.success(userAuth);

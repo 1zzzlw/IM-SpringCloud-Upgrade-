@@ -37,8 +37,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
     private JwtUtil jwtUtil;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-        throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 检测token是否过期
         String token = request.getHeader(jwtproperties.getTokenName());
         log.info("刷新token是: {}", token);
@@ -66,8 +65,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-        throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         // 移除ThreadLocal中的用户信息
         UserHolder.removeUser();
     }

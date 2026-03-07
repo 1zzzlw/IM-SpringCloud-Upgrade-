@@ -35,4 +35,14 @@ public interface ConversationService {
      */
     void clearConversationUnreadCounts(String conversationId);
 
+    /**
+     * 更新会话置顶状态
+     */
+    void updateConversationTopStatus(String conversationId, Integer isTop);
+
+    /**
+     * 获取会话免打扰状态
+     */
+    void updateConversationMuteStatus(String conversationId, Integer isMute);
+
 }

@@ -4,19 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="在线状态完成，右键菜单前端完成部分，后端还没有开始写业务操作">
-      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/FavoritesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/Favorites.java" afterDir="false" />
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="ai的对话，个性化设置，基本上完成了吧，还差图像的识别功能。这个不急着做，然后接下来想完成那些琐碎的小功能了，完成之后可能就会开始收藏界面，朋友圈界面的编写，或者是MQ消息队列，或者是ES的全局搜索，或者是webrtc">
+      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/tools/AITools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/enums/ConversationTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/enums/ConversationTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/apply/ApplyVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/apply/ApplyVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/ChatClientConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/ChatClientConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/ConversationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/ConversationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/interceptor/JwtTokenInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/interceptor/JwtTokenInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/ConversationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/ConversationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/ConversationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/ConversationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/ConversationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/ConversationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/MessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/MessageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/GroupApplyMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/GroupApplyMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/enums/ConversationTypeEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/enums/ConversationTypeEnum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/ConversationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/ConversationMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/ChatClientConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/ChatClientConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/AIMessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/AIMessageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/ConversationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/ConversationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/interceptor/JwtTokenInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/interceptor/JwtTokenInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/ConversationMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/ConversationMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/ConversationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/ConversationService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/ConversationImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/ConversationImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/mapper/ConversationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/mapper/ConversationMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,6 +248,9 @@
       <workItem from="1772348228393" duration="3798000" />
       <workItem from="1772428999272" duration="4526000" />
       <workItem from="1772612052459" duration="4636000" />
+      <workItem from="1772820491831" duration="617000" />
+      <workItem from="1772858451789" duration="6243000" />
+      <workItem from="1772897301085" duration="938000" />
     </task>
     <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
       <option name="closed" value="true" />
@@ -274,7 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770995803121</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ai的对话，个性化设置，基本上完成了吧，还差图像的识别功能。这个不急着做，然后接下来想完成那些琐碎的小功能了，完成之后可能就会开始收藏界面，朋友圈界面的编写，或者是MQ消息队列，或者是ES的全局搜索，或者是webrtc">
+      <option name="closed" value="true" />
+      <created>1772798021434</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1772798021434</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +303,7 @@
     <MESSAGE value="写了一下广播的代码，实现了集群部署的功能，使用了redisson的订阅发布的模式，然后监听队列，广播消息到所有服务中，实现了Netty的集群部署。" />
     <MESSAGE value="准备写右键菜单和在线状态" />
     <MESSAGE value="在线状态完成，右键菜单前端完成部分，后端还没有开始写业务操作" />
-    <option name="LAST_COMMIT_MESSAGE" value="在线状态完成，右键菜单前端完成部分，后端还没有开始写业务操作" />
+    <MESSAGE value="ai的对话，个性化设置，基本上完成了吧，还差图像的识别功能。这个不急着做，然后接下来想完成那些琐碎的小功能了，完成之后可能就会开始收藏界面，朋友圈界面的编写，或者是MQ消息队列，或者是ES的全局搜索，或者是webrtc" />
+    <option name="LAST_COMMIT_MESSAGE" value="ai的对话，个性化设置，基本上完成了吧，还差图像的识别功能。这个不急着做，然后接下来想完成那些琐碎的小功能了，完成之后可能就会开始收藏界面，朋友圈界面的编写，或者是MQ消息队列，或者是ES的全局搜索，或者是webrtc" />
   </component>
 </project>

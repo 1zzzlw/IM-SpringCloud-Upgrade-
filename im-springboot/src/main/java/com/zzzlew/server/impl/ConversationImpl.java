@@ -161,4 +161,16 @@ public class ConversationImpl implements ConversationService {
         // TODO 清除会话中未读消息计数
     }
 
+    @Override
+    public void updateConversationTopStatus(String conversationId, Integer isTop) {
+        Long userId = UserHolder.getUser().getId();
+        conversationMapper.updateConversationTopStatus(conversationId, userId, isTop);
+    }
+
+    @Override
+    public void updateConversationMuteStatus(String conversationId, Integer isMute) {
+        Long userId = UserHolder.getUser().getId();
+        conversationMapper.updateConversationMuteStatus(conversationId, userId, isMute);
+    }
+
 }

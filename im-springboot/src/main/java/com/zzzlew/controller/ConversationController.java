@@ -67,4 +67,32 @@ public class ConversationController {
         return Result.success();
     }
 
+    /**
+     * 更新会话置顶状态
+     *
+     * @param conversationId 会话ID
+     * @param isTop          是否置顶
+     */
+    @PostMapping("/updateTopStatus")
+    public Result<Object> updateConversationTopStatus(@RequestParam("conversationId") String conversationId,
+                                                      @RequestParam("isTop") Integer isTop) {
+        log.info("更新会话置顶状态：{},{}", conversationId, isTop);
+        conversationService.updateConversationTopStatus(conversationId, isTop);
+        return Result.success();
+    }
+
+    /**
+     * 更新会话免打扰状态
+     *
+     * @param conversationId 会话ID
+     * @param isMute         是否免打扰
+     */
+    @PostMapping("/updateMuteStatus")
+    public Result<Object> updateConversationMuteStatus(@RequestParam("conversationId") String conversationId,
+                                                       @RequestParam("isMute") Integer isMute) {
+        log.info("更新会话免打扰状态：{},{}", conversationId, isMute);
+        conversationService.updateConversationMuteStatus(conversationId, isMute);
+        return Result.success();
+    }
+
 }

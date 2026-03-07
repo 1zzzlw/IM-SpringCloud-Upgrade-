@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserMapper {
     /**
      * 根据账号查询用户
-     * 
+     *
      * @param account 账号
      * @return 用户实体类
      */
@@ -23,26 +23,26 @@ public interface UserMapper {
 
     /**
      * 插入用户
-     * 
+     *
      * @param
      */
     void insertUserAuth(UserAuth userAuth);
 
     /**
      * 根据用户ID列表查询用户
-     * 
+     *
      * @param targetUserIdList 用户ID列表
      * @return 用户实体类列表
      */
     List<UserAuth> selectUserAuthListByUserIdList(List<Long> targetUserIdList);
 
 
-     /**
-      * 根据用户ID查询用户信息
-      *
-      * @param userId 用户ID
-      * @return 用户信息VO
-      */
-     UserAuth selectUserInfoById(Long userId);
+    /**
+     * 根据用户ID查询用户信息
+     *
+     * @param userId 用户ID
+     * @return 用户信息VO
+     */
+    UserAuth selectUserInfoById(Long userId);
 
 }

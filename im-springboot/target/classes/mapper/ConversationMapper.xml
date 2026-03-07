@@ -50,6 +50,20 @@
         where id = #{conversationId}
     </update>
 
+    <update id="updateConversationTopStatus">
+        update conversation
+        set is_top = #{isTop}
+        where id = #{conversationId}
+          and user_id = #{userId}
+    </update>
+
+    <update id="updateConversationMuteStatus">
+        update conversation
+        set is_mute = #{isMute}
+        where id = #{conversationId}
+          and user_id = #{userId}
+    </update>
+
     <select id="selectGroupMemberListByConversationId"
             resultType="com.zzzlew.pojo.vo.user.GroupMemberVO"
             parameterType="java.lang.String">

@@ -57,4 +57,22 @@ public interface ConversationMapper {
      * @param fromUserId 发送方用户ID
      */
     void insertConversation(String conversationId, Long toUserId, String fromUserId, Integer type);
+
+    /**
+     * 更新会话置顶状态
+     *
+     * @param conversationId 会话ID
+     * @param userId 用户ID
+     * @param isTop 是否置顶
+     */
+    void updateConversationTopStatus(String conversationId, Long userId, Integer isTop);
+
+    /**
+     * 更新会话免打扰状态
+     *
+     * @param conversationId 会话ID
+     * @param userId 用户ID
+     * @param isMute 是否免打扰
+     */
+    void updateConversationMuteStatus(String conversationId, Long userId, Integer isMute);
 }

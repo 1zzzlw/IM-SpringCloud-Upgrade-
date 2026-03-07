@@ -1,7 +1,10 @@
 package com.zzzlew.config;
 
+import com.zzzlew.tools.AITools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.support.ToolCallbacks;
+import org.springframework.ai.tool.ToolCallback;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,8 +19,22 @@ public class ChatClientConfig {
 
     @Bean
     public ChatClient OllamaChatClient(OllamaChatModel ollamaChatModel) {
-        return ChatClient.builder(ollamaChatModel)
-                .defaultSystem("你是一个友好的AI助手")
+        ToolCallback[] tools = ToolCallbacks.from(new AITools());
+
+        return ChatClient.builder(ollamaChatModel).defaultToolCallbacks(tools)
+                .defaultSystem("""
+                        你是用户的ai聊天好友。
+                        遵循规则：
+                            1. 历史消息仅供参考，只回答用户的最新消息
+                            2. 回答简短（1-3句话），口语化，像朋友聊天
+                            3. 不要加括号说明，不要重复相同的开头
+                        个性化信息设置：
+                            - 你会收到角色设定，严格按照设定的性格和语气回答
+                            - 保持角色一致，自然灵活
+                        工具使用：
+                            - 当需要准确数据时，优先使用工具而不是猜测
+                        请自然地回答用户的最新消息。
+                        """)
                 .build();
     }
 

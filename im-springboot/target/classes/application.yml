@@ -9,7 +9,7 @@ spring:
     ollama:
       base-url: http://localhost:11434
       chat:
-        model: qwen3-vl:8b
+        model: qwen2.5:14b
         #model: gemma3:4b
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -76,6 +76,7 @@ minio:
   videoBucket: zzz-im-video
   audioBucket: zzz-im-audio
   fileBucket: zzz-im-file
+  favoriteBucket: zzz-im-favorite
   imagePath: image
   videoPath: video
   expireIn: 180 # 过期时间，单位天

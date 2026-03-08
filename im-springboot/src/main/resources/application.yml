@@ -76,6 +76,7 @@ minio:
   videoBucket: zzz-im-video
   audioBucket: zzz-im-audio
   fileBucket: zzz-im-file
+  favoriteBucket: zzz-im-favorite
   imagePath: image
   videoPath: video
   expireIn: 180 # 过期时间，单位天

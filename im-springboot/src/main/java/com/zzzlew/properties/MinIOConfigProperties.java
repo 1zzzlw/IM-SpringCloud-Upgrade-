@@ -58,6 +58,11 @@ public class MinIOConfigProperties implements Serializable {
     private String fileBucket;
 
     /**
+     * 存储笔记文件桶的名称
+     */
+    private String favoriteBucket;
+
+    /**
      * MinIO 图片路径
      */
     private String imagePath;

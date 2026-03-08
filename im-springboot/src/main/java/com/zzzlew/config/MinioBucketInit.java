@@ -34,8 +34,8 @@ public class MinioBucketInit {
     public void createBucketsOnStart() {
         // 待创建的桶名列表
         String[] bucketNames = {minIOConfigProperties.getImageBucket(), minIOConfigProperties.getVideoBucket(),
-            minIOConfigProperties.getFileBucket(), minIOConfigProperties.getAudioBucket(),
-            minIOConfigProperties.getAvatarBucket()};
+                minIOConfigProperties.getFileBucket(), minIOConfigProperties.getAudioBucket(),
+                minIOConfigProperties.getAvatarBucket(), minIOConfigProperties.getFavoriteBucket()};
 
         for (String bucketName : bucketNames) {
             try {
@@ -50,7 +50,7 @@ public class MinioBucketInit {
 
                 String publicReadPolicy = buildPublicReadPolicy(bucketName);
                 minioClient.setBucketPolicy(SetBucketPolicyArgs.builder().bucket(bucketName).config(publicReadPolicy) // 传入公共读策略JSON
-                    .build());
+                        .build());
                 log.info("MinIO桶[{}]公共读权限设置成功", bucketName);
             } catch (MinioException | InvalidKeyException | NoSuchAlgorithmException | IOException e) {
                 log.error("MinIO桶创建失败：{}，原因：{}", bucketName, e.getMessage(), e);
@@ -61,7 +61,7 @@ public class MinioBucketInit {
 
     /**
      * MinIO公共读权限标准策略 仅开放「所有用户」对「桶内所有文件」的GET操作（读），写/删权限仍为私有
-     * 
+     *
      * @param bucketName 桶名
      * @return 公共读策略JSON字符串
      */
@@ -71,17 +71,17 @@ public class MinioBucketInit {
         }
         // 固定策略模板，仅替换桶名占位符，无需修改其他内容
         return """
-            {
-              "Version": "2012-10-17",
-              "Statement": [
                 {
-                  "Effect": "Allow",
-                  "Principal": "*",
-                  "Action": "s3:GetObject",
-                  "Resource": "arn:aws:s3:::%s/*"
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": "*",
+                      "Action": "s3:GetObject",
+                      "Resource": "arn:aws:s3:::%s/*"
+                    }
+                  ]
                 }
-              ]
-            }
-            """.formatted(bucketName);
+                """.formatted(bucketName);
     }
 }

@@ -54,14 +54,14 @@ public class MinIOFileStorgeUtil {
         try {
             // 根据分块文件的流存入minio
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-                // 存储桶名称
-                .bucket(minIOConfigProperties.getAvatarBucket())
-                // 存入minio的路径对象
-                .object(minioUserAvatarPath)
-                // 输入流
-                .stream(avatarBlob.getInputStream(), avatarBlob.getSize(), -1)
-                // 内容类型
-                .contentType(avatarBlob.getContentType()).build();
+                    // 存储桶名称
+                    .bucket(minIOConfigProperties.getAvatarBucket())
+                    // 存入minio的路径对象
+                    .object(minioUserAvatarPath)
+                    // 输入流
+                    .stream(avatarBlob.getInputStream(), avatarBlob.getSize(), -1)
+                    // 内容类型
+                    .contentType(avatarBlob.getContentType()).build();
             // 上传文件分块到minio
             minioClient.putObject(putObjectArgs);
         } catch (Exception e) {
@@ -70,25 +70,45 @@ public class MinIOFileStorgeUtil {
         }
     }
 
+    // 上传笔记中的图片
+    public void uploadFavoriteImage(String minioImagePath, MultipartFile imageBlob) {
+        try {
+            // 根据分块文件的流存入minio
+            PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                    // 存储桶名称
+                    .bucket(minIOConfigProperties.getFavoriteBucket())
+                    // 存入minio的路径对象
+                    .object(minioImagePath)
+                    // 输入流
+                    .stream(imageBlob.getInputStream(), imageBlob.getSize(), -1)
+                    // 内容类型
+                    .contentType(imageBlob.getContentType()).build();
+            minioClient.putObject(putObjectArgs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("上传文件出错,bucket:{}错误信息:{}", minIOConfigProperties.getFavoriteBucket(), e.getMessage());
+        }
+    }
+
     // 上传文件分块到minio
     public void uploadFileChunk(String minioFileChunkPath, MultipartFile chunkBlob, Integer fileType) {
         try {
             // 根据分块文件的流存入minio
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-                // 存储桶名称
-                .bucket(getBucketName(fileType))
-                // 存入minio的路径对象
-                .object(minioFileChunkPath)
-                // 输入流
-                .stream(chunkBlob.getInputStream(), chunkBlob.getSize(), -1)
-                // 内容类型 TODO 后续根据文件类型动态设置，文件分块默认没有类型
-                .contentType(chunkBlob.getContentType()).build();
+                    // 存储桶名称
+                    .bucket(getBucketName(fileType))
+                    // 存入minio的路径对象
+                    .object(minioFileChunkPath)
+                    // 输入流
+                    .stream(chunkBlob.getInputStream(), chunkBlob.getSize(), -1)
+                    // 内容类型 TODO 后续根据文件类型动态设置，文件分块默认没有类型
+                    .contentType(chunkBlob.getContentType()).build();
             // 上传文件分块到minio
             minioClient.putObject(putObjectArgs);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("上传文件出错,bucket:{},objectName:{},错误信息:{}", getBucketName(fileType), minioFileChunkPath,
-                e.getMessage());
+                    e.getMessage());
         }
     }
 
@@ -96,7 +116,7 @@ public class MinIOFileStorgeUtil {
      * 合并文件分块
      *
      * @param minioFilePath minio文件路径 格式：yyyy/MM/dd/filename
-     * @param chunkCount 分块数量
+     * @param chunkCount    分块数量
      */
     public void mergeFileChunks(String minioFilePath, String minioFileChunkPath, int chunkCount, Integer fileType) {
         // 从minio中获得所有的分块文件
@@ -106,7 +126,7 @@ public class MinIOFileStorgeUtil {
         }
 
         ComposeObjectArgs composeObjectArgs =
-            ComposeObjectArgs.builder().bucket(getBucketName(fileType)).object(minioFilePath).sources(sources).build();
+                ComposeObjectArgs.builder().bucket(getBucketName(fileType)).object(minioFilePath).sources(sources).build();
 
         try {
             minioClient.composeObject(composeObjectArgs);
@@ -121,14 +141,14 @@ public class MinIOFileStorgeUtil {
      * 清除文件分块
      *
      * @param minioFileChunkPath minio文件分块路径 格式：yyyy/MM/dd/filename/
-     * @param chunkCount 分块数量
+     * @param chunkCount         分块数量
      */
     public void clearChunkFlies(String minioFileChunkPath, int chunkCount, Integer fileType) {
         Iterable<DeleteObject> objects = Stream.iterate(0, i -> ++i).limit(chunkCount)
-            .map(i -> new DeleteObject(minioFileChunkPath + i)).collect(Collectors.toList());
+                .map(i -> new DeleteObject(minioFileChunkPath + i)).collect(Collectors.toList());
 
         RemoveObjectsArgs removeObjectsArgs =
-            RemoveObjectsArgs.builder().bucket(getBucketName(fileType)).objects(objects).build();
+                RemoveObjectsArgs.builder().bucket(getBucketName(fileType)).objects(objects).build();
 
         try {
             Iterable<Result<DeleteError>> results = minioClient.removeObjects(removeObjectsArgs);
@@ -142,7 +162,7 @@ public class MinIOFileStorgeUtil {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("清除文件分块出错,bucket:{},objectName:{},错误信息:{}", getBucketName(fileType), minioFileChunkPath,
-                e.getMessage());
+                    e.getMessage());
             throw new RuntimeException(e);
         }
     }

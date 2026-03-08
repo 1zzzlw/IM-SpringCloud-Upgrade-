@@ -189,14 +189,15 @@ public class UserServiceImpl implements UserService {
 
         userInfo.setId(userId);
 
-        String avatarName = userId + "." + avatarFile.getContentType().split("/")[1];
-        // 生成远端的存储路径
-        String minioUserAvatarPath = userId + "/" + avatarName;
+        // ID/ID.png
+        String avatarName = userId + "/" + userId + "." + avatarFile.getContentType().split("/")[1];
+        // 生成远端的存储路径 yyyy/m/d/ID/ID.png
+        String baseUrl = minIOFileStorgeUtil.buildFilePath(avatarName);
         // 上传用户头像到minio服务端
-        minIOFileStorgeUtil.uploadAvatar(minioUserAvatarPath, avatarFile);
+        minIOFileStorgeUtil.uploadAvatar(baseUrl, avatarFile);
         // 生成本地存储远程路径
         String avatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/"
-                + minioUserAvatarPath;
+                + baseUrl;
 
         userInfo.setAvatar(avatar);
 

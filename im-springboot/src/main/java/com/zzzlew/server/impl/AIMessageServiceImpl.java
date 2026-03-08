@@ -75,10 +75,18 @@ public class AIMessageServiceImpl implements AIMessageService {
         // 获取ai智能体信息
         AIPersonalityVO aiPersonality = aiMessageMapper.getActivePersonality(aiMessageDTO.getUserId());
 
-        String personalityPrompt = String.format("""
-                你的角色：%s
-                性格设定：%s
-                """, aiPersonality.getName(), aiPersonality.getSystemPrompt());
+        String personalityPrompt = "当前用户没有ai个性化";
+
+        if (aiPersonality != null) {
+            log.info("当前用户有ai个性化");
+            // 添加ai个性化信息
+            personalityPrompt = String.format("""
+                    你的角色：%s
+                    性格设定：%s
+                    """, aiPersonality.getName(), aiPersonality.getSystemPrompt());
+        } else {
+            log.info("当前用户没有ai个性化");
+        }
 
         // 返回ai思考的消息，并保存到数据库
         return OllamaChatClient.prompt().system(personalityPrompt).messages(historyMessages).user(content).stream().content().doOnNext(chunk -> {
@@ -118,13 +126,13 @@ public class AIMessageServiceImpl implements AIMessageService {
 
         String randomId = IdUtil.getSnowflakeNextId() + "";
 
-        String avatarName = randomId + "AIAvatar." + avatarFile.getContentType().split("/")[1];
+        String avatarName = userId + "/" + randomId + "AIAvatar." + avatarFile.getContentType().split("/")[1];
         // 生成远端的存储路径
-        String minioUserAvatarPath = userId + "/" + avatarName;
+        String baseUrl = minIOFileStorgeUtil.buildFilePath(avatarName);
         // 上传用户头像到minio服务端
-        minIOFileStorgeUtil.uploadAvatar(minioUserAvatarPath, avatarFile);
+        minIOFileStorgeUtil.uploadAvatar(baseUrl, avatarFile);
         // 生成本地存储远程路径
-        String avatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/" + minioUserAvatarPath;
+        String avatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/" + baseUrl;
         aiPersonalityDTO.setAvatar(avatar);
 
         aiMessageMapper.createPersonality(aiPersonalityDTO);

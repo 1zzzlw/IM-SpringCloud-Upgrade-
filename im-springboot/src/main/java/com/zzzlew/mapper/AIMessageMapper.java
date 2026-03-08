@@ -95,4 +95,11 @@ public interface AIMessageMapper {
      */
     AIPersonalityVO getActivePersonality(Long userId);
 
+    /**
+     * 获取ai头像，根据激活情况
+     *
+     * @param userId
+     * @return
+     */
+    String getAiAvatarById(Long userId);
 }

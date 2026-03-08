@@ -2,6 +2,7 @@ package com.zzzlew.server.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.zzzlew.enums.ConversationTypeEnum;
+import com.zzzlew.mapper.AIMessageMapper;
 import com.zzzlew.mapper.ConversationMapper;
 import com.zzzlew.mapper.GroupConversationMapper;
 import com.zzzlew.mapper.UserMapper;
@@ -43,6 +44,8 @@ public class ConversationImpl implements ConversationService {
     private GroupConversationMapper groupConversationMapper;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private AIMessageMapper aiMessageMapper;
 
     /**
      * 全量更新并初始化会话列表
@@ -136,7 +139,8 @@ public class ConversationImpl implements ConversationService {
             } else if (conversation.getType() == ConversationTypeEnum.AI.getType()) {
                 // ai会话
                 ConversationVO conversationVO = BeanUtil.copyProperties(conversation, ConversationVO.class);
-                conversationVO.setAvatar(null);
+                String avatar = aiMessageMapper.getAiAvatarById(userId);
+                conversationVO.setAvatar(avatar);
                 conversationVO.setName("ai助手");
                 conversationVO.setUserId(userId);
                 return conversationVO;

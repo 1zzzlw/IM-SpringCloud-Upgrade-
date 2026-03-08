@@ -70,4 +70,8 @@
           and is_active = 1
     </select>
 
+    <select id="getAiAvatarById" resultType="java.lang.String">
+        select avatar from ai_personality where user_id = #{userId} and is_active = 1
+    </select>
+
 </mapper>

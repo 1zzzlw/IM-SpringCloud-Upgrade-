@@ -10,10 +10,17 @@
 
     <update id="updateNote">
         update favorites
-        set title = #{title},
-            content = #{content},
+        set title           = #{title},
+            content         = #{content},
             source_username = #{sourceUsername}
-        where id = #{id} and user_id = #{userId}
+        where id = #{id}
+          and user_id = #{userId}
     </update>
+
+    <select id="getNote" resultType="com.zzzlew.pojo.vo.favorites.FavoritesVO">
+        select *
+        from favorites
+        where user_id = #{userId} and type = 0
+    </select>
 
 </mapper>

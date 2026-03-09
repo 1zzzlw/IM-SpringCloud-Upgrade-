@@ -1,6 +1,9 @@
 package com.zzzlew.mapper;
 
 import com.zzzlew.pojo.dto.favorites.FavoritesDTO;
+import com.zzzlew.pojo.vo.favorites.FavoritesVO;
+
+import java.util.List;
 
 /**
  * @Auther: zzzlew
@@ -24,4 +27,12 @@ public interface FavoritesMapper {
      * @param favoritesDTO
      */
     void updateNote(FavoritesDTO favoritesDTO);
+
+    /**
+     * 获取笔记
+     *
+     * @param userId
+     * @return
+     */
+    List<FavoritesVO> getNote(Long userId);
 }

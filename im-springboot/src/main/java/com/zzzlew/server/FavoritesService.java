@@ -1,6 +1,7 @@
 package com.zzzlew.server;
 
 import com.zzzlew.pojo.dto.favorites.FavoritesDTO;
+import com.zzzlew.pojo.vo.favorites.FavoritesVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -33,5 +34,12 @@ public interface FavoritesService {
      * @param favoritesDTO
      */
     void updateNote(FavoritesDTO favoritesDTO);
+
+    /**
+     * 获取笔记
+     *
+     * @return
+     */
+    List<FavoritesVO> getNote();
 
 }

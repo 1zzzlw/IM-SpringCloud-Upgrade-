@@ -49,4 +49,11 @@
         where conversation_id = #{conversationId}
         order by send_time
     </select>
+
+    <update id="updateSendStatus">
+        update message
+        set send_status = #{sendStatus}
+        where file_id = #{fileId}
+    </update>
+
 </mapper>

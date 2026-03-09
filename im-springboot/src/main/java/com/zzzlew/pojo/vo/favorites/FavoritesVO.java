@@ -1,6 +1,9 @@
-package com.zzzlew.pojo.dto.favorites;
+package com.zzzlew.pojo.vo.favorites;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @Auther: zzzlew
@@ -9,7 +12,7 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-public class FavoritesDTO {
+public class FavoritesVO {
 
     /**
      * id
@@ -40,4 +43,16 @@ public class FavoritesDTO {
      * 类型 0：笔记 1：收藏
      */
     private Integer type;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+
+    /**
+     * 更新时间
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedAt;
 }

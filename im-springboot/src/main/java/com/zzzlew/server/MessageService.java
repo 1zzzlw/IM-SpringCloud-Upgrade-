@@ -21,7 +21,7 @@ public interface MessageService {
      * 热数据预加载消息列表，当前限额100条
      *
      * @param conversationIds 会话id列表
-     * @param isInit 是否初始化
+     * @param isInit          是否初始化
      * @return 消息列表
      */
     List<MessageVO> initMessageList(String conversationIds, Boolean isInit);
@@ -45,7 +45,7 @@ public interface MessageService {
     /**
      * 上传文件分片
      *
-     * @param chunkBlob 文件分片
+     * @param chunkBlob        文件分片
      * @param fileChunkInfoDTO 文件分片信息
      */
     void uploadFileChunk(MultipartFile chunkBlob, FileChunkInfoDTO fileChunkInfoDTO);
@@ -73,4 +73,13 @@ public interface MessageService {
      * @return 凭证id
      */
     Map<String, Object> verifyFileUploadToken(String fileId);
+
+    /**
+     * 更新文件消息发送状态
+     *
+     * @param fileId     文件消息id
+     * @param sendStatus 发送状态
+     */
+    void updateSendStatus(String fileId, Integer sendStatus);
+
 }

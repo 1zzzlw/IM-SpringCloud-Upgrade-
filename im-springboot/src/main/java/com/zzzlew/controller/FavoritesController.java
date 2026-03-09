@@ -1,6 +1,7 @@
 package com.zzzlew.controller;
 
 import com.zzzlew.pojo.dto.favorites.FavoritesDTO;
+import com.zzzlew.pojo.vo.favorites.FavoritesVO;
 import com.zzzlew.result.Result;
 import com.zzzlew.server.FavoritesService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,5 +64,11 @@ public class FavoritesController {
         log.info("更新笔记：{}", favoritesDTO);
         favoritesService.updateNote(favoritesDTO);
         return Result.success();
+    }
+
+    @GetMapping("/getNote")
+    public Result<List<FavoritesVO>> getNote() {
+        List<FavoritesVO> favoritesVOList = favoritesService.getNote();
+        return Result.success(favoritesVOList);
     }
 }

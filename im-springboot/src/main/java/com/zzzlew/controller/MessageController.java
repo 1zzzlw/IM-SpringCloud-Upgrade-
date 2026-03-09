@@ -134,4 +134,18 @@ public class MessageController {
         return Result.success();
     }
 
+    /**
+     * 更新文件消息发送状态
+     *
+     * @return 响应结果
+     */
+    @Operation(summary = "更新文件消息发送状态")
+    @PostMapping("/updateFileSendStatus")
+    public Result<Object> updateFileSendStatus(@RequestParam("fileId") String fileId,
+                                               @RequestParam("sendStatus") Integer sendStatus) {
+        log.info("更新消息发送状态：{}, {}", fileId, sendStatus);
+        messageService.updateSendStatus(fileId, sendStatus);
+        return Result.success();
+    }
+
 }

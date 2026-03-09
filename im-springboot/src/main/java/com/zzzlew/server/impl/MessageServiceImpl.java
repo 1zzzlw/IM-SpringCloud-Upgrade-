@@ -186,6 +186,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public void updateSendStatus(String fileId, Integer sendStatus) {
+        messageMapper.updateSendStatus(fileId, sendStatus);
+    }
+
+    @Override
     public void uploadFileChunk(MultipartFile chunkBlob, FileChunkInfoDTO fileChunkInfoDTO) {
         Integer chunkIndex = fileChunkInfoDTO.getChunkIndex();
         String chunkHash = fileChunkInfoDTO.getChunkHash();

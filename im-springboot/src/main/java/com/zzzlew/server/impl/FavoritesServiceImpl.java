@@ -2,6 +2,7 @@ package com.zzzlew.server.impl;
 
 import com.zzzlew.mapper.FavoritesMapper;
 import com.zzzlew.pojo.dto.favorites.FavoritesDTO;
+import com.zzzlew.pojo.vo.favorites.FavoritesVO;
 import com.zzzlew.properties.MinIOConfigProperties;
 import com.zzzlew.server.FavoritesService;
 import com.zzzlew.utils.MinIOFileStorgeUtil;
@@ -61,6 +62,13 @@ public class FavoritesServiceImpl implements FavoritesService {
         Long userId = UserHolder.getUser().getId();
         favoritesDTO.setUserId(userId);
         favoritesMapper.updateNote(favoritesDTO);
+    }
+
+    @Override
+    public List<FavoritesVO> getNote() {
+        Long userId = UserHolder.getUser().getId();
+        List<FavoritesVO> favoritesVOList = favoritesMapper.getNote(userId);
+        return favoritesVOList;
     }
 
 }

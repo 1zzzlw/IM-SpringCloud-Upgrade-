@@ -70,6 +70,11 @@ public class MessageVO implements Serializable {
     private Integer isRevoked;
 
     /**
+     * 是否删除 0：否 1：是
+     */
+    private Integer isDeleted = 0;
+
+    /**
      * 引用消息id
      */
     private Long quoteMsgId;

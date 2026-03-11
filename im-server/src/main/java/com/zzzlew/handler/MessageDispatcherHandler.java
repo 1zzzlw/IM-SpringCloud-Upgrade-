@@ -5,10 +5,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.zzzlew.constant.RedisConstant;
 import com.zzzlew.domain.Message;
 import com.zzzlew.handler.impl.MessageHandler;
-import com.zzzlew.handler.messageHandler.ApplySendHandler;
-import com.zzzlew.handler.messageHandler.GroupApplySendHandler;
-import com.zzzlew.handler.messageHandler.GroupChatHandler;
-import com.zzzlew.handler.messageHandler.PrivateChatHandler;
+import com.zzzlew.handler.messageHandler.*;
 import com.zzzlew.result.MessageResult;
 import com.zzzlew.utils.ChannelManageUtil;
 import io.netty.channel.ChannelHandler;
@@ -56,6 +53,7 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
         handlerMap.put(Message.GroupChatRequestDTO, new GroupChatHandler());
         handlerMap.put(Message.ApplyRequestDTO, new ApplySendHandler());
         handlerMap.put(Message.GroupApplyRequestDTO, new GroupApplySendHandler());
+        handlerMap.put(Message.SystemMessageRequestDTO, new SystemMessageHandler());
     }
 
     @Override

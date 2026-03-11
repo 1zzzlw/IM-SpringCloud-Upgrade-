@@ -8,12 +8,13 @@ import com.zzzlew.mapper.MessageMapper;
 import com.zzzlew.pojo.dto.message.FileChunkInfoDTO;
 import com.zzzlew.pojo.dto.message.FileMessageDTO;
 import com.zzzlew.pojo.dto.message.MessageDTO;
+import com.zzzlew.pojo.dto.message.SystemMessageDTO;
 import com.zzzlew.pojo.entity.message;
 import com.zzzlew.pojo.vo.message.MessageVO;
-import com.zzzlew.properties.Jwtproperties;
+import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import com.zzzlew.properties.MinIOConfigProperties;
 import com.zzzlew.server.MessageService;
-import com.zzzlew.utils.JwtUtil;
+import com.zzzlew.utils.GenerateSystemMessage;
 import com.zzzlew.utils.MinIOFileStorgeUtil;
 import com.zzzlew.utils.UserHolder;
 import jakarta.annotation.Resource;
@@ -57,11 +58,9 @@ public class MessageServiceImpl implements MessageService {
     @Resource
     private MinIOFileStorgeUtil minIOFileStorgeUtil;
     @Resource
-    private JwtUtil jwtUtil;
-    @Resource
-    private Jwtproperties jwtproperties;
-    @Resource
     private MinIOConfigProperties minIOConfigProperties;
+    @Resource
+    private GenerateSystemMessage generateSystemMessage;
 
     /**
      * 热数据预加载消息列表，当前限额100条
@@ -106,8 +105,7 @@ public class MessageServiceImpl implements MessageService {
         List<message> messageList = messageMapper.pullMessageList(conversationId, maxMessageId);
 
         // 转换为消息VO列表
-        List<MessageVO> messageVOList = messageList.stream()
-                .map(message -> BeanUtil.copyProperties(message, MessageVO.class)).collect(Collectors.toList());
+        List<MessageVO> messageVOList = messageList.stream().map(message -> BeanUtil.copyProperties(message, MessageVO.class)).collect(Collectors.toList());
 
         log.info("从数据库中查询到的消息列表为：{}", messageVOList);
 
@@ -124,7 +122,8 @@ public class MessageServiceImpl implements MessageService {
         // 重置发送时间，让数据库可以自动填充
         messageDTO.setSendTime(null);
         String conversationId = messageDTO.getConversationId();
-
+        // 文本消息直接是发送成功的状态
+        messageDTO.setSendStatus(1);
         Integer msgType = messageDTO.getMsgType();
 
         if (msgType != 1) {
@@ -132,6 +131,8 @@ public class MessageServiceImpl implements MessageService {
             String bucketName = minIOFileStorgeUtil.getBucketName(msgType);
             String remotePath = messageDTO.getRemotePath();
             messageDTO.setBucket(bucketName);
+            // 文件还是发送中的状态
+            messageDTO.setSendStatus(0);
             String minioRemoteUrl = minIOConfigProperties.getEndpoint() + "/" + bucketName + "/" + remotePath;
             messageDTO.setRemoteUrl(minioRemoteUrl);
         }
@@ -147,8 +148,7 @@ public class MessageServiceImpl implements MessageService {
             // 发送的会话是群聊会话，获得所有的群成员
             List<String> receiverIds = groupConversationMapper.selectGroupNumber(conversationId);
             // 根据群成员id修改对方的会话状态
-            conversationMapper.updateGroupConversationStatus(conversationId,
-                    messageDTO.getContent(), sendTime, receiverIds);
+            conversationMapper.updateGroupConversationStatus(conversationId, messageDTO.getContent(), sendTime, receiverIds);
         } else {
             // 发送的会话是私聊会话，获得对方的id
             String receiverId = messageDTO.getReceiverId();
@@ -188,6 +188,24 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void updateSendStatus(String fileId, Integer sendStatus) {
         messageMapper.updateSendStatus(fileId, sendStatus);
+    }
+
+    @Override
+    public SystemMessageVO recallMessage(SystemMessageDTO systemMessageDTO) {
+        Integer subType = systemMessageDTO.getSubType();
+        Long userId = UserHolder.getUser().getId();
+        Long senderId = systemMessageDTO.getSenderId();
+        Long receiverId = Long.valueOf(systemMessageDTO.getReceiverId());
+        // 当前用户的撤回消息的内容
+        String ownContent = generateSystemMessage.generateContent(subType, senderId, userId);
+        // 对方显示的撤回消息的内容
+        String targetContent = generateSystemMessage.generateContent(subType, senderId, receiverId);
+
+        // 插入消息表中
+
+        // 将该消息标记为撤回消息
+
+        return null;
     }
 
     @Override
@@ -271,6 +289,5 @@ public class MessageServiceImpl implements MessageService {
         minIOFileStorgeUtil.mergeFileChunks(minioFilePath, minioFileChunkPath, chunkCount, fileType);
         // 清除分块文件
         minIOFileStorgeUtil.clearChunkFlies(minioFileChunkPath, chunkCount, fileType);
-        // 合并成功之后将文件信息存入数据库中
     }
 }

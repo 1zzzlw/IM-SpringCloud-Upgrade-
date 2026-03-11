@@ -3,7 +3,9 @@ package com.zzzlew.server;
 import com.zzzlew.pojo.dto.message.FileChunkInfoDTO;
 import com.zzzlew.pojo.dto.message.FileMessageDTO;
 import com.zzzlew.pojo.dto.message.MessageDTO;
+import com.zzzlew.pojo.dto.message.SystemMessageDTO;
 import com.zzzlew.pojo.vo.message.MessageVO;
+import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -81,5 +83,14 @@ public interface MessageService {
      * @param sendStatus 发送状态
      */
     void updateSendStatus(String fileId, Integer sendStatus);
+
+
+    /**
+     * 撤回消息
+     *
+     * @param systemMessageDTO 撤回消息dto
+     * @return 撤回消息vo
+     */
+    SystemMessageVO recallMessage(SystemMessageDTO systemMessageDTO);
 
 }

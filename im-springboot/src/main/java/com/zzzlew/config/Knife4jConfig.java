@@ -26,7 +26,7 @@ public class Knife4jConfig {
     // 指定扫描 controller 包
     @Bean
     public GroupedOpenApi defaultGroup() {
-        return GroupedOpenApi.builder().group("default").packagesToScan("com.zzzlew.zzzimserver.controller").build();
+        return GroupedOpenApi.builder().group("default").packagesToScan("com.zzzlew.controller").build();
     }
 
 }

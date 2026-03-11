@@ -53,6 +53,11 @@ public class PrivateChatRequestDTO extends Message implements Serializable {
     private Integer sendStatus;
 
     /**
+     * 读取状态 0：未读 1：已读
+     */
+    private Integer readStatus;
+
+    /**
      * 发送时间
      */
     private LocalDateTime sendTime;

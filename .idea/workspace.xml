@@ -4,34 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="ai远程头像的bug解决">
-      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/favorites/FavoritesVO.java" afterDir="false" />
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="笔记系统的完善">
+      <change afterPath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/enums/SystemMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/utils/GenerateSystemMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/SystemMessageRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/SystemMessageResponseVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/SystemMessageHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/dto/message/SystemMessageDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/message/SystemMessageVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/FavoritesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/FavoritesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/HeartRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/HeartRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/PrivateChatRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/PrivateChatRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/GroupChatResponseVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/GroupChatResponseVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/request/HeartRequestDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/request/HeartRequestDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/request/PrivateChatRequestDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/domain/request/PrivateChatRequestDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/MessageDispatcherHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/MessageDispatcherHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/Knife4jConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/Knife4jConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/MessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/FavoritesMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/FavoritesMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/MessageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/MessageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/dto/favorites/FavoritesDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/dto/favorites/FavoritesDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/dto/message/MessageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/dto/message/MessageDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/UserAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/UserAuth.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/message/MessageVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/message/MessageVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/FavoritesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/FavoritesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/user/UserInfoVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/user/UserInfoVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/MessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/FavoritesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/FavoritesServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/MessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/MessageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/FavoritesMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/FavoritesMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/MessageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/MessageMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/FavoritesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/FavoritesController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/Knife4jConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/Knife4jConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/controller/MessageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/FavoritesMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/FavoritesMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/MessageMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/MessageMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/dto/favorites/FavoritesDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/dto/favorites/FavoritesDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/mapper/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/dto/message/MessageDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/dto/message/MessageDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/entity/UserAuth.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/entity/UserAuth.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/message/MessageVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/message/MessageVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/FavoritesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/FavoritesService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/user/UserInfoVO$UserInfoVOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/user/UserInfoVO$UserInfoVOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/user/UserInfoVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/pojo/vo/user/UserInfoVO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/MessageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/MessageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/ConversationImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/ConversationImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/FavoritesServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/FavoritesServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/MessageServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/MessageServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/mapper/FavoritesMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/mapper/FavoritesMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/mapper/MessageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/mapper/MessageMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/mapper/UserMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +57,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -219,8 +235,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
         <item itemvalue="Spring Boot.ZzzImServerApplication" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
         <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
         <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
         <item itemvalue="Application.ZzzImServerApplication" />
@@ -262,7 +278,10 @@
       <workItem from="1772942179456" duration="12656000" />
       <workItem from="1772989352923" duration="809000" />
       <workItem from="1773044442479" duration="5433000" />
-      <workItem from="1773069178698" duration="1674000" />
+      <workItem from="1773069178698" duration="5288000" />
+      <workItem from="1773127277875" duration="17679000" />
+      <workItem from="1773197372306" duration="5294000" />
+      <workItem from="1773216923880" duration="1715000" />
     </task>
     <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
       <option name="closed" value="true" />
@@ -336,7 +355,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772990153336</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="笔记系统的完善">
+      <option name="closed" value="true" />
+      <created>1773071491414</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1773071491414</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,6 +378,7 @@
     <MESSAGE value="加了一些小功能，尝试了一些Tools方法，但是ai的回答还是不好，感觉是模型的问题，但是我还在尝试找代码的优化地方" />
     <MESSAGE value="增加了笔记系统的内容，后续完善收藏功能" />
     <MESSAGE value="ai远程头像的bug解决" />
-    <option name="LAST_COMMIT_MESSAGE" value="ai远程头像的bug解决" />
+    <MESSAGE value="笔记系统的完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="笔记系统的完善" />
   </component>
 </project>

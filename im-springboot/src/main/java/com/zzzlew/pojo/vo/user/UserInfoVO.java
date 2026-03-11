@@ -22,6 +22,8 @@ public class UserInfoVO implements Serializable {
 
     private String avatar;
 
+    private String phone;
+
     // 是否在线 0-不在线 1-在线
     private Integer onLine;
 }

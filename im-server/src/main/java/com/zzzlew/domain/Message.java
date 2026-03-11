@@ -43,6 +43,9 @@ public abstract class Message implements Serializable {
 
     public static final int OnlineStatusListResponseVO = 10;
 
+    public static final int SystemMessageRequestDTO = 11;
+    public static final int SystemMessageResponseVO = 12;
+
     /**
      * 根据消息类型字节，获得对应的消息 class
      *
@@ -65,5 +68,7 @@ public abstract class Message implements Serializable {
         messageClasses.put(GroupApplyResponseVO, GroupApplyResponseVO.class);
         messageClasses.put(LoginSuccessResponseVO, LoginSuccessResponseVO.class);
         messageClasses.put(OnlineStatusListResponseVO, OnlineStatusListResponseVO.class);
+        messageClasses.put(SystemMessageRequestDTO, SystemMessageRequestDTO.class);
+        messageClasses.put(SystemMessageResponseVO, SystemMessageResponseVO.class);
     }
 }

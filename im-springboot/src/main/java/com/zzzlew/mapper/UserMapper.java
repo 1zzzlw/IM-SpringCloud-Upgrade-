@@ -1,6 +1,7 @@
 package com.zzzlew.mapper;
 
 import com.zzzlew.pojo.entity.UserAuth;
+import com.zzzlew.pojo.entity.UserInfo;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public interface UserMapper {
      * @param account 账号
      * @return 用户实体类
      */
-    @Select("select * from user_auth where account = #{account}")
-    UserAuth getByAccount(String account);
+    @Select("select * from user_info where account = #{account}")
+    UserInfo getByAccount(String account);
 
     /**
      * 插入用户

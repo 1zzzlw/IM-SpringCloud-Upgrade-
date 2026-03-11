@@ -79,15 +79,15 @@ public class UserServiceImpl implements UserService {
         String password = userLoginDTO.getPassword();
         String verifyCode = userLoginDTO.getVerifyCode();
 
-        UserAuth userAuth = userMapper.getByAccount(account);
+        UserInfo userInfo = userMapper.getByAccount(account);
 
-        if (userAuth == null) {
+        if (userInfo == null) {
             // 账号不存在
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
 
         // TODO 密码解密处理
-        if (!password.equals(userAuth.getPassword())) {
+        if (!password.equals(userInfo.getPassword())) {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
 
@@ -98,8 +98,8 @@ public class UserServiceImpl implements UserService {
         }
 
         // 构建用户信息对象
-        UserInfoVO userInfoVO = UserInfoVO.builder().id(userAuth.getUserId()).username(userAuth.getUsername())
-                .avatar(userAuth.getAvatar()).onLine(1).account(userAuth.getAccount()).build();
+        UserInfoVO userInfoVO = UserInfoVO.builder().id(userInfo.getId()).username(userInfo.getUsername())
+                .avatar(userInfo.getAvatar()).onLine(1).account(userInfo.getAccount()).phone(userInfo.getPhone()).build();
 
         // 生成并存储token
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         response.setHeader("Authorization", "Bearer " + tokenResult.getAccessToken());
         response.setHeader("refreshtoken", tokenResult.getRefreshToken());
 
-        Long userId = userAuth.getUserId();
+        Long userId = userInfo.getId();
         storeFriendListId(userId);
 
         return userInfoVO;
@@ -181,6 +181,7 @@ public class UserServiceImpl implements UserService {
         int randomNum = new Random().nextInt(90) + 10;
         String account = timestamp + randomStr + randomNum;
 
+        // 随机生成账号
         userRegisterDTO.setAccount(account);
 
         UserInfo userInfo = BeanUtil.copyProperties(userRegisterDTO, UserInfo.class);
@@ -205,6 +206,7 @@ public class UserServiceImpl implements UserService {
 
         UserInfoVO userInfoVO = BeanUtil.copyProperties(userRegisterDTO, UserInfoVO.class);
         UserAuth userAuth = BeanUtil.copyProperties(userRegisterDTO, UserAuth.class);
+
         userInfoVO.setId(userId);
         userInfoVO.setOnLine(1);
         userInfoVO.setAvatar(avatar);
@@ -272,7 +274,7 @@ public class UserServiceImpl implements UserService {
 
         // 构建用户信息对象
         UserInfoVO userInfoVO = UserInfoVO.builder().id(userAuth.getUserId()).username(userAuth.getUsername())
-                .avatar(userAuth.getAvatar()).onLine(1).account(userAuth.getAccount()).build();
+                .avatar(userAuth.getAvatar()).onLine(1).account(userAuth.getAccount()).phone(userAuth.getPhone()).build();
 
         // 校验成功之后，重新生成一个短期token
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
@@ -359,6 +361,7 @@ public class UserServiceImpl implements UserService {
         // 设置有效期
         stringRedisTemplate.expire(userKey, LOGIN_USER_TOKEN_LIST_KEY_TTL, TimeUnit.MINUTES);
 
+        log.info("存储用户信息：{}", userInfoVO);
         // 将用户信息转为map集合
         Map<String, Object> map = BeanUtil.beanToMap(userInfoVO, new HashMap<>(), CopyOptions.create()
                 .setIgnoreNullValue(true).setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));

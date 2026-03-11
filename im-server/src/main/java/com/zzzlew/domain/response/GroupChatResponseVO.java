@@ -32,7 +32,7 @@ public class GroupChatResponseVO extends Message implements Serializable {
     private Long senderId;
 
     /**
-     * 接收者ID
+     * 群聊接收id为 'g_群聊ID'
      */
     private String receiverId;
 

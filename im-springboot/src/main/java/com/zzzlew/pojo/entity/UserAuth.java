@@ -22,7 +22,7 @@ public class UserAuth implements Serializable {
 
     private String account;
 
-    private String password;
+    private String phone;
 
     private String avatar;
 

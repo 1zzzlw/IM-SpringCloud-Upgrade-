@@ -3,8 +3,10 @@ package com.zzzlew.controller;
 import com.zzzlew.pojo.dto.message.FileChunkInfoDTO;
 import com.zzzlew.pojo.dto.message.FileMessageDTO;
 import com.zzzlew.pojo.dto.message.MessageDTO;
+import com.zzzlew.pojo.dto.message.SystemMessageDTO;
 import com.zzzlew.pojo.vo.message.FileMessageVO;
 import com.zzzlew.pojo.vo.message.MessageVO;
+import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import com.zzzlew.result.Result;
 import com.zzzlew.server.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -148,4 +150,11 @@ public class MessageController {
         return Result.success();
     }
 
+    @Operation(summary = "撤回消息")
+    @PostMapping("/recallMessage")
+    public Result<SystemMessageVO> recallMessage(@RequestBody SystemMessageDTO systemMessageDTO) {
+        log.info("发送系统消息：{}", systemMessageDTO);
+        SystemMessageVO systemMessageVO = messageService.recallMessage(systemMessageDTO);
+        return Result.success(systemMessageVO);
+    }
 }

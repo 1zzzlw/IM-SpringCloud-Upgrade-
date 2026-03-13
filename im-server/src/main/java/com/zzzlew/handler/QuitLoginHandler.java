@@ -2,18 +2,22 @@ package com.zzzlew.handler;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.zzzlew.domain.UserBaseDTO;
+import com.zzzlew.domain.response.QuitLoginResponseVO;
+import com.zzzlew.result.MessageResult;
 import com.zzzlew.utils.ChannelManageUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RTopic;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-import static com.zzzlew.constant.RedisConstant.USER_OFFLINE_INFO_KEY;
-import static com.zzzlew.constant.RedisConstant.USER_ONLINE_STATUS_KEY;
+import static com.zzzlew.constant.RedisConstant.*;
 
 
 /**
@@ -26,11 +30,13 @@ import static com.zzzlew.constant.RedisConstant.USER_ONLINE_STATUS_KEY;
 @ChannelHandler.Sharable
 public class QuitLoginHandler extends ChannelInboundHandlerAdapter {
 
+    private RedissonClient redissonClient;
     private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
-        if (this.stringRedisTemplate == null) {
+        if (this.redissonClient == null && this.stringRedisTemplate == null) {
+            this.redissonClient = SpringUtil.getBean(RedissonClient.class);
             this.stringRedisTemplate = SpringUtil.getBean(StringRedisTemplate.class);
         }
     }
@@ -80,9 +86,22 @@ public class QuitLoginHandler extends ChannelInboundHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         // 无论客户端何种方式断开连接，都会执行这里的离线逻辑
         log.info("与客户端 {} 断开连接，通道关闭！", ctx.channel().remoteAddress());
+        // 推送离线消息给他的好友
         // 获得用户的基础信息
         UserBaseDTO userBaseDTO = ChannelManageUtil.getUser(ctx.channel());
-        log.info("用户 {} 离线！", userBaseDTO.getUsername());
+        log.info("用户 {} 离线！", userBaseDTO.getId());
+        String key = USER_FRIEND_LIST_KEY + userBaseDTO.getId();
+        // 1 从redis中获取当前用户的好友列表id
+        List<Long> friendIds =
+                stringRedisTemplate.opsForSet().members(key).stream().map(s -> Long.valueOf(s)).toList();
+
+        QuitLoginResponseVO quitLoginResponseVO = new QuitLoginResponseVO();
+        quitLoginResponseVO.setUserId(userBaseDTO.getId());
+
+        RTopic topic = redissonClient.getTopic(SYSTEM_MESSAGE_BROADCAST);
+        MessageResult result = MessageResult.multiple(quitLoginResponseVO, friendIds);
+        topic.publish(result);
+
         // 将离线信息存储在redis中
         LocalDateTime offlineTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

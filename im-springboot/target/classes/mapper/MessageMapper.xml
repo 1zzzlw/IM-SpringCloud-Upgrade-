@@ -56,4 +56,11 @@
         where file_id = #{fileId}
     </update>
 
+    <delete id="clearHistoryMessage">
+        delete
+        from message
+        where conversation_id = #{conversationId}
+          and sender_id = #{senderId}
+    </delete>
+
 </mapper>

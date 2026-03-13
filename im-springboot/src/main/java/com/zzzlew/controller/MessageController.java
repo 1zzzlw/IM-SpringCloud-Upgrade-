@@ -142,7 +142,7 @@ public class MessageController {
      * @return 响应结果
      */
     @Operation(summary = "更新文件消息发送状态")
-    @PostMapping("/updateFileSendStatus")
+    @PutMapping("/updateFileSendStatus")
     public Result<Object> updateFileSendStatus(@RequestParam("fileId") String fileId,
                                                @RequestParam("sendStatus") Integer sendStatus) {
         log.info("更新消息发送状态：{}, {}", fileId, sendStatus);
@@ -150,6 +150,7 @@ public class MessageController {
         return Result.success();
     }
 
+    // TODO 撤回消息的设计还没思路
     @Operation(summary = "撤回消息")
     @PostMapping("/recallMessage")
     public Result<SystemMessageVO> recallMessage(@RequestBody SystemMessageDTO systemMessageDTO) {
@@ -157,4 +158,14 @@ public class MessageController {
         SystemMessageVO systemMessageVO = messageService.recallMessage(systemMessageDTO);
         return Result.success(systemMessageVO);
     }
+
+    // TODO 清空历史消息应该只清空本地的就可以了，这个请求感觉没什么用
+    @Operation(summary = "清空历史消息")
+    @DeleteMapping("/clearHistoryMessage/{conversationId}")
+    public Result<Object> clearHistoryMessage(@PathVariable String conversationId) {
+        log.info("清空历史消息");
+        messageService.clearHistoryMessage(conversationId);
+        return Result.success();
+    }
+
 }

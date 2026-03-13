@@ -93,4 +93,9 @@ public interface MessageService {
      */
     SystemMessageVO recallMessage(SystemMessageDTO systemMessageDTO);
 
+    /**
+     * 清空历史消息
+     */
+    void clearHistoryMessage(String conversationId);
+
 }

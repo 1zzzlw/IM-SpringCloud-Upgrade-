@@ -72,6 +72,11 @@ public class PrivateChatResponseVO extends Message implements Serializable {
     private Long quoteMsgId;
 
     /**
+     * 文件id
+     */
+    private String fileId;
+
+    /**
      * 文件名
      */
     private String fileName;

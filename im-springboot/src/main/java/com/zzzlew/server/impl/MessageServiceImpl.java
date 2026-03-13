@@ -290,4 +290,10 @@ public class MessageServiceImpl implements MessageService {
         // 清除分块文件
         minIOFileStorgeUtil.clearChunkFlies(minioFileChunkPath, chunkCount, fileType);
     }
+
+    @Override
+    public void clearHistoryMessage(String conversationId) {
+        Long senderId = UserHolder.getUser().getId();
+        messageMapper.clearHistoryMessage(senderId, conversationId);
+    }
 }

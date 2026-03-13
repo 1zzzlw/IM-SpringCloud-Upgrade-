@@ -5,26 +5,24 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @Auther: zzzlew
- * @Date: 2026/2/12 - 02 - 12 - 23:30
+ * @Date: 2026/3/13 - 03 - 13 - 16:22
  * @Description: com.zzzlew.domain.response
  * @version: 1.0
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class OnlineStatusListResponseVO extends Message implements Serializable {
+public class QuitLoginResponseVO extends Message implements Serializable {
 
     /**
-     * 在线好友id集合
-     *
+     * 用户id
      */
-    private List<String> friendIdList;
+    private Long userId;
 
     @Override
     public int getMessageType() {
-        return OnlineStatusListResponseVO;
+        return QuitLoginResponseVO;
     }
 }

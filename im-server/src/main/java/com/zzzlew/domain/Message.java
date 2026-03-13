@@ -42,9 +42,10 @@ public abstract class Message implements Serializable {
     public static final int LoginSuccessResponseVO = 9;
 
     public static final int OnlineStatusListResponseVO = 10;
+    public static final int QuitLoginResponseVO = 11;
 
-    public static final int SystemMessageRequestDTO = 11;
-    public static final int SystemMessageResponseVO = 12;
+    public static final int SystemMessageRequestDTO = 12;
+    public static final int SystemMessageResponseVO = 13;
 
     /**
      * 根据消息类型字节，获得对应的消息 class

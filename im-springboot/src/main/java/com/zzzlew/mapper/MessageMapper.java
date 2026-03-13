@@ -56,4 +56,12 @@ public interface MessageMapper {
      */
     void updateSendStatus(String fileId, Integer sendStatus);
 
+    /**
+     * 清空历史消息
+     *
+     * @param senderId           发送者id
+     * @param conversationId 会话id
+     */
+    void clearHistoryMessage(Long senderId, String conversationId);
+
 }

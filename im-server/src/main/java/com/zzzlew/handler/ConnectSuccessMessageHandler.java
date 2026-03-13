@@ -61,7 +61,6 @@ public class ConnectSuccessMessageHandler extends ChannelInboundHandlerAdapter {
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             log.info("ws协议正式搭建完成，通道成功开启，客户端 {} 握手完成！", ctx.channel().remoteAddress());
-            // TODO 这里的操作基本上是操作的redis，以后的优化需要在把这里的操作通过Dubbo通信调用websocket服务来分离Netty通信层和springboot业务层
             // 通知其他用户当前用户上线
             UserBaseDTO userInfo = ChannelManageUtil.getUser(ctx.channel());
             Long userId = userInfo.getId();
@@ -69,17 +68,22 @@ public class ConnectSuccessMessageHandler extends ChannelInboundHandlerAdapter {
             // 1 从redis中获取当前用户的好友列表id
             List<Long> friendIds =
                     stringRedisTemplate.opsForSet().members(key).stream().map(s -> Long.valueOf(s)).toList();
+
             LoginSuccessResponseVO loginSuccessResponseVO = new LoginSuccessResponseVO();
             loginSuccessResponseVO.setUserId(userId);
             loginSuccessResponseVO.setAvatar(userInfo.getAvatar());
             loginSuccessResponseVO.setName(userInfo.getUsername());
+
             RTopic topic = redissonClient.getTopic(SYSTEM_MESSAGE_BROADCAST);
             MessageResult result = MessageResult.multiple(loginSuccessResponseVO, friendIds);
             topic.publish(result);
+
             String onlineStatusKey = RedisConstant.USER_ONLINE_STATUS_KEY;
             List<String> onlineFriends = stringRedisTemplate.opsForSet()
                     .intersect(onlineStatusKey, key).stream().toList();
             log.info("在线用户id集合: {}", onlineFriends);
+
+            // 推送当前用户的好友在线状态集合
             OnlineStatusListResponseVO onlineStatusListResponseVO = new OnlineStatusListResponseVO();
             onlineStatusListResponseVO.setFriendIdList(onlineFriends);
             ctx.channel().writeAndFlush(onlineStatusListResponseVO);

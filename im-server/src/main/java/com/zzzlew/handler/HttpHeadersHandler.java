@@ -27,7 +27,6 @@ import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_KEY;
 @ChannelHandler.Sharable
 public class HttpHeadersHandler extends ChannelInboundHandlerAdapter {
 
-    // TODO 以后需要通过Dubbo通信调用websocket服务来分离Netty通信层和springboot业务层
     private StringRedisTemplate stringRedisTemplate;
 
     @Override

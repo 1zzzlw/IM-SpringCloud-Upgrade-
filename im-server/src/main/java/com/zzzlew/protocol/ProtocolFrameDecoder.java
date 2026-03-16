@@ -11,6 +11,13 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 public class ProtocolFrameDecoder extends LengthFieldBasedFrameDecoder {
 
     public ProtocolFrameDecoder() {
+        /**
+         * maxFrameLength 允许解码的「最大帧长度」，单条消息的最大大小
+         * lengthFieldOffset 「长度字段」在整个报文中的起始偏移量，也就是说自定义解码器协议的长度和正文的距离
+         * lengthFieldLength 长度字段本身占用的字节数，4个字节存储一个数字，用来告诉解码器后面正文部分的长度大小
+         * LengthAdjustment 长度字段的值和「实际整帧长度」的差值补偿
+         * initialBytesToStrip 解码后「要跳过 / 剥离的字节数」
+         * */
         this(128 * 1024, 12, 4, 0, 0);
     }
 

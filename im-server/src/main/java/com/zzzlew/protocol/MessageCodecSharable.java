@@ -42,7 +42,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         out.writeByte(0xff);
         // 6. 获取内容中的字节数组，调用自定义序列化类中的 serialize 方法，已经在枚举中实现
         byte[] bytes = algorithm.serialize(message);
-        // 7. 将内容长度写入 4个字节
+        // 7. 将内容长度写入 4个字节，使用Int类型，因为Int类型正好是四个字节
         out.writeInt(bytes.length);
         // 8. 将内容写入 ByteBuf
         out.writeBytes(bytes);

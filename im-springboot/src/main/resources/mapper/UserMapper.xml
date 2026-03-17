@@ -4,8 +4,8 @@
 <mapper namespace="com.zzzlew.mapper.UserMapper">
 
     <insert id="insertUserAuth" useGeneratedKeys="true" keyProperty="id">
-        insert into user_auth (user_id, username, account, phone, avatar)
-        values (#{userId}, #{username}, #{account}, #{phone}, #{avatar})
+        insert into user_auth (user_id, username, account, phone, avatar, gender)
+        values (#{userId}, #{username}, #{account}, #{phone}, #{avatar}, #{gender})
     </insert>
 
     <select id="selectUserAuthListByUserIdList"
@@ -18,7 +18,7 @@
 
     <select id="selectUserInfoById" resultType="com.zzzlew.pojo.entity.UserAuth"
             parameterType="java.lang.Long">
-        select user_id, username, avatar, account, phone
+        select user_id, username, avatar, account, phone, gender
         from user_auth
         where user_id = #{userId}
     </select>

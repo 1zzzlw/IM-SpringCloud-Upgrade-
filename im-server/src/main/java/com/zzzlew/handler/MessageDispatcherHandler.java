@@ -51,9 +51,10 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
         // 注册消息类型与对应的 Handler
         handlerMap.put(Message.PrivateChatRequestDTO, new PrivateChatHandler());
         handlerMap.put(Message.GroupChatRequestDTO, new GroupChatHandler());
-        handlerMap.put(Message.ApplyRequestDTO, new ApplySendHandler());
+        handlerMap.put(Message.FriendApplyRequestDTO, new FriendApplySendHandler());
         handlerMap.put(Message.GroupApplyRequestDTO, new GroupApplySendHandler());
         handlerMap.put(Message.SystemMessageRequestDTO, new SystemMessageHandler());
+        handlerMap.put(Message.FriendApplyDealRequestDTO, new FriendApplyDealHandler());
     }
 
     @Override

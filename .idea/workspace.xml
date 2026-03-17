@@ -4,15 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="">
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="后端没有怎么补充新的内容，最近在补基础，后面项目还会优化和完善。后续的方向是，MQ的补充，大概就是异步写入数据库存储消息的使用了，然后优化MQ的代码熟悉一下。然后就是系统消息的逻辑再想想吧，还有就是WS消息的完善，对应前端一起。文件断点续传的代码还不完整。然后是redis，再想想还有没有别的地方可以用到redis。加上lua脚本，Redisson的广播，想到好的优化手段就用上">
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/FriendApplyDealRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/GroupApplyDealRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/FriendApplyDealResponseVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/GroupApplyDealResponseVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/FriendApplyDealHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/GroupApplyDealHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/HttpHeadersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/HttpHeadersHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/protocol/MessageCodecSharable.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/protocol/MessageCodecSharable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/protocol/ProtocolFrameDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/protocol/ProtocolFrameDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/MinIOConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/MinIOConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/MinioBucketInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/config/MinioBucketInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/MinIOConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/MinIOConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/MinioBucketInit.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/config/MinioBucketInit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/ApplyRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/request/FriendApplyRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/ApplyResponseVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/domain/response/FriendApplyResponseVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/MessageDispatcherHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/ApplySendHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/handler/messageHandler/FriendApplySendHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/HttpHeadersHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/handler/HttpHeadersHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/protocol/ProtocolFrameDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/protocol/ProtocolFrameDecoder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/UserAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/entity/UserAuth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/user/UserInfoVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/pojo/vo/user/UserInfoVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,38 +73,38 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ZzzImServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.IMNetyApplication(8000).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.IMNetyApplication(8001).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.IMNetyApplication(8002).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.IMNetyApplication(8082).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.IMNetyApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ZzzImServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/JavaProject/IM-SpringCloud/im-server/src/main/resources&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ZzzImServerApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.IMNetyApplication(8000).executor": "Run",
+    "Spring Boot.IMNetyApplication(8001).executor": "Run",
+    "Spring Boot.IMNetyApplication(8002).executor": "Run",
+    "Spring Boot.IMNetyApplication(8082).executor": "Run",
+    "Spring Boot.IMNetyApplication.executor": "Run",
+    "Spring Boot.ZzzImServerApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/JavaProject/IM-SpringCloud/im-server/src/main/resources",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "通义灵码",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\JavaProject\IM-SpringCloud\im-server\src\main\resources" />
@@ -202,8 +212,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.ZzzImServerApplication" />
         <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
+        <item itemvalue="Spring Boot.ZzzImServerApplication" />
         <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
         <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
         <item itemvalue="Application.ZzzImServerApplication" />
@@ -261,7 +271,8 @@
       <workItem from="1773507208004" duration="2280000" />
       <workItem from="1773549034185" duration="2420000" />
       <workItem from="1773556411473" duration="21964000" />
-      <workItem from="1773671304586" duration="6185000" />
+      <workItem from="1773671304586" duration="6388000" />
+      <workItem from="1773712272834" duration="13863000" />
     </task>
     <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
       <option name="closed" value="true" />
@@ -359,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773391153081</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="后端没有怎么补充新的内容，最近在补基础，后面项目还会优化和完善。后续的方向是，MQ的补充，大概就是异步写入数据库存储消息的使用了，然后优化MQ的代码熟悉一下。然后就是系统消息的逻辑再想想吧，还有就是WS消息的完善，对应前端一起。文件断点续传的代码还不完整。然后是redis，再想想还有没有别的地方可以用到redis。加上lua脚本，Redisson的广播，想到好的优化手段就用上">
+      <option name="closed" value="true" />
+      <created>1773678545716</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1773678545716</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,6 +396,11 @@
     <MESSAGE value="笔记系统的完善" />
     <MESSAGE value="我写了写撤回的逻辑，这个算是系统消息吧，系统消息的设计把我难住了，我很想设计一个不麻烦的，但是好像没什么很好的办法。我想暂时搁置一下了，我准备优化项目了，边复习springboot的基础边优化项目。我感觉我的项目还不是很规范" />
     <MESSAGE value="系统消息的设计还是没有思路，想先放一放了，修改了一个bug，关于文件发送的bug，这个主要是前端的修改，后端就修改了一下ws的返回包装类，少了数据。然后是退出的ws消息推送。全局异常处理类" />
-    <option name="LAST_COMMIT_MESSAGE" value="系统消息的设计还是没有思路，想先放一放了，修改了一个bug，关于文件发送的bug，这个主要是前端的修改，后端就修改了一下ws的返回包装类，少了数据。然后是退出的ws消息推送。全局异常处理类" />
+    <MESSAGE value="后端没有怎么补充新的内容，最近在补基础，后面项目还会优化和完善。后续的方向是，MQ的补充，大概就是异步写入数据库存储消息的使用了，然后优化MQ的代码熟悉一下。然后就是系统消息的逻辑再想想吧，还有就是WS消息的完善，对应前端一起。文件断点续传的代码还不完整。然后是redis，再想想还有没有别的地方可以用到redis。加上lua脚本，Redisson的广播，想到好的优化手段就用上" />
+    <option name="LAST_COMMIT_MESSAGE" value="后端没有怎么补充新的内容，最近在补基础，后面项目还会优化和完善。后续的方向是，MQ的补充，大概就是异步写入数据库存储消息的使用了，然后优化MQ的代码熟悉一下。然后就是系统消息的逻辑再想想吧，还有就是WS消息的完善，对应前端一起。文件断点续传的代码还不完整。然后是redis，再想想还有没有别的地方可以用到redis。加上lua脚本，Redisson的广播，想到好的优化手段就用上" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

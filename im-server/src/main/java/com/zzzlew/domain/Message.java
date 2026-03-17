@@ -33,8 +33,8 @@ public abstract class Message implements Serializable {
     public static final int GroupChatRequestDTO = 3;
     public static final int GroupChatResponseVO = 4;
 
-    public static final int ApplyRequestDTO = 5;
-    public static final int ApplyResponseVO = 6;
+    public static final int FriendApplyRequestDTO = 5;
+    public static final int FriendApplyResponseVO = 6;
 
     public static final int GroupApplyRequestDTO = 7;
     public static final int GroupApplyResponseVO = 8;
@@ -46,6 +46,9 @@ public abstract class Message implements Serializable {
 
     public static final int SystemMessageRequestDTO = 12;
     public static final int SystemMessageResponseVO = 13;
+
+    public static final int FriendApplyDealRequestDTO = 14;
+    public static final int FriendApplyDealResponseVO = 15;
 
     /**
      * 根据消息类型字节，获得对应的消息 class
@@ -63,13 +66,15 @@ public abstract class Message implements Serializable {
         messageClasses.put(PrivateChatResponseVO, PrivateChatResponseVO.class);
         messageClasses.put(GroupChatRequestDTO, GroupChatRequestDTO.class);
         messageClasses.put(GroupChatResponseVO, GroupChatResponseVO.class);
-        messageClasses.put(ApplyRequestDTO, ApplyRequestDTO.class);
-        messageClasses.put(ApplyResponseVO, ApplyResponseVO.class);
+        messageClasses.put(FriendApplyRequestDTO, FriendApplyRequestDTO.class);
+        messageClasses.put(FriendApplyResponseVO, FriendApplyResponseVO.class);
         messageClasses.put(GroupApplyRequestDTO, GroupApplyRequestDTO.class);
         messageClasses.put(GroupApplyResponseVO, GroupApplyResponseVO.class);
         messageClasses.put(LoginSuccessResponseVO, LoginSuccessResponseVO.class);
         messageClasses.put(OnlineStatusListResponseVO, OnlineStatusListResponseVO.class);
         messageClasses.put(SystemMessageRequestDTO, SystemMessageRequestDTO.class);
         messageClasses.put(SystemMessageResponseVO, SystemMessageResponseVO.class);
+        messageClasses.put(FriendApplyDealRequestDTO, FriendApplyDealRequestDTO.class);
+        messageClasses.put(FriendApplyDealResponseVO, FriendApplyDealResponseVO.class);
     }
 }

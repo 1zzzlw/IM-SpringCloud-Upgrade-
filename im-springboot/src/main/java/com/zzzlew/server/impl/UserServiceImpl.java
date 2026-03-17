@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
         // 构建用户信息对象
         UserInfoVO userInfoVO = UserInfoVO.builder().id(userInfo.getId()).username(userInfo.getUsername())
-                .avatar(userInfo.getAvatar()).onLine(1).account(userInfo.getAccount()).phone(userInfo.getPhone()).build();
+                .avatar(userInfo.getAvatar()).onLine(1).account(userInfo.getAccount()).phone(userInfo.getPhone()).gender(userInfo.getGender()).build();
 
         // 生成并存储token
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
@@ -212,6 +212,7 @@ public class UserServiceImpl implements UserService {
         userInfoVO.setAvatar(avatar);
         userAuth.setUserId(userId);
         userAuth.setAvatar(avatar);
+        userAuth.setGender(userRegisterDTO.getGender());
         userMapper.insertUserAuth(userAuth);
         log.info("主要用户信息：{}", userAuth);
         // 生成并存储用户登录信息在redis中
@@ -274,7 +275,7 @@ public class UserServiceImpl implements UserService {
 
         // 构建用户信息对象
         UserInfoVO userInfoVO = UserInfoVO.builder().id(userAuth.getUserId()).username(userAuth.getUsername())
-                .avatar(userAuth.getAvatar()).onLine(1).account(userAuth.getAccount()).phone(userAuth.getPhone()).build();
+                .avatar(userAuth.getAvatar()).onLine(1).account(userAuth.getAccount()).phone(userAuth.getPhone()).gender(userAuth.getGender()).build();
 
         // 校验成功之后，重新生成一个短期token
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);

@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ApplyResponseVO extends Message implements Serializable {
+public class FriendApplyResponseVO extends Message implements Serializable {
 
     /**
      * 申请表id
@@ -41,6 +41,6 @@ public class ApplyResponseVO extends Message implements Serializable {
 
     @Override
     public int getMessageType() {
-        return ApplyResponseVO;
+        return FriendApplyResponseVO;
     }
 }

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @Slf4j
 @EqualsAndHashCode(callSuper = true)
-public class ApplyRequestDTO extends Message implements Serializable {
+public class FriendApplyRequestDTO extends Message implements Serializable {
 
     private Long applyId;
 
@@ -28,7 +28,7 @@ public class ApplyRequestDTO extends Message implements Serializable {
 
     @Override
     public int getMessageType() {
-        return ApplyRequestDTO;
+        return FriendApplyRequestDTO;
     }
 
 }

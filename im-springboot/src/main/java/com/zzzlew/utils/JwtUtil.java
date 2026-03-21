@@ -29,7 +29,7 @@ public class JwtUtil {
         Date exp = new Date(expirationTime);
 
         JwtBuilder builder = Jwts.builder().setClaims(claims).setExpiration(exp).signWith(signatureAlgorithm,
-            secretKey.getBytes(StandardCharsets.UTF_8));
+                secretKey.getBytes(StandardCharsets.UTF_8));
 
         return builder.compact();
     }
@@ -38,7 +38,7 @@ public class JwtUtil {
     public Claims parseJWT(String secretKey, String token) {
         try {
             Claims claims =
-                Jwts.parser().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token).getBody();
+                    Jwts.parser().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token).getBody();
             return claims;
         } catch (ExpiredJwtException e) {
             log.error("JWT令牌过期");

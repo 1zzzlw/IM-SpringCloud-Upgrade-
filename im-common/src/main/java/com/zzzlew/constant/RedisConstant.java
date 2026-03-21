@@ -14,10 +14,10 @@ public class RedisConstant {
     public static final String LOGIN_CODE_KEY = "login:code:";
     public static final Long LOGIN_CODE_TTL = 2L;
 
-    public static final String LOGIN_USERINFO_KEY = "login:user:Info:";
-    public static final Long LOGIN_USERINFO_KEY_TTL = 36000L;
+    public static final String LOGIN_USERINFO_ACCESSTOKEN_KEY = "login:user:Info:accessToken:";
+    public static final Long LOGIN_USERINFO_ACCESSTOKEN_KEY_TTL = 36000L;
 
-    public static final String LOGIN_USERINFO_REFRESHTOKEN_KEY = "login:user:refreshToken:";
+    public static final String LOGIN_USERINFO_REFRESHTOKEN_KEY = "login:user:Info:refreshToken:";
     public static final Long LOGIN_USERINFO_REFRESHTOKEN_KEY_TTL = 36000L;
 
     public static final String REGISTER_CODE_KEY = "register:code:";

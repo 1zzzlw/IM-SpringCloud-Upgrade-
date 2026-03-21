@@ -16,7 +16,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_KEY_TTL;
+import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_REFRESHTOKEN_KEY_TTL;
 import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_REFRESHTOKEN_KEY;
 
 /**
@@ -58,7 +58,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
         // 将用户信息存储到ThreadLocal中
         UserHolder.save(userBaseDTO);
         // 刷新token在redis中的过期时间
-        stringRedisTemplate.expire(refreshTokenKey, LOGIN_USERINFO_KEY_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(refreshTokenKey, LOGIN_USERINFO_REFRESHTOKEN_KEY_TTL, TimeUnit.MINUTES);
 
         // 没有过期，放行
         return true;

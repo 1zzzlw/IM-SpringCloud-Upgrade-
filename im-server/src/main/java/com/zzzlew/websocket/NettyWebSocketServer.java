@@ -67,7 +67,7 @@ public class NettyWebSocketServer {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
                 // 用于设置 TCP 连接的 半连接队列（backlog）大小
-                .option(ChannelOption.SO_BACKLOG, 128)
+                .option(ChannelOption.SO_BACKLOG, 1024)
                 // 用于设置 TCP 连接的 保活时间（keep-alive），单位为秒
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 // 用于记录 Netty 服务器的日志
@@ -85,7 +85,8 @@ public class NettyWebSocketServer {
                         // 自定义 Http 处理头，用于处理 Http 头信息
                         pipeline.addLast(new HttpHeadersHandler());
                         // 用于处理 WebSocket 协议的握手、升级和关闭，会自动处理 ping/pong 帧
-                        pipeline.addLast(new WebSocketServerProtocolHandler("/ws", null, true, 131072, true, true, 10000L));
+                        pipeline.addLast(new WebSocketServerProtocolHandler("/ws", null, true, 131072, true, true,
+                                30000L));
                         // 用于将 BinaryWebSocketFrame 转换为 ByteBuf ，因为后续的处理器都需要 ByteBuf 类型的消息
                         pipeline.addLast(new BinaryWebSocketFrameToByteBufHandler());
                         // 自定义协议处理，WebSocket 升级完成后使用

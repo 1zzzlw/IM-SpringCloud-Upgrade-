@@ -39,7 +39,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-        throws Exception {
+            throws Exception {
         System.out.println("Interceptor triggered: " + request.getRequestURI());
         // 获取请求头中的短期token
         String token = request.getHeader(jwtproperties.getTokenName());
@@ -58,8 +58,8 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // redis中键的格式为：login:user:Info:token
-        String tokenKey = LOGIN_USERINFO_KEY + token;
+        // redis中键的格式为：login:user:Info:accesstoken:token
+        String tokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + token;
         // 从redis信息中获取用户信息
         Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(tokenKey);
         // 检查用户信息是否为空,如果为空,说明token过期,只做刷新token在redis中的过期时间操作,不做拦截
@@ -73,7 +73,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         // 将用户信息存储到ThreadLocal中
         UserHolder.save(userBaseDTO);
         // 刷新token在redis中的过期时间
-        stringRedisTemplate.expire(tokenKey, LOGIN_USERINFO_KEY_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(tokenKey, LOGIN_USERINFO_ACCESSTOKEN_KEY_TTL, TimeUnit.MINUTES);
 
         // 从UserBaseDTO中获取userId
         Long userId = userBaseDTO.getId();
@@ -86,7 +86,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-        throws Exception {
+            throws Exception {
         // 移除ThreadLocal中的用户信息
         UserHolder.removeUser();
     }

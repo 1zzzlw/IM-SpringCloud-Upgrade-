@@ -14,8 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.Map;
 
-import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_KEY;
-
+import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_ACCESSTOKEN_KEY;
 
 /**
  * @Auther: zzzlew
@@ -51,7 +50,10 @@ public class HttpHeadersHandler extends ChannelInboundHandlerAdapter {
                     return;
                 }
                 log.info("请求路径 {} 中 token 参数值为 {}", uri, token);
-                String tokenKey = LOGIN_USERINFO_KEY + token;
+                // 解析token
+                // Map<Object, Object> userMap =
+
+                String tokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + token;
                 Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(tokenKey);
                 if (userMap.isEmpty()) {
                     log.error("请求路径 {} 中 token 参数值 {} 不存在", uri, token);

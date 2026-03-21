@@ -1,5 +1,6 @@
 package com.zzzlew.pojo.vo.user;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Builder
 @Data
 public class UserInfoVO implements Serializable {
+    @JSONField(format = "string")
     private Long id;
 
     private String username;

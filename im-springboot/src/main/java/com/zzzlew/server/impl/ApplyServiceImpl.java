@@ -88,8 +88,7 @@ public class ApplyServiceImpl implements ApplyService {
 
             // TODO 先添加和好友的会话，后续在添加自动发送消息的功能
 
-            String conversationId = toUserId > fromUserId ? String.format("%d_%d", toUserId, fromUserId)
-                : String.format("%d_%d", fromUserId, toUserId);
+            String conversationId = toUserId > fromUserId ? String.format("%d_%d", toUserId, fromUserId) : String.format("%d_%d", fromUserId, toUserId);
 
             // 插入会话表
             conversationMapper.insertConversation(conversationId, toUserId, fromUserId.toString(), 0);
@@ -107,13 +106,12 @@ public class ApplyServiceImpl implements ApplyService {
     /**
      * 发送群聊申请
      *
-     * @param friendIdList 好友ID列表
+     * @param friendIdList  好友ID列表
      * @param groupApplyDTO 群聊申请信息
      */
     @Transactional
     @Override
-    public ConversationVO createGroupConversation(List<Long> friendIdList, GroupApplyDTO groupApplyDTO,
-                                                  MultipartFile groupAvatarFile) {
+    public ConversationVO createGroupConversation(List<Long> friendIdList, GroupApplyDTO groupApplyDTO, MultipartFile groupAvatarFile) {
         // 生成群聊的唯一id
         long snowflakeId = IdUtil.getSnowflakeNextId();
         String conversationId = "g_" + snowflakeId;
@@ -126,8 +124,7 @@ public class ApplyServiceImpl implements ApplyService {
         // 上传用户头像到minio服务端
         minIOFileStorgeUtil.uploadAvatar(minioGroupAvatarPath, groupAvatarFile);
         // 生成本地存储远程路径
-        String groupAvatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/"
-            + minioGroupAvatarPath;
+        String groupAvatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/" + minioGroupAvatarPath;
 
         groupApplyDTO.setUserAvatar(groupAvatar);
 
@@ -154,8 +151,7 @@ public class ApplyServiceImpl implements ApplyService {
         // 插入会话表
         conversationMapper.insertConversation(conversationId, userId, conversationId, 1);
 
-        ConversationVO conversationVO = ConversationVO.builder().id(conversationId).avatar(groupAvatar)
-            .name(groupApplyDTO.getGroupName()).userId(userId).targetId(conversationId).type(1).build();
+        ConversationVO conversationVO = ConversationVO.builder().id(conversationId).avatar(groupAvatar).name(groupApplyDTO.getGroupName()).userId(userId).targetId(conversationId).type(1).build();
 
         return conversationVO;
     }
@@ -183,8 +179,7 @@ public class ApplyServiceImpl implements ApplyService {
         // 上传用户头像到minio服务端
         minIOFileStorgeUtil.uploadAvatar(minioGroupAvatarPath, groupAvatarBlob);
         // 生成本地存储远程路径
-        String groupAvatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/"
-            + minioGroupAvatarPath;
+        String groupAvatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/" + minioGroupAvatarPath;
         dealGroupDTO.setUserAvatar(groupAvatar);
         // 修改群聊申请状态
         applyMapper.dealGroupApply(dealGroupDTO);

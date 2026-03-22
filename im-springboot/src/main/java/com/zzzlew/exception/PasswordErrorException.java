@@ -6,7 +6,7 @@ package com.zzzlew.exception;
  * @Description: com.zzzlew.zzzimserver.exception
  * @version: 1.0
  */
-public class PasswordErrorException extends BaseException{
+public class PasswordErrorException extends BaseException {
     public PasswordErrorException() {
     }
 

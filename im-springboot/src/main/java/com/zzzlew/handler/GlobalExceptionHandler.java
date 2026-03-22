@@ -27,4 +27,6 @@ public class GlobalExceptionHandler {
         log.error("[系统异常] {}", ex.getMessage());
         return Result.error(ex.getMessage());
     }
+
+
 }

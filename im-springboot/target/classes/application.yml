@@ -62,12 +62,6 @@ springdoc:
     enabled: true # 生成OpenAPI 3.0的JSON数据源
 
 minio:
-  #  endpoint: http://192.168.100.10:9001
-  #  accessKey: minio
-  #  secretKey: minio1234
-  #  endpoint: http://100.112.106.41:9000
-  #  accessKey: minioadmin
-  #  secretKey: minioadmin
   endpoint: http://47.111.22.183:9000
   accessKey: admin
   secretKey: 12345678

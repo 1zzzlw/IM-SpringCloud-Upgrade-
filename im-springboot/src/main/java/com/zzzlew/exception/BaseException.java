@@ -6,11 +6,13 @@ package com.zzzlew.exception;
  * @Description: com.zzzlew.zzzimserver.exception
  * @version: 1.0
  */
+
 /**
  * 业务异常
  */
 public class BaseException extends RuntimeException {
-    public BaseException() {}
+    public BaseException() {
+    }
 
     public BaseException(String msg) {
         super(msg);

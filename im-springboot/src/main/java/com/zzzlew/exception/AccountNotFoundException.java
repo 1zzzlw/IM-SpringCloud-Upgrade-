@@ -6,7 +6,7 @@ package com.zzzlew.exception;
  * @Description: com.zzzlew.zzzimserver.exception
  * @version: 1.0
  */
-public class AccountNotFoundException extends BaseException{
+public class AccountNotFoundException extends BaseException {
     public AccountNotFoundException() {
     }
 

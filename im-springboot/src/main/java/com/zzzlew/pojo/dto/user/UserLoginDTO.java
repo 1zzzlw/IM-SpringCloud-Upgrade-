@@ -1,17 +1,42 @@
 package com.zzzlew.pojo.dto.user;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
 /**
  * 用户登录DTO
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserLoginDTO extends UserBaseDTO implements Serializable {
+public class UserLoginDTO implements Serializable {
 
+    /**
+     * 用户id
+     */
+    private Long id;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 账号
+     */
+    private String account;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 验证码
+     */
     private String verifyCode;
-
 }

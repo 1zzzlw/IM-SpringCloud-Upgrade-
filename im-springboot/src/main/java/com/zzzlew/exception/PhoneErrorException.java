@@ -8,7 +8,8 @@ package com.zzzlew.exception;
  */
 public class PhoneErrorException extends RuntimeException {
 
-    public PhoneErrorException() {}
+    public PhoneErrorException() {
+    }
 
     public PhoneErrorException(String message) {
         super(message);

@@ -37,7 +37,7 @@ public class FriendServiceImpl implements FriendService {
 
     /**
      * 全量更新并初始化好友列表
-     * 
+     *
      * @param isInit 是否初始化
      * @return 好友列表
      */

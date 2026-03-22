@@ -11,6 +11,7 @@ import com.zzzlew.mapper.ConversationMapper;
 import com.zzzlew.mapper.FriendMapper;
 import com.zzzlew.mapper.UserInfoMapper;
 import com.zzzlew.mapper.UserMapper;
+import com.zzzlew.pojo.dto.user.UserBaseDTO;
 import com.zzzlew.pojo.dto.user.UserLoginDTO;
 import com.zzzlew.pojo.dto.user.UserRegisterDTO;
 import com.zzzlew.pojo.entity.UserAuth;
@@ -24,6 +25,7 @@ import com.zzzlew.server.UserService;
 import com.zzzlew.utils.JwtUtil;
 import com.zzzlew.utils.MinIOFileStorgeUtil;
 import com.zzzlew.utils.RegexUtils;
+import com.zzzlew.utils.UserHolder;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -172,7 +174,7 @@ public class UserServiceImpl implements UserService {
             // 确保流里的数据全发送给前端
             os.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new LoginCodeGenerateException("验证码生成错误，请重新刷新");
         }
     }
 
@@ -295,40 +297,46 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void refreshToken(Long userId, HttpServletResponse response) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(JwtClaimsConstant.USER_ID, userId);
-        String newToken = JwtUtil.createJWT(jwtproperties.getAccessSecretKey(), jwtproperties.getAccessExpiration(),
-                claims);
+        // Map<String, Object> claims = new HashMap<>();
+        // claims.put(JwtClaimsConstant.USER_ID, userId);
+        // String newToken = JwtUtil.createJWT(jwtproperties.getAccessSecretKey(), jwtproperties.getAccessExpiration(),
+        //         claims);
+        //
+        // String userKey = LOGIN_USER_TOKEN_LIST_KEY + userId;
+        // // 通过用户id拿到redis中的旧token
+        // Set<String> okdTokens = stringRedisTemplate.opsForSet().members(userKey);
+        // // 检查是否存在旧token
+        // if (okdTokens != null && !okdTokens.isEmpty()) {
+        //     for (String oldToken : okdTokens) {
+        //         // 遍历旧token列表，看哪个token作为键在redis缓存中有用户信息
+        //         String oldTokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + oldToken;
+        //         Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(oldTokenKey);
+        //
+        //         if (!userMap.isEmpty()) {
+        //             // 用户信息不为空，此时这个oldToken中就是上一次使用的token
+        //             String newTokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + newToken;
+        //             stringRedisTemplate.opsForHash().putAll(newTokenKey, userMap);
+        //             // 设置过期时间
+        //             stringRedisTemplate.expire(newTokenKey, LOGIN_USERINFO_ACCESSTOKEN_KEY_TTL, TimeUnit.MINUTES);
+        //             // 删除旧token对应的用户信息
+        //             stringRedisTemplate.delete(oldTokenKey);
+        //         }
+        //     }
+        // }
+        // // 清空旧的token集合
+        // stringRedisTemplate.delete(userKey);
+        //
+        // // 4. 添加新token到用户token集合
+        // stringRedisTemplate.opsForSet().add(userKey, newToken);
+        // stringRedisTemplate.expire(userKey, LOGIN_USER_TOKEN_LIST_KEY_TTL, TimeUnit.MINUTES);
+        UserBaseDTO userBaseDTO = UserHolder.getUser();
+        UserInfoVO userInfoVO = BeanUtil.copyProperties(userBaseDTO, UserInfoVO.class);
+        userInfoVO.setOnLine(1);
 
-        String userKey = LOGIN_USER_TOKEN_LIST_KEY + userId;
-        // 通过用户id拿到redis中的旧token
-        Set<String> okdTokens = stringRedisTemplate.opsForSet().members(userKey);
-        // 检查是否存在旧token
-        if (okdTokens != null && !okdTokens.isEmpty()) {
-            for (String oldToken : okdTokens) {
-                // 遍历旧token列表，看哪个token作为键在redis缓存中有用户信息
-                String oldTokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + oldToken;
-                Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(oldTokenKey);
+        TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
 
-                if (!userMap.isEmpty()) {
-                    // 用户信息不为空，此时这个oldToken中就是上一次使用的token
-                    String newTokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + newToken;
-                    stringRedisTemplate.opsForHash().putAll(newTokenKey, userMap);
-                    // 设置过期时间
-                    stringRedisTemplate.expire(newTokenKey, LOGIN_USERINFO_ACCESSTOKEN_KEY_TTL, TimeUnit.MINUTES);
-                    // 删除旧token对应的用户信息
-                    stringRedisTemplate.delete(oldTokenKey);
-                }
-            }
-        }
-        // 清空旧的token集合
-        stringRedisTemplate.delete(userKey);
-
-        // 4. 添加新token到用户token集合
-        stringRedisTemplate.opsForSet().add(userKey, newToken);
-        stringRedisTemplate.expire(userKey, LOGIN_USER_TOKEN_LIST_KEY_TTL, TimeUnit.MINUTES);
-
-        response.setHeader("Authorization", "Bearer " + newToken);
+        response.setHeader("Authorization", "Bearer " + tokenResult.getAccessToken());
+        response.setHeader("refreshtoken", tokenResult.getRefreshToken());
     }
 
     // public TokenResult generateAndStoreWithUpdateToken(UserInfoVO userInfoVO) {
@@ -405,11 +413,9 @@ public class UserServiceImpl implements UserService {
         claims.put(JwtClaimsConstant.ACCOUNT, userInfoVO.getAccount());
         claims.put(JwtClaimsConstant.AVATAR, userInfoVO.getAvatar());
         // 生成长期token
-        String refreshToken = JwtUtil.createJWT(jwtproperties.getFreshSecretKey(),
-                jwtproperties.getRefreshExpiration(), claims);
+        String refreshToken = JwtUtil.createJWT(jwtproperties.getFreshSecretKey(), jwtproperties.getRefreshExpiration(), claims);
         // 生成短期token
-        String accessToken = JwtUtil.createJWT(jwtproperties.getAccessSecretKey(),
-                jwtproperties.getAccessExpiration(), claims);
+        String accessToken = JwtUtil.createJWT(jwtproperties.getAccessSecretKey(), jwtproperties.getAccessExpiration(), claims);
 
         String userKey = LOGIN_USER_TOKEN_LIST_KEY + userId;
         String accessTokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + accessToken;
@@ -429,7 +435,7 @@ public class UserServiceImpl implements UserService {
         // 脚本执行结果校验
         if (executeResult == null || executeResult != 1) {
             log.error("用户{}的Token原子化操作失败", userId);
-            throw new RuntimeException("Token生成与存储失败");
+            throw new TokenGenerateException("Token生成与存储失败");
         }
 
         // 6. 封装返回结果

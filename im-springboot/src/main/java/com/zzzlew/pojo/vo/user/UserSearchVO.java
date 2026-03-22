@@ -11,12 +11,24 @@ import lombok.Data;
 @Data
 public class UserSearchVO {
 
+    /**
+     * 用户ID
+     */
     private Long id;
 
+    /**
+     * 用户名
+     */
     private String username;
 
+    /**
+     * 账号
+     */
     private String account;
 
+    /**
+     * 头像
+     */
     private String avatar;
 
     /**

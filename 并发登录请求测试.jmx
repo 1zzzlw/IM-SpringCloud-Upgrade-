@@ -5,6 +5,8 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="并发登录请求测试">
@@ -22,7 +24,7 @@
           <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
@@ -164,13 +166,13 @@
           <eu.luminis.jmeter.wssampler.OpenWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.OpenWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.OpenWebSocketSampler" testname="WebSocket Open Connection">
             <boolProp name="TLS">false</boolProp>
             <stringProp name="server">127.0.0.1</stringProp>
-            <stringProp name="port">80</stringProp>
+            <stringProp name="port">8000</stringProp>
             <stringProp name="path">/ws?token=${AuthorizationToken}</stringProp>
             <stringProp name="connectTimeout">20000</stringProp>
             <stringProp name="readTimeout">5000</stringProp>
           </eu.luminis.jmeter.wssampler.OpenWebSocketSampler>
           <hashTree/>
-          <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="同步定时器">
+          <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="同步定时器" enabled="true">
             <stringProp name="groupSize">${__threadNum}</stringProp>
             <longProp name="timeoutInMs">30000</longProp>
           </SyncTimer>

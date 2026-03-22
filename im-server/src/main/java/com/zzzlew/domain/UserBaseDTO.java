@@ -16,4 +16,8 @@ public class UserBaseDTO implements Serializable {
     private String account;
 
     private String avatar;
+
+    private Integer gender;
+
+    private String phone;
 }

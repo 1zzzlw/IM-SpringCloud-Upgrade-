@@ -58,6 +58,7 @@ public class ConversationImpl implements ConversationService {
     public List<ConversationVO> initConversationList(Boolean isInit) {
         // 获得当前登录用户id
         Long userId = UserHolder.getUser().getId();
+        log.info("初始化会话的id：{}", userId);
         // 查看redis中是否有登录记录
         Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries(USER_OFFLINE_INFO_KEY);
         String quitTime;

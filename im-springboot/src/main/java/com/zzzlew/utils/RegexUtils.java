@@ -13,6 +13,7 @@ public class RegexUtils {
 
     /**
      * 校验手机号格式
+     *
      * @param phone 手机号
      * @return 是否符合手机号格式
      */
@@ -21,10 +22,11 @@ public class RegexUtils {
     }
 
     // 校验是否不符合正则格式
-    private static boolean mismatch(String str, String regex){
+    private static boolean mismatch(String str, String regex) {
         if (StrUtil.isBlank(str)) {
             return true;
         }
         return !str.matches(regex);
     }
+
 }

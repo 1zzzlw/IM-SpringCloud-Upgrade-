@@ -14,7 +14,6 @@ import com.zzzlew.pojo.vo.message.MessageVO;
 import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import com.zzzlew.properties.MinIOConfigProperties;
 import com.zzzlew.server.MessageService;
-import com.zzzlew.utils.GenerateSystemMessage;
 import com.zzzlew.utils.MinIOFileStorgeUtil;
 import com.zzzlew.utils.UserHolder;
 import jakarta.annotation.Resource;
@@ -59,8 +58,6 @@ public class MessageServiceImpl implements MessageService {
     private MinIOFileStorgeUtil minIOFileStorgeUtil;
     @Resource
     private MinIOConfigProperties minIOConfigProperties;
-    @Resource
-    private GenerateSystemMessage generateSystemMessage;
 
     /**
      * 热数据预加载消息列表，当前限额100条
@@ -196,10 +193,6 @@ public class MessageServiceImpl implements MessageService {
         Long userId = UserHolder.getUser().getId();
         Long senderId = systemMessageDTO.getSenderId();
         Long receiverId = Long.valueOf(systemMessageDTO.getReceiverId());
-        // 当前用户的撤回消息的内容
-        String ownContent = generateSystemMessage.generateContent(subType, senderId, userId);
-        // 对方显示的撤回消息的内容
-        String targetContent = generateSystemMessage.generateContent(subType, senderId, receiverId);
 
         // 插入消息表中
 

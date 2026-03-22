@@ -23,3 +23,7 @@ netty:
 #自定义编码器的序列化算法
 serializer:
   algorithm: Json
+
+jwt:
+  accessToken:
+    secret: qwertyuiopasdfghjklzxcvbnmqzzzlew  # 跟im-springboot的secret必须一致

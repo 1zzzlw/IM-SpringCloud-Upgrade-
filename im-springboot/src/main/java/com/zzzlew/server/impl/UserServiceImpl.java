@@ -69,8 +69,6 @@ public class UserServiceImpl implements UserService {
     @Resource
     private Jwtproperties jwtproperties;
     @Resource
-    private JwtUtil jwtUtil;
-    @Resource
     private MinIOFileStorgeUtil minIOFileStorgeUtil;
     @Resource
     private MinIOConfigProperties minIOConfigProperties;
@@ -277,7 +275,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void pendingLogin(String token, Long userId, HttpServletResponse response) {
         // 判断长期token是否过期
-        if (jwtUtil.parseJWT(jwtproperties.getFreshSecretKey(), token) == null) {
+        if (JwtUtil.parseJWT(jwtproperties.getFreshSecretKey(), token) == null) {
             throw new TokenExpiredException(MessageConstant.TOKEN_EXPIRED);
         }
         // 根据用户信息查询一次用户信息
@@ -299,7 +297,8 @@ public class UserServiceImpl implements UserService {
     public void refreshToken(Long userId, HttpServletResponse response) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID, userId);
-        String newToken = jwtUtil.createJWT(jwtproperties.getAccessSecretKey(), jwtproperties.getAccessExpiration(), claims);
+        String newToken = JwtUtil.createJWT(jwtproperties.getAccessSecretKey(), jwtproperties.getAccessExpiration(),
+                claims);
 
         String userKey = LOGIN_USER_TOKEN_LIST_KEY + userId;
         // 通过用户id拿到redis中的旧token
@@ -402,10 +401,15 @@ public class UserServiceImpl implements UserService {
         Long userId = userInfoVO.getId();
         log.info("当前登录用户id：{}", userId);
         claims.put(JwtClaimsConstant.USER_ID, userId);
+        claims.put(JwtClaimsConstant.USERNAME, userInfoVO.getUsername());
+        claims.put(JwtClaimsConstant.ACCOUNT, userInfoVO.getAccount());
+        claims.put(JwtClaimsConstant.AVATAR, userInfoVO.getAvatar());
         // 生成长期token
-        String refreshToken = jwtUtil.createJWT(jwtproperties.getFreshSecretKey(), jwtproperties.getRefreshExpiration(), claims);
+        String refreshToken = JwtUtil.createJWT(jwtproperties.getFreshSecretKey(),
+                jwtproperties.getRefreshExpiration(), claims);
         // 生成短期token
-        String accessToken = jwtUtil.createJWT(jwtproperties.getAccessSecretKey(), jwtproperties.getAccessExpiration(), claims);
+        String accessToken = JwtUtil.createJWT(jwtproperties.getAccessSecretKey(),
+                jwtproperties.getAccessExpiration(), claims);
 
         String userKey = LOGIN_USER_TOKEN_LIST_KEY + userId;
         String accessTokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + accessToken;

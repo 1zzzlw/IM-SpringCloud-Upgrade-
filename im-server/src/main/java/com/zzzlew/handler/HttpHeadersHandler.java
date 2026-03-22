@@ -5,16 +5,14 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.zzzlew.domain.UserBaseDTO;
 import com.zzzlew.utils.ChannelManageUtil;
+import com.zzzlew.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
-
-import java.util.Map;
-
-import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_ACCESSTOKEN_KEY;
+import org.springframework.core.env.Environment;
 
 /**
  * @Auther: zzzlew
@@ -25,15 +23,6 @@ import static com.zzzlew.constant.RedisConstant.LOGIN_USERINFO_ACCESSTOKEN_KEY;
 @Slf4j
 @ChannelHandler.Sharable
 public class HttpHeadersHandler extends ChannelInboundHandlerAdapter {
-
-    private StringRedisTemplate stringRedisTemplate;
-
-    @Override
-    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        if (stringRedisTemplate == null) {
-            stringRedisTemplate = SpringUtil.getBean(StringRedisTemplate.class);
-        }
-    }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -51,17 +40,12 @@ public class HttpHeadersHandler extends ChannelInboundHandlerAdapter {
                 }
                 log.info("请求路径 {} 中 token 参数值为 {}", uri, token);
                 // 解析token
-                // Map<Object, Object> userMap =
+                Environment env = SpringUtil.getBean(Environment.class);
+                String accessTokenSecret = env.getProperty("jwt.accessToken.secret");
+                Claims claims = JwtUtil.parseJWT(accessTokenSecret, token);
 
-                String tokenKey = LOGIN_USERINFO_ACCESSTOKEN_KEY + token;
-                Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(tokenKey);
-                if (userMap.isEmpty()) {
-                    log.error("请求路径 {} 中 token 参数值 {} 不存在", uri, token);
-                    ctx.channel().close();
-                    return;
-                }
                 // 将用户信息转为用户基本信息DTO UserBaseDTO
-                UserBaseDTO userBaseDTO = BeanUtil.copyProperties(userMap, UserBaseDTO.class);
+                UserBaseDTO userBaseDTO = BeanUtil.copyProperties(claims, UserBaseDTO.class);
                 // 打印用户基本信息DTO
                 log.info("用户基本信息DTO：{}", userBaseDTO);
                 ChannelManageUtil.addChannel(userBaseDTO, ctx.channel());

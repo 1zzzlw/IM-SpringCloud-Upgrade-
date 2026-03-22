@@ -33,8 +33,6 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private Jwtproperties jwtproperties;
-    @Resource
-    private JwtUtil jwtUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -42,7 +40,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
         String token = request.getHeader(jwtproperties.getTokenName());
         log.info("刷新token是: {}", token);
         // 解析token
-        if (jwtUtil.parseJWT(jwtproperties.getFreshSecretKey(), token) == null) {
+        if (JwtUtil.parseJWT(jwtproperties.getFreshSecretKey(), token) == null) {
             log.error("刷新token过期，需要重新登录");
             // 返回状态码需要前端重新登录
             response.setStatus(400);

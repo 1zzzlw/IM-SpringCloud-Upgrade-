@@ -32,9 +32,6 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
     private StringRedisTemplate stringRedisTemplate;
 
     @Resource
-    private JwtUtil jwtUtil;
-
-    @Resource
     private Jwtproperties jwtproperties;
 
     @Override
@@ -52,7 +49,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         }
 
         // 解析token判断是否过期
-        if (jwtUtil.parseJWT(jwtproperties.getAccessSecretKey(), token) == null) {
+        if (JwtUtil.parseJWT(jwtproperties.getAccessSecretKey(), token) == null) {
             // 说明令牌过期
             response.setStatus(401);
             return false;

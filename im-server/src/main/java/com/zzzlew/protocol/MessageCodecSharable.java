@@ -26,10 +26,9 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Message message, List<Object> list) throws Exception {
-
         ByteBuf out = ctx.alloc().buffer();
         // 1. 4个字节的魔数
-        out.writeBytes(new byte[] {1, 2, 3, 4});
+        out.writeBytes(new byte[]{1, 2, 3, 4});
         // 2. 1个字节的版本号
         out.writeByte(1);
         // 3. 1个字节的序列化方式记号 ordinal()获取枚举的顺序，默认从0开始，JSON为0，Java为1

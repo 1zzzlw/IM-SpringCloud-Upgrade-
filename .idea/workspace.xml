@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="优化了一些小内容，异常类的补充处理。接下来继续把Netty剩余的部分复习完，源码看一下，就可以开始测试并发消息发送了，先是未优化之前的一次测试，然后是使用MQ消息队列加上消息重发机制ACK确认机制之后的测试。我留了是一周的时间完成。完成了话，我的项目基本上就完成了，其实还有很多预期的功能没有完成，但是没办法了。剩下一个月的时间，我就要练习算法和八股了。同时我还会补充一下我前端的小功能，当作兴趣爱好吧，让我的客户端界面更好看，我心情也会好一点" />
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="文档提交">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/protocol/MessageCodecSharable.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/protocol/MessageCodecSharable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/websocket/NettyWebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/zzzlew/websocket/NettyWebSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/protocol/MessageCodecSharable.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/protocol/MessageCodecSharable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/com/zzzlew/websocket/NettyWebSocketServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/exception/BaseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/exception/BaseException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/exception/PhoneErrorException.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/exception/PhoneErrorException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/exception/TokenNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/exception/TokenNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/ApplyServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/ApplyServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx-1.28.2/logs/nginx.pid" beforeDir="false" afterPath="$PROJECT_DIR$/nginx-1.28.2/logs/nginx.pid" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,6 +49,13 @@
     &quot;accountId&quot;: &quot;9b7c3ef3-66d5-46fc-9b3c-e3d9e8a6a17d&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://D:/JDK/jdk-17.0.16/lib/src.zip!/java.base/java/lang/Comparable.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/bootstrap/AbstractBootstrap.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/EventLoopGroup.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/socket/DuplexChannel.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/socket/SocketChannel.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -78,7 +99,7 @@
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/JavaProject/IM-SpringCloud/im-server/src/main/resources&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;通义灵码&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Language Defaults&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -116,7 +137,6 @@
             <map>
               <entry key="IMNetyApplication(8000)" value="STOPPED" />
               <entry key="IMNetyApplication(8001)" value="STOPPED" />
-              <entry key="IMNetyApplication(8002)" value="STOPPED" />
               <entry key="ZzzImServerApplication" value="STOPPED" />
             </map>
           </value>
@@ -124,20 +144,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ZzzImServerApplication">
-    <configuration name="ZzzImServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.zzzlew.ZzzImServerApplication" />
-      <module name="im-springboot" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.zzzlew.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.IMNetyApplication(8001)">
     <configuration name="IMNetyApplication(8000)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="false" temporary="true">
       <module name="im-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.zzzlew.IMNetyApplication" />
@@ -194,11 +201,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.ZzzImServerApplication" />
         <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
-        <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
+        <item itemvalue="Spring Boot.ZzzImServerApplication" />
         <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
-        <item itemvalue="Application.ZzzImServerApplication" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8002)" />
       </list>
     </recent_temporary>
   </component>
@@ -260,7 +266,13 @@
       <workItem from="1773912007792" duration="892000" />
       <workItem from="1774013375074" duration="4349000" />
       <workItem from="1774065838034" duration="36951000" />
-      <workItem from="1774153056117" duration="8695000" />
+      <workItem from="1774153056117" duration="11641000" />
+      <workItem from="1774171626264" duration="15000" />
+      <workItem from="1774171657565" duration="97000" />
+      <workItem from="1774171767137" duration="181000" />
+      <workItem from="1774171977782" duration="4512000" />
+      <workItem from="1774176514082" duration="10610000" />
+      <workItem from="1774263094485" duration="3839000" />
     </task>
     <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
       <option name="closed" value="true" />
@@ -422,7 +434,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774167957399</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="文档提交">
+      <option name="closed" value="true" />
+      <created>1774168430934</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1774168430934</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -456,7 +476,39 @@
     <MESSAGE value="优化了登陆时redis操作的相关命令，使用lua脚本替代，大大的提高了吞吐量，响应时间以及redis的数据一致性" />
     <MESSAGE value="优化了一下。接下来想调整一下domain包里的类，太乱了" />
     <MESSAGE value="优化了一些小内容，异常类的补充处理。接下来继续把Netty剩余的部分复习完，源码看一下，就可以开始测试并发消息发送了，先是未优化之前的一次测试，然后是使用MQ消息队列加上消息重发机制ACK确认机制之后的测试。我留了是一周的时间完成。完成了话，我的项目基本上就完成了，其实还有很多预期的功能没有完成，但是没办法了。剩下一个月的时间，我就要练习算法和八股了。同时我还会补充一下我前端的小功能，当作兴趣爱好吧，让我的客户端界面更好看，我心情也会好一点" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化了一些小内容，异常类的补充处理。接下来继续把Netty剩余的部分复习完，源码看一下，就可以开始测试并发消息发送了，先是未优化之前的一次测试，然后是使用MQ消息队列加上消息重发机制ACK确认机制之后的测试。我留了是一周的时间完成。完成了话，我的项目基本上就完成了，其实还有很多预期的功能没有完成，但是没办法了。剩下一个月的时间，我就要练习算法和八股了。同时我还会补充一下我前端的小功能，当作兴趣爱好吧，让我的客户端界面更好看，我心情也会好一点" />
+    <MESSAGE value="文档提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="文档提交" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/AbstractChannelHandlerContext.java</url>
+          <line>601</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/AbstractChannelHandlerContext.java</url>
+          <line>603</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/AbstractChannelHandlerContext.java</url>
+          <line>605</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/AbstractChannelHandlerContext.java</url>
+          <line>611</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../maven/apache-maven-3.9.12/repo/io/netty/netty-transport/4.1.113.Final/netty-transport-4.1.113.Final-sources.jar!/io/netty/channel/AbstractChannelHandlerContext.java</url>
+          <line>599</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

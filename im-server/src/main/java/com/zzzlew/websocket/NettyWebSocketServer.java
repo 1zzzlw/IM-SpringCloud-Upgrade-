@@ -23,8 +23,12 @@ import io.netty.util.NettyRuntime;
 import io.netty.util.concurrent.Future;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.annotation.Resource;
 import jodd.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +49,20 @@ public class NettyWebSocketServer {
     private final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     private final EventLoopGroup workerGroup = new NioEventLoopGroup(NettyRuntime.availableProcessors());
 
+    @Resource
+    private RabbitAdmin rabbitAdmin;
+    @Resource
+    @Qualifier("imTopicExchange")
+    private TopicExchange imTopicExchange;
+    @Value("${netty.websocket.cluster-id}")
+    private String nettyClusterId;
+
     // 启动Netty服务器
     @PostConstruct
     public void start() throws InterruptedException {
+        // 初始化MQ消息队列
+        initNettyRabbitMQ();
+        // 启动服务
         run();
         log.info("Netty服务器启动成功，端口：{}", port);
     }
@@ -113,6 +128,21 @@ public class NettyWebSocketServer {
             port = Integer.parseInt(wsPortStr);
         }
         serverBootstrap.bind(port).sync();
+    }
+
+    public void initNettyRabbitMQ() {
+        String NettyMQId = System.getProperty("ws.mq");
+        if (!StringUtil.isBlank(NettyMQId)) {
+            nettyClusterId = NettyMQId;
+        }
+
+        // 创建当前Netty节点的专属队列
+        Queue queue = QueueBuilder.durable("im-push-queue-" + nettyClusterId).build();
+        rabbitAdmin.declareQueue(queue);
+
+        // 绑定到Topic交换机
+        Binding binding = BindingBuilder.bind(queue).to(imTopicExchange).with("im.push." + nettyClusterId);
+        rabbitAdmin.declareBinding(binding);
     }
 
 }

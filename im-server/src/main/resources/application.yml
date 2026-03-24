@@ -15,11 +15,18 @@ spring:
           max-idle: 10
           min-idle: 1
           time-between-eviction-runs: 10s
+  rabbitmq:
+    host: 47.111.22.183
+    port: 5672
+    virtual-host: /
+    username: rabbitmq
+    password: 123456
 # websocket配置
 netty:
   websocket:
     # 端口
     port: 8000
+    cluster-id: 1
 #自定义编码器的序列化算法
 serializer:
   algorithm: Json

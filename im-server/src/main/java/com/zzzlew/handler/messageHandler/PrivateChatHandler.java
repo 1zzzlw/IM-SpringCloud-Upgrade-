@@ -1,7 +1,6 @@
 package com.zzzlew.handler.messageHandler;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.IdUtil;
 import com.zzzlew.domain.request.PrivateChatRequestDTO;
 import com.zzzlew.domain.response.PrivateChatResponseVO;
 import com.zzzlew.handler.impl.MessageHandler;
@@ -39,7 +38,12 @@ public class PrivateChatHandler implements MessageHandler<PrivateChatRequestDTO>
         PrivateChatResponseVO privateChatResponseVO =
                 BeanUtil.copyProperties(privateChatRequestDTO, PrivateChatResponseVO.class);
         privateChatResponseVO.setSendTime(LocalDateTime.now());
+        // 从 redis 中获得该用户所在的Netty集群id
+
+        // 将消息推送到对应的消息队列中（用户id + VO消息）
+
         log.info("已向接收者{}的channel写入私聊消息:{}", receiverId, privateChatResponseVO);
         return MessageResult.single(privateChatResponseVO, receiverId);
     }
+
 }

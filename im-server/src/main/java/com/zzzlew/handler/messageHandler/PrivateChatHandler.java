@@ -1,10 +1,13 @@
 package com.zzzlew.handler.messageHandler;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.IdUtil;
 import com.zzzlew.domain.request.PrivateChatRequestDTO;
+import com.zzzlew.domain.response.ACKMessageResponseVO;
 import com.zzzlew.domain.response.PrivateChatResponseVO;
 import com.zzzlew.handler.impl.MessageHandler;
 import com.zzzlew.result.MessageResult;
+import com.zzzlew.utils.ACKMessagePackUtil;
 import com.zzzlew.utils.ChannelManageUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -35,14 +38,15 @@ public class PrivateChatHandler implements MessageHandler<PrivateChatRequestDTO>
         Long receiverId = privateChatRequestDTO.getReceiverId();
         log.info("私信消息:{}", privateChatRequestDTO);
         // 封装回应消息
-        PrivateChatResponseVO privateChatResponseVO =
-                BeanUtil.copyProperties(privateChatRequestDTO, PrivateChatResponseVO.class);
+        PrivateChatResponseVO privateChatResponseVO = BeanUtil.copyProperties(privateChatRequestDTO, PrivateChatResponseVO.class);
         privateChatResponseVO.setSendTime(LocalDateTime.now());
-        // 从 redis 中获得该用户所在的Netty集群id
-
-        // 将消息推送到对应的消息队列中（用户id + VO消息）
-
+        // 生成服务端的唯一id
+        privateChatResponseVO.setId(String.valueOf(IdUtil.getSnowflakeNextId()));
         log.info("已向接收者{}的channel写入私聊消息:{}", receiverId, privateChatResponseVO);
+        // 返回发送消息成功发送服务端的ACK消息
+        ACKMessageResponseVO successACK = ACKMessagePackUtil.createSuccessACK(String.valueOf(privateChatRequestDTO.getId()), privateChatResponseVO.getId());
+        log.info("ACK消息为：{}", successACK);
+        ctx.channel().writeAndFlush(successACK);
         return MessageResult.single(privateChatResponseVO, receiverId);
     }
 

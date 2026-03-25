@@ -6,13 +6,13 @@ import com.zzzlew.constant.RedisConstant;
 import com.zzzlew.domain.Message;
 import com.zzzlew.handler.impl.MessageHandler;
 import com.zzzlew.handler.messageHandler.*;
+import com.zzzlew.publish.MQMessagePublish;
 import com.zzzlew.result.MessageResult;
 import com.zzzlew.utils.ChannelManageUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static com.zzzlew.constant.RedisConstant.*;
+import static com.zzzlew.constant.RedisConstant.USER_CLUSTER_MAPPING_KEY_TTL;
 
 /**
  * @Auther: zzzlew
@@ -34,12 +35,14 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
 
     private RedissonClient redissonClient;
     private StringRedisTemplate stringRedisTemplate;
+    private MQMessagePublish mqMessagePublish;
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         if (this.redissonClient == null && this.stringRedisTemplate == null) {
             this.redissonClient = SpringUtil.getBean(RedissonClient.class);
             this.stringRedisTemplate = SpringUtil.getBean(StringRedisTemplate.class);
+            this.mqMessagePublish = SpringUtil.getBean(MQMessagePublish.class);
         }
     }
 
@@ -73,9 +76,10 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
             if (handler != null) {
                 log.info("分发给 Handler: {}", handler.getClass().getSimpleName());
                 MessageResult result = handler.handle(ctx, message);
-                RTopic topic = redissonClient.getTopic(SYSTEM_MESSAGE_BROADCAST);
-                // 广播消息
-                topic.publish(result);
+                // 使用RabbitMQ发送消息到集群，而不是Redisson
+                if (result != null) {
+                    mqMessagePublish.sendToCluster(result);
+                }
             } else {
                 log.warn("未找到对应的 Handler 处理消息类型: {}", message.getMessageType());
             }
@@ -92,5 +96,10 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
         stringRedisTemplate.expire(friendListKey, USER_FRIEND_LIST_KEY_TTL, TimeUnit.MINUTES);
         // 更新在线过期时间
         stringRedisTemplate.expire(RedisConstant.USER_ONLINE_STATUS_KEY, RedisConstant.USER_ONLINE_STATUS_KEY_TTL, TimeUnit.SECONDS);
+        // 更新用户和Netty集群的过期时间
+        String nettyClusterKey = USER_CLUSTER_MAPPING_KEY + userId;
+        if (stringRedisTemplate.hasKey(nettyClusterKey)) {
+            stringRedisTemplate.expire(nettyClusterKey, USER_CLUSTER_MAPPING_KEY_TTL, TimeUnit.MINUTES);
+        }
     }
 }

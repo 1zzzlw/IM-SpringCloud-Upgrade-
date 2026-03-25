@@ -1,6 +1,8 @@
 package com.zzzlew.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.zzzlew.domain.request.*;
 import com.zzzlew.domain.response.*;
 import lombok.Data;
@@ -16,6 +18,30 @@ import java.util.Map;
  * @version: 1.0
  */
 @Data
+// 传递消息给MQ之间的序列化注解声明
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME, // 用名字标识类型
+        include = JsonTypeInfo.As.PROPERTY,  // 把类型当成一个字段
+        property = "messageType" // 这个字段名叫：messageType
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PrivateChatRequestDTO.class, name = "1"),
+        @JsonSubTypes.Type(value = PrivateChatResponseVO.class, name = "2"),
+        @JsonSubTypes.Type(value = GroupChatRequestDTO.class, name = "3"),
+        @JsonSubTypes.Type(value = GroupChatResponseVO.class, name = "4"),
+        @JsonSubTypes.Type(value = FriendApplyRequestDTO.class, name = "5"),
+        @JsonSubTypes.Type(value = FriendApplyResponseVO.class, name = "6"),
+        @JsonSubTypes.Type(value = GroupApplyRequestDTO.class, name = "7"),
+        @JsonSubTypes.Type(value = GroupApplyResponseVO.class, name = "8"),
+        @JsonSubTypes.Type(value = LoginSuccessResponseVO.class, name = "9"),
+        @JsonSubTypes.Type(value = OnlineStatusListResponseVO.class, name = "10"),
+        @JsonSubTypes.Type(value = QuitLoginResponseVO.class, name = "11"),
+        @JsonSubTypes.Type(value = SystemMessageRequestDTO.class, name = "12"),
+        @JsonSubTypes.Type(value = SystemMessageResponseVO.class, name = "13"),
+        @JsonSubTypes.Type(value = FriendApplyDealRequestDTO.class, name = "14"),
+        @JsonSubTypes.Type(value = FriendApplyDealResponseVO.class, name = "15"),
+        @JsonSubTypes.Type(value = ACKMessageResponseVO.class, name = "16"),
+})
 public abstract class Message implements Serializable {
     private static final Map<Integer, Class<? extends Message>> messageClasses = new HashMap<>();
 
@@ -50,6 +76,8 @@ public abstract class Message implements Serializable {
     public static final int FriendApplyDealRequestDTO = 14;
     public static final int FriendApplyDealResponseVO = 15;
 
+    public static final int ACKMessageResponseVO = 16;
+
     /**
      * 根据消息类型字节，获得对应的消息 class
      *
@@ -76,5 +104,6 @@ public abstract class Message implements Serializable {
         messageClasses.put(SystemMessageResponseVO, SystemMessageResponseVO.class);
         messageClasses.put(FriendApplyDealRequestDTO, FriendApplyDealRequestDTO.class);
         messageClasses.put(FriendApplyDealResponseVO, FriendApplyDealResponseVO.class);
+        messageClasses.put(ACKMessageResponseVO, ACKMessageResponseVO.class);
     }
 }

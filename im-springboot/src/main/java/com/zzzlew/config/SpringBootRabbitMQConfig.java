@@ -5,7 +5,8 @@ import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+
+import static com.zzzlew.constant.RabbitMQConstant.*;
 
 /**
  * @Auther: zzzlew
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
  * @Description: com.zzzlew.config
  * @version: 1.0
  */
-@Component
 @Configuration
 public class SpringBootRabbitMQConfig {
     @Resource
@@ -23,7 +23,7 @@ public class SpringBootRabbitMQConfig {
     // 创建固定的存库队列
     @Bean
     public Queue imStorageQueue() {
-        return QueueBuilder.durable("im-storage-queue").build();
+        return QueueBuilder.durable(QUEUE_STORGE_PREFIX).build();
     }
 
     // 绑定到Topic交换机，路由键用im.storage
@@ -32,6 +32,6 @@ public class SpringBootRabbitMQConfig {
         return BindingBuilder
                 .bind(imStorageQueue())
                 .to(imTopicExchange)
-                .with("im.storage");
+                .with(QUEUE_STORGE_ROUTING_KEY);
     }
 }

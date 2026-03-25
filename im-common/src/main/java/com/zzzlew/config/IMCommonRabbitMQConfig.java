@@ -9,6 +9,8 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static com.zzzlew.constant.RabbitMQConstant.EXCHANGE;
+
 /**
  * @Auther: zzzlew
  * @Date: 2026/3/24 - 03 - 24 - 11:02
@@ -21,7 +23,7 @@ public class IMCommonRabbitMQConfig {
     // 定义共用的Topic交换机，所有模块共用
     @Bean(name = "imTopicExchange")
     public TopicExchange imTopicExchange() {
-        return ExchangeBuilder.topicExchange("im-topic-exchange").durable(true).build();
+        return ExchangeBuilder.topicExchange(EXCHANGE).durable(true).build();
     }
 
     @Bean

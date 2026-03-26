@@ -1,6 +1,9 @@
 package com.zzzlew.listener;
 
 import com.zzzlew.domain.ClusterMessageWrapper;
+import com.zzzlew.pojo.dto.message.MessageDTO;
+import com.zzzlew.server.MessageService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +20,17 @@ import static com.zzzlew.constant.RabbitMQConstant.QUEUE_STORGE_PREFIX;
 @Configuration
 public class MQMessageListener {
 
+    @Resource
+    private MessageService messageService;
+
     /**
      * 监听本集群的消息队列
      */
     @RabbitListener(queues = QUEUE_STORGE_PREFIX)
-    public void handleClusterMessage(ClusterMessageWrapper wrapper) {
+    public void handleClusterMessage(ClusterMessageWrapper<MessageDTO> wrapper) {
         log.info("收到集群消息: {}", wrapper.getMessage());
-        // TODO 监听到消息信息存储到数据库中
-
+        // 保存消息到数据库
+        messageService.sendMessage(wrapper.getMessage());
     }
 
 }

@@ -126,7 +126,7 @@ public class NettyWebSocketServer {
 
     public void initNettyRabbitMQ() {
         // 创建当前Netty节点的专属队列
-        Queue queue = QueueBuilder.durable(QUEUE_NETTY_PREFIX + NETTY_CLUSTER_ID).build();
+        Queue queue = QueueBuilder.durable(QUEUE_NETTY_PREFIX + NETTY_CLUSTER_ID).lazy().build();
         rabbitAdmin.declareQueue(queue);
 
         // 绑定到Topic交换机

@@ -105,8 +105,8 @@ public class QuitLoginHandler extends ChannelInboundHandlerAdapter {
         // RTopic topic = redissonClient.getTopic(SYSTEM_MESSAGE_BROADCAST);
         // topic.publish(result);
 
-        // 将离线时间存储在redis中，因为有20s的时间可以推送离线消息，因此，再用户正常退出登录的时候拉取离线消息的时间可以晚20s
-        LocalDateTime offlineTime = LocalDateTime.now().plusSeconds(20);
+        // TODO 将离线时间存储在redis中，因为有20s的时间可以推送离线消息，因此，再用户正常退出登录的时候拉取离线消息的时间可以晚20s
+        LocalDateTime offlineTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String offlineTimeStr = offlineTime.format(formatter);
         String userId = userBaseDTO.getId().toString();

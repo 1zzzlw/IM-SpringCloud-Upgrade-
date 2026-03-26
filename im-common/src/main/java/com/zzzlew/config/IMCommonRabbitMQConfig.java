@@ -1,5 +1,7 @@
 package com.zzzlew.config;
 
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -17,9 +19,9 @@ import static com.zzzlew.constant.RabbitMQConstant.EXCHANGE;
  * @Description: com.zzzlew.config
  * @version: 1.0
  */
+@Slf4j
 @Configuration
 public class IMCommonRabbitMQConfig {
-
     // 定义共用的Topic交换机，所有模块共用
     @Bean(name = "imTopicExchange")
     public TopicExchange imTopicExchange() {
@@ -28,12 +30,13 @@ public class IMCommonRabbitMQConfig {
 
     @Bean
     public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+        Jackson2JsonMessageConverter jjmc = new Jackson2JsonMessageConverter();
+        // jjmc.setCreateMessageIds(true);
+        return jjmc;
     }
 
     @Bean
     public RabbitAdmin rabbitAdmin(ConnectionFactory factory) {
         return new RabbitAdmin(factory);
     }
-
 }

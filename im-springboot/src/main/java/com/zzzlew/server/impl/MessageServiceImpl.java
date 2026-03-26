@@ -112,10 +112,6 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     @Override
     public MessageVO sendMessage(MessageDTO messageDTO) {
-        // 获取当前登录用户id
-        Long userId = UserHolder.getUser().getId();
-
-        messageDTO.setSenderId(userId);
         // 重置发送时间，让数据库可以自动填充
         messageDTO.setSendTime(null);
         String conversationId = messageDTO.getConversationId();

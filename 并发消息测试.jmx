@@ -5,10 +5,12 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="并发消息测试">
-        <intProp name="ThreadGroup.num_threads">1000</intProp>
+        <intProp name="ThreadGroup.num_threads">10000</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -23,11 +25,11 @@
           <boolProp name="TLS">false</boolProp>
           <stringProp name="server">127.0.0.1</stringProp>
           <stringProp name="port">8000</stringProp>
-          <stringProp name="path">ws?token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTc3MzczOTM2Mjc2MTM5OCwiYXZhdGFyIjoiaHR0cDovLzQ3LjExMS4yMi4xODM6OTAwMC96enotaW0tYXZhdGFyLzIwMjYvMDMvMTcvMTc3MzczOTM2Mjc2MTM5OC8xNzczNzM5MzYyNzYxMzk4LmpwZWciLCJhY2NvdW50IjoiMTc3MzczOTM2Mjc1OXFud1E0NCIsInVzZXJuYW1lIjoi55So5oi35LiAIiwiZXhwIjoxNzc0MzUyMTUyfQ.JLDL0q6KnM8qWt3vBZ41V65q6eJmJWbdoCHZvdwUuNk</stringProp>
+          <stringProp name="path">ws?token=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTc3MzczOTM2Mjc2MTM5OCwiYXZhdGFyIjoiaHR0cDovLzQ3LjExMS4yMi4xODM6OTAwMC96enotaW0tYXZhdGFyLzIwMjYvMDMvMTcvMTc3MzczOTM2Mjc2MTM5OC8xNzczNzM5MzYyNzYxMzk4LmpwZWciLCJhY2NvdW50IjoiMTc3MzczOTM2Mjc1OXFud1E0NCIsInVzZXJuYW1lIjoi55So5oi35LiAIiwiZXhwIjoxNzc0NDYwNTExfQ.ctXkvTtsBNZdfBw52qqQVfTbgjVbm3CdYSq68JwR5vo</stringProp>
           <stringProp name="connectTimeout">20000</stringProp>
           <stringProp name="payloadType">Binary</stringProp>
           <stringProp name="requestData">0102030401000100000000ff000001357b226964223a2237343431383032323235343833393431363530222c2273656e6465724964223a313737333733393336323736313339382c22636f6e766572736174696f6e4964223a22313737333733393434353838363631395f31373733373339333632373631333938222c2272656365697665724964223a2231373733373339343435383836363139222c226d736754797065223a312c22636f6e74656e74223a22e4bda0e5a5bd222c2273656e64537461747573223a302c2273656e6454696d65223a22323032362d30332d32332031393a30353a3132222c2266696c654964223a22222c2266696c654e616d65223a22222c2266696c6553697a65223a302c226c6f63616c50617468223a22222c2270726576696577426173653634223a22222c2272656d6f746550617468223a22227d</stringProp>
-          <stringProp name="readTimeout">6000</stringProp>
+          <stringProp name="readTimeout">20000</stringProp>
           <boolProp name="loadDataFromFile">false</boolProp>
           <stringProp name="dataFile"></stringProp>
         </eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler>

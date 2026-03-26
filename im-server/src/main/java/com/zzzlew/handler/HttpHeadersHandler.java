@@ -43,7 +43,6 @@ public class HttpHeadersHandler extends ChannelInboundHandlerAdapter {
                 Environment env = SpringUtil.getBean(Environment.class);
                 String accessTokenSecret = env.getProperty("jwt.accessToken.secret");
                 Claims claims = JwtUtil.parseJWT(accessTokenSecret, token);
-
                 // 将用户信息转为用户基本信息DTO UserBaseDTO
                 UserBaseDTO userBaseDTO = BeanUtil.copyProperties(claims, UserBaseDTO.class);
                 // 打印用户基本信息DTO

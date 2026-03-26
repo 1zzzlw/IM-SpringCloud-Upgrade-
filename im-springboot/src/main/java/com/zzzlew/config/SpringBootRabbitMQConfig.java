@@ -23,7 +23,7 @@ public class SpringBootRabbitMQConfig {
     // 创建固定的存库队列
     @Bean
     public Queue imStorageQueue() {
-        return QueueBuilder.durable(QUEUE_STORGE_PREFIX).build();
+        return QueueBuilder.durable(QUEUE_STORGE_PREFIX).lazy().build();
     }
 
     // 绑定到Topic交换机，路由键用im.storage

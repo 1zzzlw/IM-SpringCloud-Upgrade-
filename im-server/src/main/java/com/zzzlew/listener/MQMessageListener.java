@@ -40,7 +40,6 @@ public class MQMessageListener {
             log.info("消息已发送给用户: {}", userId);
         } else {
             log.warn("用户 {} 的Channel不存在或未激活", userId);
-            // 可以处理离线消息
         }
     }
 

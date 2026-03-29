@@ -29,8 +29,11 @@ public class MQMessageListener {
     @RabbitListener(queues = QUEUE_STORGE_PREFIX)
     public void handleClusterMessage(ClusterMessageWrapper<MessageDTO> wrapper) {
         log.info("收到集群消息: {}", wrapper.getMessage());
-        // 保存消息到数据库
-        messageService.sendMessage(wrapper.getMessage());
+        MessageDTO messageDTO = wrapper.getMessage();
+        if (messageDTO.getMsgType() == 1 || messageDTO.getMsgType() == 99) {
+            // 保存消息到数据库
+            messageService.sendMessage(messageDTO);
+        }
     }
 
 }

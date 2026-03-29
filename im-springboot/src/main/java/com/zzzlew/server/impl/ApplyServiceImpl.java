@@ -172,15 +172,17 @@ public class ApplyServiceImpl implements ApplyService {
         // 获得当前登录用户id
         Long userId = UserHolder.getUser().getId();
         String conversationId = dealGroupDTO.getConversationId();
-
-        // 生成群聊头像的远端存储路径
-        String avatarName = conversationId + ".png";
-        String minioGroupAvatarPath = conversationId + "/" + avatarName;
-        // 上传用户头像到minio服务端
-        minIOFileStorgeUtil.uploadAvatar(minioGroupAvatarPath, groupAvatarBlob);
-        // 生成本地存储远程路径
-        String groupAvatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/" + minioGroupAvatarPath;
-        dealGroupDTO.setUserAvatar(groupAvatar);
+        String groupAvatar = null;
+        if (groupAvatarBlob == null || groupAvatarBlob.getSize() == 0) {
+            // 生成群聊头像的远端存储路径
+            String avatarName = conversationId + ".png";
+            String minioGroupAvatarPath = conversationId + "/" + avatarName;
+            // 上传用户头像到minio服务端
+            minIOFileStorgeUtil.uploadAvatar(minioGroupAvatarPath, groupAvatarBlob);
+            // 生成本地存储远程路径
+            groupAvatar = minIOConfigProperties.getEndpoint() + "/" + minIOConfigProperties.getAvatarBucket() + "/" + minioGroupAvatarPath;
+            dealGroupDTO.setUserAvatar(groupAvatar);
+        }
         // 修改群聊申请状态
         applyMapper.dealGroupApply(dealGroupDTO);
         // 更新群会话的头像

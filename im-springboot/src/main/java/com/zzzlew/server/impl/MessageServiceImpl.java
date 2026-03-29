@@ -8,10 +8,8 @@ import com.zzzlew.mapper.MessageMapper;
 import com.zzzlew.pojo.dto.message.FileChunkInfoDTO;
 import com.zzzlew.pojo.dto.message.FileMessageDTO;
 import com.zzzlew.pojo.dto.message.MessageDTO;
-import com.zzzlew.pojo.dto.message.SystemMessageDTO;
 import com.zzzlew.pojo.entity.message;
 import com.zzzlew.pojo.vo.message.MessageVO;
-import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import com.zzzlew.properties.MinIOConfigProperties;
 import com.zzzlew.server.MessageService;
 import com.zzzlew.utils.MinIOFileStorgeUtil;
@@ -112,45 +110,51 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     @Override
     public MessageVO sendMessage(MessageDTO messageDTO) {
-        // 重置发送时间，让数据库可以自动填充
         messageDTO.setSendTime(null);
-        String conversationId = messageDTO.getConversationId();
-        // 文本消息直接是发送成功的状态
-        messageDTO.setSendStatus(1);
-        Integer msgType = messageDTO.getMsgType();
 
-        if (msgType != 1) {
-            // 文件消息
+        Integer msgType = messageDTO.getMsgType();
+        boolean isSystem = java.util.Objects.equals(msgType, 99);
+        boolean isText = java.util.Objects.equals(msgType, 1);
+        boolean isFile = !isText && !isSystem;
+        messageDTO.setSendStatus(1);
+
+        if (isFile) {
             String bucketName = minIOFileStorgeUtil.getBucketName(msgType);
             String remotePath = messageDTO.getRemotePath();
             messageDTO.setBucket(bucketName);
-            // 文件还是发送中的状态
             messageDTO.setSendStatus(0);
-            String minioRemoteUrl = minIOConfigProperties.getEndpoint() + "/" + bucketName + "/" + remotePath;
-            messageDTO.setRemoteUrl(minioRemoteUrl);
+            messageDTO.setRemoteUrl(minIOConfigProperties.getEndpoint() + "/" + bucketName + "/" + remotePath);
         }
 
-        MessageVO messageVO = BeanUtil.copyProperties(messageDTO, MessageVO.class);
         LocalDateTime sendTime = LocalDateTime.now();
-        messageVO.setSendTime(sendTime);
-
-        // 保存消息到数据库
+        // 入库
         messageMapper.saveMessage(messageDTO);
 
-        if (conversationId.startsWith("g_")) {
-            // 发送的会话是群聊会话，获得所有的群成员
-            List<String> receiverIds = groupConversationMapper.selectGroupNumber(conversationId);
-            // 根据群成员id修改对方的会话状态
-            conversationMapper.updateGroupConversationStatus(conversationId, messageDTO.getContent(), sendTime, receiverIds);
-        } else {
-            // 发送的会话是私聊会话，获得对方的id
-            String receiverId = messageDTO.getReceiverId();
-            // 根据对方的id修改对方的会话状态
-            conversationMapper.updateConversationStatus(conversationId, messageDTO.getContent(), sendTime, receiverId);
+        // 系统消息：不更新会话最新消息/时间
+        if (!isSystem) {
+            String conversationId = messageDTO.getConversationId();
+            if (conversationId.startsWith("g_")) {
+                List<String> receiverIds = groupConversationMapper.selectGroupNumber(conversationId);
+                conversationMapper.updateGroupConversationStatus(conversationId, messageDTO.getContent(), sendTime, receiverIds);
+            } else {
+                String receiverId = messageDTO.getReceiverId();
+                conversationMapper.updateConversationStatus(conversationId, messageDTO.getContent(), sendTime, receiverId);
+            }
         }
-
-        log.info("回应的消息为：{}", messageVO);
-        return messageVO;
+        MessageVO vo = isFile ? cn.hutool.core.bean.BeanUtil.copyProperties(messageDTO, MessageVO.class)
+                : new MessageVO();
+        vo.setId(messageDTO.getId());
+        vo.setConversationId(messageDTO.getConversationId());
+        vo.setSenderId(messageDTO.getSenderId());
+        vo.setReceiverId(messageDTO.getReceiverId());
+        vo.setMsgType(msgType);
+        vo.setSubType(messageDTO.getSubType());
+        vo.setSendStatus(messageDTO.getSendStatus());
+        vo.setSendTime(sendTime);
+        if (isText || isSystem) {
+            vo.setContent(messageDTO.getContent());
+        }
+        return vo;
     }
 
     /**
@@ -184,17 +188,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public SystemMessageVO recallMessage(SystemMessageDTO systemMessageDTO) {
-        Integer subType = systemMessageDTO.getSubType();
-        Long userId = UserHolder.getUser().getId();
-        Long senderId = systemMessageDTO.getSenderId();
-        Long receiverId = Long.valueOf(systemMessageDTO.getReceiverId());
-
-        // 插入消息表中
-
-        // 将该消息标记为撤回消息
-
-        return null;
+    public void recallMessage(String conversationId, Long messageId) {
+        // 直接删除这条消息
+        messageMapper.deleteMessage(conversationId, messageId);
     }
 
     @Override

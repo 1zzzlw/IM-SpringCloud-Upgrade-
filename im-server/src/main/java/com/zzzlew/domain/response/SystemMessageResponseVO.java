@@ -17,34 +17,40 @@ import java.io.Serializable;
 public class SystemMessageResponseVO extends Message implements Serializable {
 
     /**
-     * 消息id
+     * 系统消息ID
      */
-    private Long id;
+    private String id;
 
     /**
-     * 发送者id
+     * 操作者ID (谁发起的：如群主、撤回者)
      */
     private Long senderId;
 
     /**
-     * 会话id
+     * 会话ID
      */
     private String conversationId;
 
     /**
-     * 系统接收id为 'system'
+     * 接收者ID (群ID或对方用户ID)
      */
-    private String receiverId;
+    private String receiverId;    // 接收者ID (群ID或对方用户ID)
 
     /**
-     * 消息类型 1：文本消息 2：图片消息 3：语音消息 4：视频消息 5：文件消息
+     * 系统消息固定为99
      */
-    private Integer msgType;
+    private Integer msgType = 99;
 
     /**
-     * 消息内容
+     * 系统消息子类型
+     */
+    private Integer subType;
+
+    /**
+     * 结构：{"opId":1, "opName":"张三", "trId":2, "trName":"李四", "ext":{}}
      */
     private String content;
+
 
     @Override
     public int getMessageType() {

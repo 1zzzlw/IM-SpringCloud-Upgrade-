@@ -3,9 +3,7 @@ package com.zzzlew.server;
 import com.zzzlew.pojo.dto.message.FileChunkInfoDTO;
 import com.zzzlew.pojo.dto.message.FileMessageDTO;
 import com.zzzlew.pojo.dto.message.MessageDTO;
-import com.zzzlew.pojo.dto.message.SystemMessageDTO;
 import com.zzzlew.pojo.vo.message.MessageVO;
-import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -88,10 +86,9 @@ public interface MessageService {
     /**
      * 撤回消息
      *
-     * @param systemMessageDTO 撤回消息dto
      * @return 撤回消息vo
      */
-    SystemMessageVO recallMessage(SystemMessageDTO systemMessageDTO);
+    void recallMessage(String conversationId, Long messageId);
 
     /**
      * 清空历史消息

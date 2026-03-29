@@ -12,6 +12,11 @@ import lombok.Data;
 public class GroupApplyVO {
 
     /**
+     * 群聊id
+     */
+    private Long id;
+
+    /**
      * 群会话ID
      */
     private String conversationId;

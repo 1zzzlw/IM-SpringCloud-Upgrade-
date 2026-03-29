@@ -64,4 +64,12 @@ public interface MessageMapper {
      */
     void clearHistoryMessage(Long senderId, String conversationId);
 
+    /**
+     * 删除消息
+     *
+     * @param conversationId 会话id
+     * @param messageId      消息id
+     */
+    void deleteMessage(String conversationId, Long messageId);
+
 }

@@ -34,7 +34,7 @@
 
     <insert id="saveMessage"
             parameterType="com.zzzlew.pojo.dto.message.MessageDTO">
-        insert into message (id, conversation_id, sender_id, receiver_id, content, msg_type, sub_type,
+        insert ignore into message (id, conversation_id, sender_id, receiver_id, content, msg_type, sub_type,
                              file_id, file_name, bucket, send_status, remote_path, file_size, preview_base64,
                              local_path, remote_url)
         values (#{id}, #{conversationId}, #{senderId}, #{receiverId}, #{content}, #{msgType}, #{subType},
@@ -61,6 +61,13 @@
         from message
         where conversation_id = #{conversationId}
           and sender_id = #{senderId}
+    </delete>
+
+    <delete id="deleteMessage">
+        delete
+        from message
+        where conversation_id = #{conversationId}
+          and id = #{messageId}
     </delete>
 
 </mapper>

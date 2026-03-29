@@ -46,7 +46,7 @@
 
     <select id="getGroupApplyList" resultType="com.zzzlew.pojo.vo.apply.GroupApplyVO"
             parameterType="java.lang.Long">
-        select conversation_id, user_id, user_avatar, group_name, status
+        select id, conversation_id, user_id, user_avatar, group_name, status
         from group_apply
         where member_id = #{userId}
     </select>

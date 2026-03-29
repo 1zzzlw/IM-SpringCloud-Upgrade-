@@ -3,10 +3,8 @@ package com.zzzlew.controller;
 import com.zzzlew.pojo.dto.message.FileChunkInfoDTO;
 import com.zzzlew.pojo.dto.message.FileMessageDTO;
 import com.zzzlew.pojo.dto.message.MessageDTO;
-import com.zzzlew.pojo.dto.message.SystemMessageDTO;
 import com.zzzlew.pojo.vo.message.FileMessageVO;
 import com.zzzlew.pojo.vo.message.MessageVO;
-import com.zzzlew.pojo.vo.message.SystemMessageVO;
 import com.zzzlew.result.Result;
 import com.zzzlew.server.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -150,13 +148,12 @@ public class MessageController {
         return Result.success();
     }
 
-    // TODO 撤回消息的设计还没思路
     @Operation(summary = "撤回消息")
-    @PostMapping("/recallMessage")
-    public Result<SystemMessageVO> recallMessage(@RequestBody SystemMessageDTO systemMessageDTO) {
-        log.info("发送系统消息：{}", systemMessageDTO);
-        SystemMessageVO systemMessageVO = messageService.recallMessage(systemMessageDTO);
-        return Result.success(systemMessageVO);
+    @DeleteMapping("/recallMessage")
+    public Result<Object> recallMessage(String conversationId, Long messageId) {
+        log.info("撤回消息的会话id：{}，和消息id：{}", conversationId, messageId);
+        messageService.recallMessage(conversationId, messageId);
+        return Result.success();
     }
 
     // TODO 清空历史消息应该只清空本地的就可以了，这个请求感觉没什么用

@@ -30,4 +30,10 @@ public interface FriendService {
      */
     UserSearchVO search(String phone);
 
+    /**
+     * 删除好友
+     *
+     * @param friendId 好友id
+     */
+    void deleteFriend(String friendId);
 }

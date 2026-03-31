@@ -32,7 +32,7 @@ public class FriendApplyDealResponseVO extends Message implements Serializable {
     /**
      * 好友id
      */
-    private Long friendId;
+    private String friendId;
 
     /**
      * 用户名

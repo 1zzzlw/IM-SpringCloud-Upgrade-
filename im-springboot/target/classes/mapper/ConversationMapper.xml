@@ -79,5 +79,10 @@
         values (#{conversationId}, #{toUserId}, #{fromUserId}, #{type})
     </insert>
 
+    <delete id="deleteConversation">
+        delete
+        from conversation
+        where id = #{conversationId}
+    </delete>
 
 </mapper>

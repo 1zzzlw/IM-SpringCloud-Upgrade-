@@ -33,8 +33,12 @@ public class FriendApplySendHandler implements MessageHandler<FriendApplyRequest
         friendApplyResponseVO.setFromUserId(fromUserId);
         friendApplyResponseVO.setAvatar(ChannelManageUtil.getUser(ctx.channel()).getAvatar());
         friendApplyResponseVO.setUsername(ChannelManageUtil.getUser(ctx.channel()).getUsername());
+        friendApplyResponseVO.setAccount(ChannelManageUtil.getUser(ctx.channel()).getAccount());
+        friendApplyResponseVO.setGender(ChannelManageUtil.getUser(ctx.channel()).getGender());
+        friendApplyResponseVO.setPhone(ChannelManageUtil.getUser(ctx.channel()).getPhone());
         friendApplyResponseVO.setApplyMsg(friendApplyRequestDTO.getApplyMsg());
         friendApplyResponseVO.setIsDealt(0);
+        log.info("发送好友申请消息：{}", friendApplyResponseVO);
         return MessageResult.single(friendApplyResponseVO, toUserId);
     }
 

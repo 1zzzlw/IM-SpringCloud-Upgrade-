@@ -6,6 +6,7 @@ import com.zzzlew.pojo.dto.apply.DealGroupDTO;
 import com.zzzlew.pojo.dto.apply.GroupApplyDTO;
 import com.zzzlew.pojo.dto.apply.SendApplyDTO;
 import com.zzzlew.pojo.vo.apply.ApplyVO;
+import com.zzzlew.pojo.vo.apply.DealApplyVO;
 import com.zzzlew.pojo.vo.apply.GroupApplyVO;
 import com.zzzlew.pojo.vo.conversation.ConversationVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,7 @@ public interface ApplyService {
      *
      * @param dealApplyDTO 好友申请信息
      */
-    String dealApply(DealApplyDTO dealApplyDTO);
+    DealApplyVO dealApply(DealApplyDTO dealApplyDTO);
 
     /**
      * 发送群聊申请

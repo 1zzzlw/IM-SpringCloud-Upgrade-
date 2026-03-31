@@ -13,6 +13,7 @@ import com.zzzlew.pojo.dto.apply.SendApplyDTO;
 import com.zzzlew.pojo.dto.conversation.GroupConversationDTO;
 import com.zzzlew.pojo.dto.user.GroupMemberDTO;
 import com.zzzlew.pojo.vo.apply.ApplyVO;
+import com.zzzlew.pojo.vo.apply.DealApplyVO;
 import com.zzzlew.pojo.vo.apply.GroupApplyVO;
 import com.zzzlew.pojo.vo.conversation.ConversationVO;
 import com.zzzlew.properties.MinIOConfigProperties;
@@ -21,12 +22,16 @@ import com.zzzlew.utils.MinIOFileStorgeUtil;
 import com.zzzlew.utils.UserHolder;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.zzzlew.constant.RedisConstant.*;
 
 /**
  * @Auther: zzzlew
@@ -50,6 +55,8 @@ public class ApplyServiceImpl implements ApplyService {
     private MinIOFileStorgeUtil minIOFileStorgeUtil;
     @Resource
     private MinIOConfigProperties minIOConfigProperties;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public Long sendApply(SendApplyDTO sendApplyDTO) {
@@ -75,18 +82,18 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Transactional
     @Override
-    public String dealApply(DealApplyDTO dealApplyDTO) {
+    public DealApplyVO dealApply(DealApplyDTO dealApplyDTO) {
         LocalDateTime dealTime = LocalDateTime.now();
         dealApplyDTO.setDealTime(dealTime);
         applyMapper.dealApply(dealApplyDTO);
         // 如果同意好友申请，需要添加好友到好友列表
         if (dealApplyDTO.getDealResult() == 1) {
             // TODO 增加 “幂等性处理”（避免重复添加好友）
-            // 获得当前登录用户id
-            Long toUserId = UserHolder.getUser().getId();
-            Long fromUserId = dealApplyDTO.getFromUserId();
 
-            // TODO 先添加和好友的会话，后续在添加自动发送消息的功能
+            // 获得当前登录用户id，也就是说处理申请的用户
+            Long toUserId = UserHolder.getUser().getId();
+            // 申请来自的谁的id，也就是发送申请的用户id
+            Long fromUserId = dealApplyDTO.getFromUserId();
 
             String conversationId = toUserId > fromUserId ? String.format("%d_%d", toUserId, fromUserId) : String.format("%d_%d", fromUserId, toUserId);
 
@@ -98,7 +105,31 @@ public class ApplyServiceImpl implements ApplyService {
             // 插入好友关系表
             friendMapper.addFriendToRelation(toUserId, fromUserId);
             friendMapper.addFriendToRelation(fromUserId, toUserId);
-            return conversationId;
+
+            // redis中插入好友关系
+            // 处理申请的用户id
+            String friend1ListKey = USER_FRIEND_LIST_KEY + toUserId;
+            // 发送申请的用户id
+            String friend2ListKey = USER_FRIEND_LIST_KEY + fromUserId;
+            stringRedisTemplate.opsForSet().add(friend1ListKey, fromUserId.toString());
+            stringRedisTemplate.opsForSet().add(friend2ListKey, toUserId.toString());
+            // 设置好友列表的过期时间
+            stringRedisTemplate.expire(friend1ListKey, USER_FRIEND_LIST_KEY_TTL, TimeUnit.MINUTES);
+            stringRedisTemplate.expire(friend2ListKey, USER_FRIEND_LIST_KEY_TTL, TimeUnit.MINUTES);
+
+            DealApplyVO dealApplyVO = new DealApplyVO();
+
+            dealApplyVO.setConversationId(conversationId);
+            // 查看发送申请用户是否在线
+            Boolean isFromUserOnline = stringRedisTemplate.opsForSet().isMember(USER_ONLINE_STATUS_KEY, fromUserId.toString());
+            if (Boolean.TRUE.equals(isFromUserOnline)) {
+                log.info("对方在线，发送好友申请消息");
+                dealApplyVO.setIsOnline(1);
+            } else {
+                log.info("对方不在线");
+                dealApplyVO.setIsOnline(0);
+            }
+            return dealApplyVO;
         }
         return null;
     }

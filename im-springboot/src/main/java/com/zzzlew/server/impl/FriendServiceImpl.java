@@ -89,4 +89,12 @@ public class FriendServiceImpl implements FriendService {
         return userSearchVO;
     }
 
+    @Override
+    public void deleteFriend(String friendId) {
+        Long userId = UserHolder.getUser().getId();
+        Long friendId1 = Long.parseLong(friendId);
+        friendMapper.deleteFriend(userId, friendId1);
+        friendMapper.deleteFriend(friendId1, userId);
+    }
+
 }

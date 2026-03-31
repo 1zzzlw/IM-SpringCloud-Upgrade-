@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         if (CollectionUtils.isEmpty(friendRelationVOList)) {
             return; // 跳过后续操作，避免空集合传入Redis
         }
-        // TODO暂时先只存好友的id，以后有需要在进行扩展或者改善
+        // TODO 暂时先只存好友的id，以后有需要在进行扩展或者改善
         Set<String> friendIdSet = friendRelationVOList.stream().map(vo -> vo.getFriendId().toString()).collect(Collectors.toSet());
         // 将好友列表存储到redis中
         stringRedisTemplate.opsForSet().add(friendListKey, friendIdSet.toArray(new String[0]));
@@ -407,11 +407,13 @@ public class UserServiceImpl implements UserService {
         // 生成短期token和长期token设置在响应头中
         Map<String, Object> claims = new HashMap<>();
         Long userId = userInfoVO.getId();
-        log.info("当前登录用户id：{}", userId);
+        log.info("当前登录用户id：{}，用户信息：{}", userId, userInfoVO);
         claims.put(JwtClaimsConstant.USER_ID, userId);
         claims.put(JwtClaimsConstant.USERNAME, userInfoVO.getUsername());
         claims.put(JwtClaimsConstant.ACCOUNT, userInfoVO.getAccount());
         claims.put(JwtClaimsConstant.AVATAR, userInfoVO.getAvatar());
+        claims.put(JwtClaimsConstant.GENDER, userInfoVO.getGender());
+        claims.put(JwtClaimsConstant.PHONE, userInfoVO.getPhone());
         // 生成长期token
         String refreshToken = JwtUtil.createJWT(jwtproperties.getFreshSecretKey(), jwtproperties.getRefreshExpiration(), claims);
         // 生成短期token

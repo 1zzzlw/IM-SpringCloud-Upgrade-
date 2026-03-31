@@ -27,7 +27,13 @@ public class FriendApplyResponseVO extends Message implements Serializable {
 
     private String username;
 
+    private String account;
+
     private String applyMsg;
+
+    private Integer gender;
+
+    private String phone;
 
     /**
      * 0：未处理，1：已处理

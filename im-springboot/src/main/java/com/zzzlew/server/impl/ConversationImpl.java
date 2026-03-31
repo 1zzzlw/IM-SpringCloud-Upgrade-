@@ -178,4 +178,9 @@ public class ConversationImpl implements ConversationService {
         conversationMapper.updateConversationMuteStatus(conversationId, userId, isMute);
     }
 
+    @Override
+    public void deleteConversation(String conversationId) {
+        conversationMapper.deleteConversation(conversationId);
+    }
+
 }

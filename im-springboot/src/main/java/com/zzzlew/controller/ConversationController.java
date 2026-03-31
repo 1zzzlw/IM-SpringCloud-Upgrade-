@@ -95,4 +95,17 @@ public class ConversationController {
         return Result.success();
     }
 
+    /**
+     * 删除会话
+     *
+     * @param conversationId 会话ID
+     */
+    @Operation(summary = "删除会话")
+    @DeleteMapping("/delete")
+    public Result<Object> deleteConversation(String conversationId) {
+        log.info("删除会话id {}", conversationId);
+        conversationService.deleteConversation(conversationId);
+        return Result.success();
+    }
+
 }

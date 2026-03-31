@@ -14,8 +14,8 @@ import java.util.List;
 public interface FriendMapper {
     /**
      * 查询用户好友列表
-     * 
-     * @param userId 用户ID
+     *
+     * @param userId   用户ID
      * @param quitTime 用户离线时间
      * @return 好友列表
      */
@@ -23,10 +23,17 @@ public interface FriendMapper {
 
     /**
      * 添加好友关系
-     * 
-     * @param toUserId 被添加好友用户ID
+     *
+     * @param toUserId   被添加好友用户ID
      * @param fromUserId 添加好友用户ID
      */
     void addFriendToRelation(Long toUserId, Long fromUserId);
 
+    /**
+     * 删除好友关系
+     *
+     * @param userId   用户ID
+     * @param friendId 好友ID
+     */
+    void deleteFriend(Long userId, long friendId);
 }

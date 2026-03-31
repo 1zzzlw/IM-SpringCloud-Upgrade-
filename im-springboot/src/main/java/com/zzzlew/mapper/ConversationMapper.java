@@ -75,4 +75,11 @@ public interface ConversationMapper {
      * @param isMute 是否免打扰
      */
     void updateConversationMuteStatus(String conversationId, Long userId, Integer isMute);
+
+    /**
+     * 删除会话
+     *
+     * @param conversationId 会话ID
+     */
+    void deleteConversation(String conversationId);
 }

@@ -38,7 +38,7 @@ public class FriendApplyDealHandler implements MessageHandler<FriendApplyDealReq
         }
         // 向好友发送申请处理结果的信息，所以好友接收的信息应该为该用户的信息所以需要更换userId和friendId的顺序
         friendApplyDealResponseVO.setUserId(receiverId);
-        friendApplyDealResponseVO.setFriendId(userId);
+        friendApplyDealResponseVO.setFriendId(String.valueOf(userId));
         log.info("已向接收者{}的channel写入好友申请处理消息:{}", receiverId, friendApplyDealResponseVO);
         return MessageResult.single(friendApplyDealResponseVO, receiverId);
     }

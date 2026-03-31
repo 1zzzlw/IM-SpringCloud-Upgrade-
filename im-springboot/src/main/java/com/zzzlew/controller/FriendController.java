@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,5 +55,16 @@ public class FriendController {
         return Result.success(userSearchVO);
     }
 
-
+    /**
+     * 删除好友
+     *
+     * @param friendId 好友id
+     */
+    @Operation(summary = "删除好友")
+    @DeleteMapping("/delete")
+    public Result<Object> deleteFriend(String friendId) {
+        log.info("删除好友id {}", friendId);
+        friendService.deleteFriend(friendId);
+        return Result.success();
+    }
 }

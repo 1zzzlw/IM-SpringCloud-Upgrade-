@@ -6,6 +6,7 @@ import com.zzzlew.pojo.dto.apply.DealGroupDTO;
 import com.zzzlew.pojo.dto.apply.GroupApplyDTO;
 import com.zzzlew.pojo.dto.apply.SendApplyDTO;
 import com.zzzlew.pojo.vo.apply.ApplyVO;
+import com.zzzlew.pojo.vo.apply.DealApplyVO;
 import com.zzzlew.pojo.vo.apply.GroupApplyVO;
 import com.zzzlew.pojo.vo.conversation.ConversationVO;
 import com.zzzlew.result.Result;
@@ -107,10 +108,10 @@ public class ApplyController {
      */
     @Operation(summary = "处理好友申请")
     @PostMapping("/deal")
-    public Result<String> dealApply(@RequestBody DealApplyDTO dealApplyDTO) {
+    public Result<DealApplyVO> dealApply(@RequestBody DealApplyDTO dealApplyDTO) {
         log.info("处理好友申请，申请信息为：{}", dealApplyDTO);
-        String conversationId = applyService.dealApply(dealApplyDTO);
-        return Result.success(conversationId);
+        DealApplyVO dealApplyVO = applyService.dealApply(dealApplyDTO);
+        return Result.success(dealApplyVO);
     }
 
     /**

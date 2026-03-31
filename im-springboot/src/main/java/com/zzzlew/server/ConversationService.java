@@ -45,4 +45,9 @@ public interface ConversationService {
      */
     void updateConversationMuteStatus(String conversationId, Integer isMute);
 
+    /**
+     * 删除会话
+     */
+    void deleteConversation(String conversationId);
+
 }

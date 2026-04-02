@@ -204,7 +204,7 @@ public class ApplyServiceImpl implements ApplyService {
         Long userId = UserHolder.getUser().getId();
         String conversationId = dealGroupDTO.getConversationId();
         String groupAvatar = null;
-        if (groupAvatarBlob == null || groupAvatarBlob.getSize() == 0) {
+        if (groupAvatarBlob != null && groupAvatarBlob.getSize() > 0) {
             // 生成群聊头像的远端存储路径
             String avatarName = conversationId + ".png";
             String minioGroupAvatarPath = conversationId + "/" + avatarName;
@@ -234,6 +234,7 @@ public class ApplyServiceImpl implements ApplyService {
             conversationVO.setTargetId(conversationId);
             conversationVO.setUserId(userId);
             conversationVO.setType(1);
+            log.info("群会话信息为：{}", conversationVO);
             return conversationVO;
         } else {
             log.info("用户id：{}拒绝入群申请", userId);

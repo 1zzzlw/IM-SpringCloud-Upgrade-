@@ -123,7 +123,7 @@ public class ApplyController {
     @PostMapping("/groupApply/deal")
     public Result<ConversationVO> dealGroupApply(DealGroupDTO dealGroupDTO,
                                                  @RequestParam(value = "groupAvatarBlob") MultipartFile groupAvatarBlob) {
-        log.info("处理群聊申请：{}", dealGroupDTO);
+        log.info("处理群聊申请：{}, {}", dealGroupDTO, groupAvatarBlob);
         ConversationVO conversationVO = applyService.dealGroupApply(dealGroupDTO, groupAvatarBlob);
         return Result.success(conversationVO);
     }

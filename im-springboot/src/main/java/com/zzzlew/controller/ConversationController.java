@@ -108,4 +108,17 @@ public class ConversationController {
         return Result.success();
     }
 
+    /**
+     * 退出群聊
+     *
+     * @param conversationId 群聊会话ID
+     */
+    @Operation(summary = "退出群聊")
+    @DeleteMapping("/exitGroup")
+    public Result<Object> exitGroup(String conversationId) {
+        log.info("退出群聊id {}", conversationId);
+        conversationService.deleteGroupMember(conversationId);
+        return Result.success();
+    }
+
 }

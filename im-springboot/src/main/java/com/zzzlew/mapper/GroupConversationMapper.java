@@ -60,4 +60,12 @@ public interface GroupConversationMapper {
      * @return 群成员id集合
      */
     List<String> selectGroupNumber(String conversationId);
+
+    /**
+     * 删除群成员
+     *
+     * @param conversationId 群聊会话ID
+     */
+    void deleteGroupMember(String conversationId, Long userId);
+
 }

@@ -58,6 +58,7 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
         handlerMap.put(Message.GroupApplyRequestDTO, new GroupApplySendHandler());
         handlerMap.put(Message.SystemMessageRequestDTO, new SystemMessageHandler());
         handlerMap.put(Message.FriendApplyDealRequestDTO, new FriendApplyDealHandler());
+        handlerMap.put(Message.GroupApplyDealRequestDTO, new GroupApplyDealHandler());
     }
 
     @Override

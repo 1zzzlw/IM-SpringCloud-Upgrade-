@@ -46,4 +46,9 @@
         where group_id = #{conversationId}
     </select>
 
+    <delete id="deleteGroupMember">
+        delete group_member
+        where group_id = #{conversationId} and user_id = #{userId}
+    </delete>
+
 </mapper>

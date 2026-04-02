@@ -183,4 +183,10 @@ public class ConversationImpl implements ConversationService {
         conversationMapper.deleteConversation(conversationId);
     }
 
+    @Override
+    public void deleteGroupMember(String conversationId) {
+        Long userId = UserHolder.getUser().getId();
+        groupConversationMapper.deleteGroupMember(conversationId, userId);
+    }
+
 }

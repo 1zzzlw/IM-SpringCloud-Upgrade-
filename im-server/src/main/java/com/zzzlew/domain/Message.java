@@ -41,6 +41,8 @@ import java.util.Map;
         @JsonSubTypes.Type(value = FriendApplyDealRequestDTO.class, name = "14"),
         @JsonSubTypes.Type(value = FriendApplyDealResponseVO.class, name = "15"),
         @JsonSubTypes.Type(value = ACKMessageResponseVO.class, name = "16"),
+        @JsonSubTypes.Type(value = GroupApplyDealRequestDTO.class, name = "17"),
+        @JsonSubTypes.Type(value = GroupApplyDealResponseVO.class, name = "18"),
 })
 public abstract class Message implements Serializable {
     private static final Map<Integer, Class<? extends Message>> messageClasses = new HashMap<>();
@@ -78,6 +80,9 @@ public abstract class Message implements Serializable {
 
     public static final int ACKMessageResponseVO = 16;
 
+    public static final int GroupApplyDealRequestDTO = 17;
+    public static final int GroupApplyDealResponseVO = 18;
+
     /**
      * 根据消息类型字节，获得对应的消息 class
      *
@@ -105,5 +110,7 @@ public abstract class Message implements Serializable {
         messageClasses.put(FriendApplyDealRequestDTO, FriendApplyDealRequestDTO.class);
         messageClasses.put(FriendApplyDealResponseVO, FriendApplyDealResponseVO.class);
         messageClasses.put(ACKMessageResponseVO, ACKMessageResponseVO.class);
+        messageClasses.put(GroupApplyDealRequestDTO, GroupApplyDealRequestDTO.class);
+        messageClasses.put(GroupApplyDealResponseVO, GroupApplyDealResponseVO.class);
     }
 }

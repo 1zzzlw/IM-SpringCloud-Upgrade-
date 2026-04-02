@@ -36,7 +36,7 @@ public class SystemMessageRequestDTO extends Message implements Serializable {
     /**
      * 接收者ID (群ID或对方用户ID)
      */
-    private Long receiverId;
+    private String receiverId;
 
     /**
      * 群聊的接收者ID

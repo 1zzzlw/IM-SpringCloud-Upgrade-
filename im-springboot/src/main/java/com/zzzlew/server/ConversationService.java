@@ -50,4 +50,9 @@ public interface ConversationService {
      */
     void deleteConversation(String conversationId);
 
+    /**
+     * 删除群成员
+     */
+    void deleteGroupMember(String conversationId);
+
 }

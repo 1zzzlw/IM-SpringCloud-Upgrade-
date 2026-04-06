@@ -4,16 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="群聊相关的功能">
-      <change afterPath="$PROJECT_DIR$/im-common/src/main/java/com/zzzlew/enums/LimitKeyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/annotaion/UrlLimit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/aop/UrlLimitAspect.java" afterDir="false" />
+    <list default="true" id="ecb6e31d-2154-456f-bf23-97c585e35494" name="Changes" comment="算是完工了吧，还有优化的地方，后面慢慢补，接下来开始完善文档，测试数据了">
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/zzz-im-server.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-server/src/main/resources/application-docker.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-springboot/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/application-docker.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/schema.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/target/classes/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/im-springboot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/java/com/zzzlew/server/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/com/zzzlew/server/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx-1.28.2/logs/nginx.pid" beforeDir="false" afterPath="$PROJECT_DIR$/nginx-1.28.2/logs/nginx.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/src/test/java/com/zzzlew/mqTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/im-springboot/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-springboot/target/test-classes/com/zzzlew/mqTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +86,8 @@
   &quot;keyToString&quot;: {
     &quot;Application.ZzzImServerApplication.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.mqTest.springbootSend.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.IM-SpringCloud [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.IM-SpringCloud [package].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
@@ -96,9 +108,9 @@
     &quot;Spring Boot.ZzzImServerApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/JavaProject/IM-SpringCloud/im-server/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/JavaProject/IM-SpringCloud/im-springboot/src/main/resources&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;通义灵码&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -109,11 +121,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\JavaProject\IM-SpringCloud\im-server\src\main\resources" />
       <recent name="E:\JavaProject\IM-SpringCloud\im-springboot\src\main\resources" />
+      <recent name="E:\JavaProject\IM-SpringCloud\db" />
+      <recent name="E:\JavaProject\IM-SpringCloud\im-server\src\main\resources" />
       <recent name="E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew" />
       <recent name="E:\JavaProject\IM-SpringCloud\im-common\src\main\java\com\zzzlew" />
-      <recent name="E:\JavaProject\IM-SpringCloud\im-server\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\JavaProject\IM-SpringCloud\im-server\src\main\resources" />
@@ -228,10 +240,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
-        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
-        <item itemvalue="Spring Boot.ZzzImServerApplication(8081)" />
         <item itemvalue="Spring Boot.ZzzImServerApplication(8080)" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8000)" />
+        <item itemvalue="Spring Boot.IMNetyApplication(8001)" />
+        <item itemvalue="Spring Boot.ZzzImServerApplication(8081)" />
         <item itemvalue="JUnit.mqTest.springbootSend" />
       </list>
     </recent_temporary>
@@ -329,7 +341,9 @@
       <workItem from="1775186078813" duration="10833000" />
       <workItem from="1775283579144" duration="7879000" />
       <workItem from="1775379876407" duration="625000" />
-      <workItem from="1775461469659" duration="4274000" />
+      <workItem from="1775461469659" duration="4679000" />
+      <workItem from="1775467674571" duration="8286000" />
+      <workItem from="1775477510904" duration="746000" />
     </task>
     <task id="LOCAL-00001" summary="我最近为了加上MQ和Redis的功能，去理解沉淀了几天，虽然大部分时间都在休息吧但是我也有了思路，首先是我看了别人的一个IM项目，特别复杂，是用redis实现的消息队列，还有加锁等，对于现在大二的我来说可以说是特别难的，复杂的一个项目了。但是他的有一个设计不合理，感觉这个设计就是为了作为一个练习redis而出现的，就是Http和Ws没有解耦，是通过Http发送消息同时处理存储数据库和推送到消息队列中，Netty模块进行监听消息队列从而实现发送到对方的功能，所以整个项目高度使用了redis的消息队列实现了集群分布。但是我的项目是Http和WS解耦的项目，经过我的学习，发现，好像只需要redisson的发布订阅模式来实现广播的功能，就可以实现集群部署了。至于MQ消息队列的使用，对于我的项目感觉用到的地方很少，比如或未读和已读消息的处理，我仍然可以使用ws进行发送消息的改变状态。以及用户的在线状态，我可以登录成功的时候拉去一次，然后加上好友上线提醒的功能，这个我已经实现了，还有个是好友下线的提醒，这样就可以实现好友的在线状态的展示了。至于消息的撤回，引用，这个就是普通的http请求，以及消息状态的更新，前端的展示的问题了，和MQ的关系并不大。然后就是现在思考一下MQ可以怎么使用，我希望的是MQ不能让我的项目有很大的改动，这样就没必要了，MQ只是个通过异步处理的方式，提高项目性能的工具，首先能想到的就是http请求发送消息时存储到数据库的操作，这个可以异步处理。其他需要的地方我倒是还没有想到。">
       <option name="closed" value="true" />
@@ -555,7 +569,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775141521487</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="算是完工了吧，还有优化的地方，后面慢慢补，接下来开始完善文档，测试数据了">
+      <option name="closed" value="true" />
+      <created>1775467285601</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1775467285601</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -596,7 +618,8 @@
     <MESSAGE value="优化了系统消息，还有publish代码，之前有一个错误就是，根据对方id查对方的Netty集群，应该一下子查完的，不应该每次循环都查询一次redis，这样太浪费性能了，这次优化了一下，并用上了spring的异步处理，避免了Netty的长时间阻塞" />
     <MESSAGE value="完成了撤回消息，以及删除好友的功能，IM项目这些很繁琐，前后端的数据一致性，一个小功能的添加就需要很多代码。因为我的项目是http和ws分开发送处理业务的，就只有消息发送是springboot监听Netty。" />
     <MESSAGE value="群聊相关的功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="群聊相关的功能" />
+    <MESSAGE value="算是完工了吧，还有优化的地方，后面慢慢补，接下来开始完善文档，测试数据了" />
+    <option name="LAST_COMMIT_MESSAGE" value="算是完工了吧，还有优化的地方，后面慢慢补，接下来开始完善文档，测试数据了" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

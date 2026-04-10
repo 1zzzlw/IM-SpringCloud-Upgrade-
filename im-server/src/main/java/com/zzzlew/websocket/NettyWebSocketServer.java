@@ -47,7 +47,7 @@ import static com.zzzlew.constant.RabbitMQConstant.*;
 public class NettyWebSocketServer {
 
     private final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-    private final EventLoopGroup workerGroup = new NioEventLoopGroup(NettyRuntime.availableProcessors());
+    private final EventLoopGroup workerGroup = new NioEventLoopGroup(NettyRuntime.availableProcessors() * 2);
 
     @Resource
     private RabbitAdmin rabbitAdmin;

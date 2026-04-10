@@ -17,8 +17,6 @@
 - npm版本：10.9.4
 - node版本：v22.21.1
 
-
-
 ## 项目部署
 
 ### 部署中间件(MySQL + Redis + Nginx + MinIO + RabbitMQ)
@@ -129,10 +127,12 @@ docker build -t im-server .
 
 # 运行容器（映射Netty端口8000）
 # 部署第一台集群
-docker run -d --name im-server-1 -p 8000:8000 im-server
+# -e WS_MQ=1 集群id配置
+docker run -d --name im-server-1 -p 8000:8000 -e WS_MQ=1 im-server
 
 # 部署第二台集群
-docker run -d --name im-server-2 -p 8001:8000 im-server
+# -e WS_MQ=2 集群id配置
+docker run -d --name im-server-2 -p 8001:8000 -e WS_MQ=2 im-server
 ```
 
 ## 项目界面展示
@@ -366,23 +366,6 @@ NIO 单线程模型响应波动最小，标准偏差仅 0.70，最大响应仅 4
 - 核心优化方案： 将 WS 升级阶段「从 Redis 读取用户信息」的逻辑，替换为「本地解析 JWT 令牌获取用户信息」，绕开 Redis 网络 IO
   瓶颈，彻底规避单 Key 高并发读的排队 / 超时问题。
 
-三、测试验证：
-
-1. 测试环境：
-
-    - 测试工具：JMeter
-    - 测试场景：同一账号并发登录
-    - 并发梯度：
-        - 100/1000/10000 线程，1 秒内启动完成
-
-- 100/1000/10000 线程，30 秒内启动完成
-- 核心观测指标：吞吐量（QPS）、异常率、平均响应时间
-- 部署环境：单机部署、集群部署
-
-2.测试结果对比：
-
-
-
 #### Netty的并发消息发送测试数据（优化前）
 
 一、测试验证
@@ -434,11 +417,33 @@ NIO 单线程模型响应波动最小，标准偏差仅 0.70，最大响应仅 4
 
 #### Netty的粘包和半包处理
 
+`核心方案：继承 LengthFieldBasedFrameDecoder 实现自定义帧解码器`
 
+**协议设计（16字节头部）**：
+
+```bash
+| 魔数(4B) | 版本(1B) | 序列化算法(1B) | 消息类型(1B) | 序列号(4B) | 填充(1B) | 内容长度(4B) | 正文(NB) |
+```
+
+**关键配置：**
+
+- lengthFieldOffset=12：长度字段在协议中的偏移量（前面12字节是固定头部）
+- lengthFieldLength=4：用4字节Int存储正文长度
+- maxFrameLength=128KB：单条消息上限，防止内存溢出
+
+工作原理：Netty自动根据"内容长度"字段拆分完整数据包，解决TCP流式传输的边界问题。
 
 #### Netty的自定义编解码器以及可扩展序列化配置
 
+`架构设计：策略模式 + 枚举实现多序列化算法切换`
 
+**核心组件：**
+
+- Serializer 接口：定义 serialize/deserialize 标准方法
+- Algorithm 枚举：实现 JSON（当前）、Java（备用），预留 Kryo/Protobuf 扩展位
+- MessageCodecSharable：统一编解码器，通过配置动态选择算法
+
+**协议兼容性：**编码时写入"序列化算法标识字节"，解码时根据该字节自动匹配对应算法，支持客户端/服务端使用不同序列化方式。
 
 ### Redis相关部分
 

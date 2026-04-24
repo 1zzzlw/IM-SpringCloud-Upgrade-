@@ -1,13 +1,16 @@
 package com.zzzlew.publish;
 
 import com.alibaba.fastjson.JSON;
+import com.zzzlew.config.NettyConfig;
 import com.zzzlew.domain.ClusterMessageWrapper;
 import com.zzzlew.domain.Message;
 import com.zzzlew.domain.response.GroupChatResponseVO;
 import com.zzzlew.domain.response.PrivateChatResponseVO;
 import com.zzzlew.domain.response.SystemMessageResponseVO;
 import com.zzzlew.result.MessageResult;
+import com.zzzlew.utils.ChannelManageUtil;
 import io.micrometer.common.util.StringUtils;
+import io.netty.channel.Channel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 import static com.zzzlew.constant.RabbitMQConstant.*;
@@ -38,6 +42,8 @@ public class MQMessagePublish {
     private RabbitTemplate rabbitTemplate;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource(name = "imAsyncExecutor")
+    private ExecutorService imAsyncExecutor;
 
     private static final DefaultRedisScript<Long> storeOfflineMessageScript;
 
@@ -84,7 +90,7 @@ public class MQMessagePublish {
     // }
 
     /**
-     * 发送消息到集群
+     * 发送消息到集群（优化版：本地直接发送，远程走MQ）
      */
     public void sendToCluster(MessageResult messageResult) {
         List<Long> receiverIds = messageResult.getReceiverIds();
@@ -92,42 +98,81 @@ public class MQMessagePublish {
             return;
         }
 
-        // --- 核心优化点：异步执行 ---
-        // 使用 runAsync 将后续逻辑交给 Spring 默认线程池处理，Netty 线程此时可以立即释放去处理下一个请求
+        Message message = messageResult.getResponse();
+        String currentClusterId = NettyConfig.NETTY_CLUSTER_ID;
+
+        // 异步执行，Netty线程立即释放
         CompletableFuture.runAsync(() -> {
             try {
-                // 1. 批量获取 Redis 中的用户集群映射关系 (优化：从 N 次请求变为 1 次请求)
-                List<String> keys = receiverIds.stream().map(id -> USER_CLUSTER_MAPPING_KEY + id).collect(Collectors.toList());
+                // 批量获取 Redis 中的用户集群映射关系
+                List<String> keys = receiverIds.stream()
+                        .map(id -> USER_CLUSTER_MAPPING_KEY + id)
+                        .collect(Collectors.toList());
                 List<String> serverIds = stringRedisTemplate.opsForValue().multiGet(keys);
 
-                // 2. 遍历处理投递
+                // 遍历处理投递
                 for (int i = 0; i < receiverIds.size(); i++) {
                     Long receiverId = receiverIds.get(i);
-                    // 对应 Redis multiGet 返回的结果
                     String serverId = (serverIds != null && i < serverIds.size()) ? serverIds.get(i) : null;
 
-                    if (!StringUtils.isBlank(serverId)) {
-                        // 用户在线，投递到对应服务器的队列
+                    if (StringUtils.isBlank(serverId)) {
+                        // 用户离线
+                        if (message instanceof PrivateChatResponseVO ||
+                                message instanceof GroupChatResponseVO ||
+                                message instanceof SystemMessageResponseVO) {
+                            recordOfflineMessageMarker(receiverId, message);
+                        }
+                    } else if (currentClusterId.equals(serverId)) {
+                        // 用户在本地集群：直接通过Channel发送，不走MQ
+                        Channel channel = ChannelManageUtil.getChannel(receiverId);
+                        if (channel != null && channel.isActive() && channel.isWritable()) {
+                            // 发送消息并监听结果
+                            channel.writeAndFlush(message).addListener(future -> {
+                                if (future.isSuccess()) {
+                                    log.debug("本地直接发送消息成功，用户: {}", receiverId);
+                                } else {
+                                    log.error("本地发送消息失败，用户: {}，降级为MQ发送", receiverId, future.cause());
+                                    // 失败后降级为MQ发送
+                                    String routingKey = QUEUE_NETTY_ROUTING_KEY + serverId;
+                                    rabbitTemplate.convertAndSend(EXCHANGE, routingKey,
+                                            new ClusterMessageWrapper<>(message, receiverId));
+                                }
+                            });
+                        } else {
+                            // Channel不可用，降级为离线处理
+                            log.warn("用户 {} 在本地但Channel不可用(active:{}, writable:{}), 标记为离线",
+                                    receiverId,
+                                    channel != null && channel.isActive(),
+                                    channel != null && channel.isWritable());
+                            if (message instanceof PrivateChatResponseVO ||
+                                    message instanceof GroupChatResponseVO ||
+                                    message instanceof SystemMessageResponseVO) {
+                                recordOfflineMessageMarker(receiverId, message);
+                            }
+                        }
+                    } else {
+                        // 用户在远程集群：通过MQ转发到对应集群
                         String routingKey = QUEUE_NETTY_ROUTING_KEY + serverId;
-                        // 这里沿用您现有的 ClusterMessageWrapper 结构，不需要改动其他类
-                        rabbitTemplate.convertAndSend(EXCHANGE, routingKey, new ClusterMessageWrapper<Message>(messageResult.getResponse(), receiverId));
-                    } else if (messageResult.getResponse() instanceof PrivateChatResponseVO || messageResult.getResponse() instanceof GroupChatResponseVO || messageResult.getResponse() instanceof SystemMessageResponseVO) {
-                        // 用户离线，记录标记
-                        recordOfflineMessageMarker(receiverId, messageResult.getResponse());
+                        rabbitTemplate.convertAndSend(EXCHANGE, routingKey,
+                                new ClusterMessageWrapper<>(message, receiverId));
+                        log.debug("通过MQ发送消息到集群 {}, 用户: {}", serverId, receiverId);
                     }
                 }
 
-                // 3. 消息持久化异步存储 (发往 SpringBoot 消费端)
-                if (messageResult.getResponse() instanceof PrivateChatResponseVO || messageResult.getResponse() instanceof GroupChatResponseVO || messageResult.getResponse() instanceof SystemMessageResponseVO) {
-                    rabbitTemplate.convertAndSend(EXCHANGE, QUEUE_STORGE_ROUTING_KEY, new ClusterMessageWrapper<Message>(messageResult.getResponse()));
+                // 消息持久化异步存储
+                if (message instanceof PrivateChatResponseVO ||
+                        message instanceof GroupChatResponseVO ||
+                        message instanceof SystemMessageResponseVO) {
+                    rabbitTemplate.convertAndSend(EXCHANGE, QUEUE_STORGE_ROUTING_KEY,
+                            new ClusterMessageWrapper<>(message));
                 }
 
-                log.info("群聊消息异步投递完成，总目标数: {}", receiverIds.size());
+                log.info("消息投递完成");
 
             } catch (Exception e) {
                 log.error("异步投递集群消息时发生异常", e);
             }
-        });
+        }, imAsyncExecutor);
     }
 
     public void recordOfflineMessageMarker(Long userId, Message message) {

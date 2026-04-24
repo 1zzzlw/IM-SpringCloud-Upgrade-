@@ -1,7 +1,5 @@
 package com.zzzlew.controller;
 
-import com.zzzlew.annotaion.UrlLimit;
-import com.zzzlew.enums.LimitKeyType;
 import com.zzzlew.pojo.dto.user.UserLoginDTO;
 import com.zzzlew.pojo.vo.user.UserInfoVO;
 import com.zzzlew.result.Result;
@@ -36,7 +34,7 @@ public class LoginController {
      */
     @Operation(summary = "用户登录")
     @PostMapping
-    @UrlLimit(keyType = LimitKeyType.IP)
+    // @UrlLimit(keyType = LimitKeyType.IP)
     public Result<UserInfoVO> login(@RequestBody UserLoginDTO userLoginDTO, HttpServletResponse response) {
         log.info("当前登录用户信息：{}", userLoginDTO);
         UserInfoVO userInfoVO = userService.login(userLoginDTO, response);

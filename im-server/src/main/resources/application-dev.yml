@@ -19,10 +19,12 @@ spring:
     listener:
       simple:
         acknowledge-mode: auto
-        prefetch: 50
+        prefetch: 10                     # 改为与并发数一致，避免消息被“挤到”队尾
+        concurrency: 20
+        max-concurrency: 30
         retry:
           enabled: true
-          initial-interval: 1000ms
-          multiplier: 1
-          max-attempts: 3
-          stateless: false
+          initial-interval: 1s           # 首次重试延迟稍长，给Netty缓冲区恢复时间
+          multiplier: 2
+          max-attempts: 3                # 减少重试次数，避免消息积压
+          max-interval: 5000ms

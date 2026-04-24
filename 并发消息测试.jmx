@@ -10,7 +10,7 @@
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="并发消息测试">
-        <intProp name="ThreadGroup.num_threads">500</intProp>
+        <intProp name="ThreadGroup.num_threads">200</intProp>
         <intProp name="ThreadGroup.ramp_time">0</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -23,12 +23,12 @@
         <eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler guiclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui" testclass="eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler" testname="WebSocket request-response Sampler">
           <boolProp name="createNewConnection">true</boolProp>
           <boolProp name="TLS">false</boolProp>
-          <stringProp name="server">47.111.22.183</stringProp>
+          <stringProp name="server">127.0.0.1</stringProp>
           <stringProp name="port">80</stringProp>
-          <stringProp name="path">ws?token=eyJhbGciOiJIUzI1NiJ9.eyJnZW5kZXIiOjEsInBob25lIjoiMTM4NDk0MzQzNjYiLCJpZCI6MTc3NTQ5MDU2NDY5MDczOCwiYXZhdGFyIjoiaHR0cDovLzQ3LjExMS4yMi4xODM6OTAwMC96enotaW0tYXZhdGFyLzIwMjYvMDQvMDYvMTc3NTQ5MDU2NDY5MDczOC8xNzc1NDkwNTY0NjkwNzM4LmpwZWciLCJhY2NvdW50IjoiMTc3NTQ5MDU2NDY4NHBGRVk3MCIsInVzZXJuYW1lIjoiYWVmc2YiLCJleHAiOjE3NzU1NDk3NDd9.NQdSy8spA9bwkZU3FbCeCC06IC1RpYtdrTGNaTeF1Gk</stringProp>
+          <stringProp name="path">ws?token=eyJhbGciOiJIUzI1NiJ9.eyJnZW5kZXIiOjEsInBob25lIjoiMTM4NDk0ODM5NDQiLCJpZCI6MTc3NjI2MzU2NTI1ODcxOCwiYXZhdGFyIjoiaHR0cDovLzQ3LjExMS4yMi4xODM6OTAwMC96enotaW0tYXZhdGFyLzIwMjYvMDQvMTUvMTc3NjI2MzU2NTI1ODcxOC8xNzc2MjYzNTY1MjU4NzE4LmpwZWciLCJhY2NvdW50IjoiMTc3NjI2MzU2NTIyNVcyRlA5MiIsInVzZXJuYW1lIjoienp6IiwiZXhwIjoxNzc3MDI5NDgyfQ.HPKEf4dTEIJnm0t9AQ96UDa-NF4fY18JNKCo7VEVqsY</stringProp>
           <stringProp name="connectTimeout">20000</stringProp>
           <stringProp name="payloadType">Binary</stringProp>
-          <stringProp name="requestData">0102030401000100000000ff000001357b226964223a2237343431383032323235343833393431363530222c2273656e6465724964223a313737333733393336323736313339382c22636f6e766572736174696f6e4964223a22313737333733393434353838363631395f31373733373339333632373631333938222c2272656365697665724964223a2231373733373339343435383836363139222c226d736754797065223a312c22636f6e74656e74223a22e4bda0e5a5bd222c2273656e64537461747573223a302c2273656e6454696d65223a22323032362d30332d32332031393a30353a3132222c2266696c654964223a22222c2266696c654e616d65223a22222c2266696c6553697a65223a302c226c6f63616c50617468223a22222c2270726576696577426173653634223a22222c2272656d6f746550617468223a22227d</stringProp>
+          <stringProp name="requestData">0102030401000100000000ff000001357b226964223a2237343431383032323235343833393431363530222c2273656e6465724964223a313737363236333536353235383731382c22636f6e766572736174696f6e4964223a22313737363236393335343431303131385f31373736323633353635323538373138222c2272656365697665724964223a2231373736323639333534343130313138222c226d736754797065223a312c22636f6e74656e74223a22e4bda0e5a5bd222c2273656e64537461747573223a302c2273656e6454696d65223a22323032362d30332d32332031393a30353a3132222c2266696c654964223a22222c2266696c654e616d65223a22222c2266696c6553697a65223a302c226c6f63616c50617468223a22222c2270726576696577426173653634223a22222c2272656d6f746550617468223a22227d</stringProp>
           <stringProp name="readTimeout">20000</stringProp>
           <boolProp name="loadDataFromFile">false</boolProp>
           <stringProp name="dataFile"></stringProp>

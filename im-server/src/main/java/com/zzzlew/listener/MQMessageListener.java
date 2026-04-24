@@ -31,15 +31,42 @@ public class MQMessageListener {
     }
 
     /**
-     * 发送消息给指定用户
+     * 发送消息给指定用户（同步等待，带重试机制）
      */
     private void sendToUser(Long userId, Message message) {
         Channel channel = ChannelManageUtil.getChannel(userId);
-        if (channel != null && channel.isActive()) {
-            channel.writeAndFlush(message);
-            log.info("消息已发送给用户: {}", userId);
-        } else {
+        if (channel == null || !channel.isActive()) {
             log.warn("用户 {} 的Channel不存在或未激活", userId);
+            throw new RuntimeException("Channel不可用，触发MQ重试");
+        }
+
+        // 检查Channel是否可写
+        if (!channel.isWritable()) {
+            log.warn("用户 {} 的Channel写缓冲区已满", userId);
+            throw new RuntimeException("Channel不可写，触发MQ重试");
+        }
+
+        try {
+            // 同步等待发送完成（最多等待3秒）
+            io.netty.channel.ChannelFuture future = channel.writeAndFlush(message);
+            boolean success = future.await(3000);
+
+            if (!success) {
+                log.error("用户 {} 消息发送超时(3秒)", userId);
+                throw new RuntimeException("发送超时，触发MQ重试");
+            }
+
+            if (!future.isSuccess()) {
+                log.error("用户 {} 消息发送失败: {}", userId, future.cause().getMessage());
+                throw new RuntimeException("发送失败，触发MQ重试", future.cause());
+            }
+
+            log.info("消息已发送给用户: {}", userId);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("用户 {} 消息发送被中断", userId, e);
+            throw new RuntimeException("发送被中断，触发MQ重试", e);
         }
     }
 

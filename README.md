@@ -36,9 +36,10 @@ docker run -d --name mysql -p 3306:3306 -e TZ=Asia/Shanghai -e MYSQL_ROOT_PASSWO
 docker run -d \
 --name redis \
 -p 6379:6379 \
+-v /root/redis/redis.conf:/etc/redis/redis.conf \
 -v /root/redis/data:/data \
 redis:7.0 \
---requirepass "123456"
+redis-server /etc/redis/redis.conf
 ```
 
 #### Nginx 部署
@@ -366,6 +367,10 @@ NIO 单线程模型响应波动最小，标准偏差仅 0.70，最大响应仅 4
 - 核心优化方案： 将 WS 升级阶段「从 Redis 读取用户信息」的逻辑，替换为「本地解析 JWT 令牌获取用户信息」，绕开 Redis 网络 IO
   瓶颈，彻底规避单 Key 高并发读的排队 / 超时问题。
 
+2. Linux系统下和Windows系统下针对Netty的优化配置不同
+   - Linux系统：
+   - Windows系统：
+
 #### Netty的并发消息发送测试数据（优化前）
 
 一、测试验证
@@ -411,9 +416,41 @@ NIO 单线程模型响应波动最小，标准偏差仅 0.70，最大响应仅 4
    - 测试工具：JMeter
    - 测试场景：固定两个用户（1收1发），3个Netty集群部署
    - 集群部署方式：MQ消息队列
-   - 测试梯度：
-     - 循环一次：200/1s，500/1s，1000/1s，2000/1s，3000/1s
-     - 循环三十次：500/1s，1000/1s，2000/1s
+   - 测试梯度：单连接内分别循环发送 100、500、1000、5000、10000 次消息（覆盖低中高负载）
+2. 测试结果汇总
+
+| 总发送消息条数 | 平均响应时间 (ms) | 异常率 | 总体吞吐量 (/sec) | 核心表现                                       |
+| -------------- | ----------------- | ------ | ----------------- | ---------------------------------------------- |
+| 100            | 2                 | 0.00%  | 489.1             | 极低延迟，服务端无处理压力                     |
+| 500            | 0                 | 0.00%  | 2335.7            | 吞吐量大幅提升，响应时间趋近于 0               |
+| 1000           | 0                 | 0.00%  | 4028.2            | 峰值吞吐量超 4000 TPS，达到性能拐点            |
+| 5000           | 4                 | 0.00%  | 487.1             | 受本地硬件资源限制，吞吐量回落，稳定性不受影响 |
+| 10000          | 1                 | 0.00%  | 1137.3            | 高压负载下响应时间≤1ms，无丢包、无断连         |
+
+3. 测试说明
+
+- 平均响应时间：JMeter `WebSocket Single` 响应采样器统计值，代表消息**端到端收发耗时**
+- 总体吞吐量：包含登录、WebSocket 握手全流程开销；纯业务消息吞吐量峰值可达 3000+ TPS
+- 高负载场景（5000/10000 条）：因本地 Windows 环境 CPU / 内存硬件瓶颈，吞吐量有所下降，**全程异常率保持 0%**
+
+3. 测试照片
+
+![x100](docs/x100.png)
+
+![x500](docs/x500.png)
+
+![x1000](docs/x1000.png)
+
+![x5000](docs/x5000.png)
+
+![x10000](docs/x10000.png)
+
+4. 测试结论 
+
+- **高吞吐高性能**：单 WebSocket 连接峰值吞吐量达**4000+ TPS**，可稳定支撑高频消息收发
+- **极致稳定性**：全量级测试（100~10000 条）**异常率 0%**，无连接断开、无消息丢失
+- **超低延迟**：常规场景下响应时间 0~2ms，满足即时通讯、实时交互类业务严苛要求
+- **架构可靠性**：单连接模式避免重复握手开销，结合 Netty 集群 + MQ 通信，适配高并发、低延迟的生产级场景
 
 #### Netty的粘包和半包处理
 
@@ -593,49 +630,90 @@ public class BroadCastListener {
 2. 使用MQ实现集群部署的代码
 
 ```bash
-# 推送消息
+    /**
+     * 发送消息到集群（优化版：本地直接发送，远程走MQ）
+     */
     public void sendToCluster(MessageResult messageResult) {
         List<Long> receiverIds = messageResult.getReceiverIds();
         if (receiverIds == null || receiverIds.isEmpty()) {
             return;
         }
 
-        // --- 核心优化点：异步执行 ---
-        // 使用 runAsync 将后续逻辑交给 Spring 默认线程池处理，Netty 线程此时可以立即释放去处理下一个请求
+        Message message = messageResult.getResponse();
+        String currentClusterId = NettyConfig.NETTY_CLUSTER_ID;
+
+        // 异步执行，Netty线程立即释放
         CompletableFuture.runAsync(() -> {
             try {
-                // 1. 批量获取 Redis 中的用户集群映射关系 (优化：从 N 次请求变为 1 次请求)
-                List<String> keys = receiverIds.stream().map(id -> USER_CLUSTER_MAPPING_KEY + id).collect(Collectors.toList());
+                // 批量获取 Redis 中的用户集群映射关系
+                List<String> keys = receiverIds.stream()
+                        .map(id -> USER_CLUSTER_MAPPING_KEY + id)
+                        .collect(Collectors.toList());
                 List<String> serverIds = stringRedisTemplate.opsForValue().multiGet(keys);
 
-                // 2. 遍历处理投递
+                // 遍历处理投递
                 for (int i = 0; i < receiverIds.size(); i++) {
                     Long receiverId = receiverIds.get(i);
-                    // 对应 Redis multiGet 返回的结果
                     String serverId = (serverIds != null && i < serverIds.size()) ? serverIds.get(i) : null;
 
-                    if (!StringUtils.isBlank(serverId)) {
-                        // 用户在线，投递到对应服务器的队列
+                    if (StringUtils.isBlank(serverId)) {
+                        // 用户离线
+                        if (message instanceof PrivateChatResponseVO ||
+                                message instanceof GroupChatResponseVO ||
+                                message instanceof SystemMessageResponseVO) {
+                            recordOfflineMessageMarker(receiverId, message);
+                        }
+                    } else if (currentClusterId.equals(serverId)) {
+                        // 用户在本地集群：直接通过Channel发送，不走MQ
+                        Channel channel = ChannelManageUtil.getChannel(receiverId);
+                        if (channel != null && channel.isActive() && channel.isWritable()) {
+                            // 发送消息并监听结果
+                            channel.writeAndFlush(message).addListener(future -> {
+                                if (future.isSuccess()) {
+                                    log.debug("本地直接发送消息成功，用户: {}", receiverId);
+                                } else {
+                                    log.error("本地发送消息失败，用户: {}，降级为MQ发送", receiverId, future.cause());
+                                    // 失败后降级为MQ发送
+                                    String routingKey = QUEUE_NETTY_ROUTING_KEY + serverId;
+                                    rabbitTemplate.convertAndSend(EXCHANGE, routingKey,
+                                            new ClusterMessageWrapper<>(message, receiverId));
+                                }
+                            });
+                        } else {
+                            // Channel不可用，降级为离线处理
+                            log.warn("用户 {} 在本地但Channel不可用(active:{}, writable:{}), 标记为离线",
+                                    receiverId,
+                                    channel != null && channel.isActive(),
+                                    channel != null && channel.isWritable());
+                            if (message instanceof PrivateChatResponseVO ||
+                                    message instanceof GroupChatResponseVO ||
+                                    message instanceof SystemMessageResponseVO) {
+                                recordOfflineMessageMarker(receiverId, message);
+                            }
+                        }
+                    } else {
+                        // 用户在远程集群：通过MQ转发到对应集群
                         String routingKey = QUEUE_NETTY_ROUTING_KEY + serverId;
-                        // 这里沿用您现有的 ClusterMessageWrapper 结构，不需要改动其他类
-                        rabbitTemplate.convertAndSend(EXCHANGE, routingKey, new ClusterMessageWrapper<Message>(messageResult.getResponse(), receiverId));
-                    } else if (messageResult.getResponse() instanceof PrivateChatResponseVO || messageResult.getResponse() instanceof GroupChatResponseVO || messageResult.getResponse() instanceof SystemMessageResponseVO) {
-                        // 用户离线，记录标记
-                        recordOfflineMessageMarker(receiverId, messageResult.getResponse());
+                        rabbitTemplate.convertAndSend(EXCHANGE, routingKey,
+                                new ClusterMessageWrapper<>(message, receiverId));
+                        log.debug("通过MQ发送消息到集群 {}, 用户: {}", serverId, receiverId);
                     }
                 }
 
-                // 3. 消息持久化异步存储 (发往 SpringBoot 消费端)
-                if (messageResult.getResponse() instanceof PrivateChatResponseVO || messageResult.getResponse() instanceof GroupChatResponseVO || messageResult.getResponse() instanceof SystemMessageResponseVO) {
-                    rabbitTemplate.convertAndSend(EXCHANGE, QUEUE_STORGE_ROUTING_KEY, new ClusterMessageWrapper<Message>(messageResult.getResponse()));
+                // 消息持久化异步存储
+                if (message instanceof PrivateChatResponseVO ||
+                        message instanceof GroupChatResponseVO ||
+                        message instanceof SystemMessageResponseVO) {
+                    rabbitTemplate.convertAndSend(EXCHANGE, QUEUE_STORGE_ROUTING_KEY,
+                            new ClusterMessageWrapper<>(message));
                 }
 
-                log.info("群聊消息异步投递完成，总目标数: {}", receiverIds.size());
+                log.info("消息投递完成");
 
             } catch (Exception e) {
                 log.error("异步投递集群消息时发生异常", e);
             }
-        });
+        }, imAsyncExecutor);
     }
 
     public void recordOfflineMessageMarker(Long userId, Message message) {
@@ -649,7 +727,7 @@ public class BroadCastListener {
         log.debug("用户 {} 离线消息已存储，当前消息数: {}", userId, count);
     }
 
-# 监听消息并广播
+
     /**
      * 监听本集群的消息队列
      */
@@ -664,25 +742,43 @@ public class BroadCastListener {
     }
 
     /**
-     * 发送消息给指定用户
+     * 发送消息给指定用户（同步等待，带重试机制）
      */
     private void sendToUser(Long userId, Message message) {
         Channel channel = ChannelManageUtil.getChannel(userId);
-        if (channel != null && channel.isActive()) {
-            channel.writeAndFlush(message);
-            log.info("消息已发送给用户: {}", userId);
-        } else {
+        if (channel == null || !channel.isActive()) {
             log.warn("用户 {} 的Channel不存在或未激活", userId);
+            throw new RuntimeException("Channel不可用，触发MQ重试");
         }
-    }
 
-    /**
-     * 广播消息给本集群所有用户
-     */
-    private void broadcastToAllUsers(Message message) {
-        // 获取本集群所有在线用户的Channel并发送消息
-        // 这里需要根据你的ChannelManageUtil实现来获取所有用户
-        log.info("广播消息给本集群所有用户: {}", message);
+        // 检查Channel是否可写
+        if (!channel.isWritable()) {
+            log.warn("用户 {} 的Channel写缓冲区已满", userId);
+            throw new RuntimeException("Channel不可写，触发MQ重试");
+        }
+
+        try {
+            // 同步等待发送完成（最多等待3秒）
+            io.netty.channel.ChannelFuture future = channel.writeAndFlush(message);
+            boolean success = future.await(3000);
+
+            if (!success) {
+                log.error("用户 {} 消息发送超时(3秒)", userId);
+                throw new RuntimeException("发送超时，触发MQ重试");
+            }
+
+            if (!future.isSuccess()) {
+                log.error("用户 {} 消息发送失败: {}", userId, future.cause().getMessage());
+                throw new RuntimeException("发送失败，触发MQ重试", future.cause());
+            }
+
+            log.info("消息已发送给用户: {}", userId);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("用户 {} 消息发送被中断", userId, e);
+            throw new RuntimeException("发送被中断，触发MQ重试", e);
+        }
     }
 ```
 

@@ -117,8 +117,7 @@ public class QuitLoginHandler extends ChannelInboundHandlerAdapter {
         ChannelManageUtil.removeChannel(ctx.channel());
 
         // 用户断开连接时，移除用户和Netty集群的对应关系
-        String nettyClusterKey = USER_CLUSTER_MAPPING_KEY + userId;
-        stringRedisTemplate.delete(nettyClusterKey);
+        stringRedisTemplate.opsForHash().delete(USER_CLUSTER_MAPPING_KEY, userId);
 
         offLine(ctx);
     }

@@ -16,6 +16,7 @@ com\zzzlew\websocket\NettyWebSocketServer.class
 com\zzzlew\domain\request\SystemMessageRequestDTO.class
 com\zzzlew\handler\messageHandler\FriendApplyDealHandler.class
 com\zzzlew\utils\NettyPlatformOptimizer$OS_TYPE.class
+com\zzzlew\config\ThreadPoolConfig.class
 com\zzzlew\domain\request\HeartRequestDTO.class
 com\zzzlew\domain\response\SystemMessageResponseVO.class
 com\zzzlew\handler\messageHandler\GroupChatHandler.class

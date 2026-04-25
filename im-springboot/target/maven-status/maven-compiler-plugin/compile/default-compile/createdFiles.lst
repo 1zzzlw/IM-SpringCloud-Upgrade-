@@ -70,6 +70,7 @@ com\zzzlew\result\TokenResult.class
 com\zzzlew\mapper\MessageMapper.class
 com\zzzlew\controller\LoginController.class
 com\zzzlew\server\FriendService.class
+com\zzzlew\exception\IPException.class
 com\zzzlew\server\impl\FavoritesServiceImpl.class
 com\zzzlew\controller\ApplyController.class
 com\zzzlew\server\CommonsService.class

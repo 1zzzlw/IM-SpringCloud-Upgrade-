@@ -32,6 +32,7 @@ E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\handler\message
 E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\protocol\MessageCodecSharable.java
 E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\domain\request\SystemMessageRequestDTO.java
 E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\domain\request\GroupChatRequestDTO.java
+E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\config\ThreadPoolConfig.java
 E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\config\NettyConfig.java
 E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\domain\response\GroupApplyDealResponseVO.java
 E:\JavaProject\IM-SpringCloud\im-server\src\main\java\com\zzzlew\handler\HttpHeadersHandler.java

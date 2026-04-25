@@ -18,5 +18,5 @@ import java.lang.annotation.Target;
 public @interface UrlLimit {
     LimitKeyType keyType() default LimitKeyType.ID; // 限制类型，ip或者id
 
-    int maxRequests() default 60; // 每分钟最大请求次数
+    int maxRequests() default 30; // 每分钟最大请求次数
 }

@@ -17,10 +17,12 @@ import com.zzzlew.utils.UserHolder;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -207,7 +209,7 @@ public class MessageServiceImpl implements MessageService {
         String realVerify = stringRedisTemplate.opsForValue().get(verifyKey);
         if (realVerify.isBlank() || !verify.equals(realVerify)) {
             // 没有该凭证
-            throw new RuntimeException("凭证不对");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "verify invalid");
         }
 
         byte[] bytes = null;
@@ -215,14 +217,13 @@ public class MessageServiceImpl implements MessageService {
             bytes = chunkBlob.getBytes();
         } catch (IOException e) {
             log.error("上传文件分块消息失败: {}", e.getMessage());
-            throw new RuntimeException(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "read chunk failed");
         }
         // 计算接收分片的md5值
         String md5Digest = DigestUtils.md5DigestAsHex(bytes);
         if (!chunkHash.equals(md5Digest)) {
             log.error("md5计算值{}与前端传递的{}不相同", md5Digest, chunkHash);
-            // TODO 以后增加自动重试机制
-            throw new RuntimeException("md5 校验失败");
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "chunk hash mismatch");
         } else {
             log.info("第{}个分片校验成功", chunkIndex);
         }

@@ -66,6 +66,7 @@ E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\mapper\Frie
 E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\properties\MinIOConfigProperties.java
 E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\pojo\vo\message\MessageVO.java
 E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\handler\GlobalExceptionHandler.java
+E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\exception\IPException.java
 E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\listener\MQMessageListener.java
 E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\pojo\dto\apply\SendApplyDTO.java
 E:\JavaProject\IM-SpringCloud\im-springboot\src\main\java\com\zzzlew\server\ApplyService.java

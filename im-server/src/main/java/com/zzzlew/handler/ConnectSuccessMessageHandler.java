@@ -106,8 +106,11 @@ public class ConnectSuccessMessageHandler extends ChannelInboundHandlerAdapter {
             stringRedisTemplate.expire(onlineStatusKey, RedisConstant.USER_ONLINE_STATUS_KEY_TTL, TimeUnit.SECONDS);
 
             // 将用户和Netty集群的对应关系存入redis中
-            String nettyClusterKey = USER_CLUSTER_MAPPING_KEY + userId;
-            stringRedisTemplate.opsForValue().set(nettyClusterKey, NETTY_CLUSTER_ID, USER_CLUSTER_MAPPING_KEY_TTL, TimeUnit.MINUTES);
+            stringRedisTemplate.opsForHash().put(
+                    USER_CLUSTER_MAPPING_KEY,
+                    userId.toString(),
+                    NETTY_CLUSTER_ID
+            );
         }
     }
 

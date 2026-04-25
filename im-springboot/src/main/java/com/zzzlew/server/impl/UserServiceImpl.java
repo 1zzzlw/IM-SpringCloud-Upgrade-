@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
         // }
 
         // 构建用户信息对象
-        UserInfoVO userInfoVO = UserInfoVO.builder().id(userInfo.getId()).username(userInfo.getUsername()).avatar(userInfo.getAvatar()).onLine(1).account(userInfo.getAccount()).phone(userInfo.getPhone()).gender(userInfo.getGender()).build();
+        UserInfoVO userInfoVO = UserInfoVO.builder().id(userInfo.getId()).username(userInfo.getUsername()).avatar(userInfo.getAvatar()).account(userInfo.getAccount()).phone(userInfo.getPhone()).gender(userInfo.getGender()).build();
 
         // 生成并存储token
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
@@ -218,7 +218,6 @@ public class UserServiceImpl implements UserService {
         UserAuth userAuth = BeanUtil.copyProperties(userRegisterDTO, UserAuth.class);
 
         userInfoVO.setId(userId);
-        userInfoVO.setOnLine(1);
         userInfoVO.setAvatar(avatar);
         userAuth.setUserId(userId);
         userAuth.setAvatar(avatar);
@@ -284,7 +283,7 @@ public class UserServiceImpl implements UserService {
         UserAuth userAuth = userMapper.selectUserInfoById(userId);
 
         // 构建用户信息对象
-        UserInfoVO userInfoVO = UserInfoVO.builder().id(userAuth.getUserId()).username(userAuth.getUsername()).avatar(userAuth.getAvatar()).onLine(1).account(userAuth.getAccount()).phone(userAuth.getPhone()).gender(userAuth.getGender()).build();
+        UserInfoVO userInfoVO = UserInfoVO.builder().id(userAuth.getUserId()).username(userAuth.getUsername()).avatar(userAuth.getAvatar()).account(userAuth.getAccount()).phone(userAuth.getPhone()).gender(userAuth.getGender()).build();
 
         // 校验成功之后，重新生成一个短期token
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
@@ -331,7 +330,6 @@ public class UserServiceImpl implements UserService {
         // stringRedisTemplate.expire(userKey, LOGIN_USER_TOKEN_LIST_KEY_TTL, TimeUnit.MINUTES);
         UserBaseDTO userBaseDTO = UserHolder.getUser();
         UserInfoVO userInfoVO = BeanUtil.copyProperties(userBaseDTO, UserInfoVO.class);
-        userInfoVO.setOnLine(1);
 
         TokenResult tokenResult = generateAndStoreWithUpdateToken(userInfoVO);
 

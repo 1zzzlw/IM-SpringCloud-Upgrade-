@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import static com.zzzlew.constant.RedisConstant.*;
-import static com.zzzlew.constant.RedisConstant.USER_CLUSTER_MAPPING_KEY_TTL;
 
 /**
  * @Auther: zzzlew
@@ -97,10 +96,5 @@ public class MessageDispatcherHandler extends ChannelInboundHandlerAdapter {
         stringRedisTemplate.expire(friendListKey, USER_FRIEND_LIST_KEY_TTL, TimeUnit.MINUTES);
         // 更新在线过期时间
         stringRedisTemplate.expire(RedisConstant.USER_ONLINE_STATUS_KEY, RedisConstant.USER_ONLINE_STATUS_KEY_TTL, TimeUnit.SECONDS);
-        // 更新用户和Netty集群的过期时间
-        String nettyClusterKey = USER_CLUSTER_MAPPING_KEY + userId;
-        if (stringRedisTemplate.hasKey(nettyClusterKey)) {
-            stringRedisTemplate.expire(nettyClusterKey, USER_CLUSTER_MAPPING_KEY_TTL, TimeUnit.MINUTES);
-        }
     }
 }

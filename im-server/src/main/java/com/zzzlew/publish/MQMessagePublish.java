@@ -105,10 +105,19 @@ public class MQMessagePublish {
         CompletableFuture.runAsync(() -> {
             try {
                 // 批量获取 Redis 中的用户集群映射关系
-                List<String> keys = receiverIds.stream()
-                        .map(id -> USER_CLUSTER_MAPPING_KEY + id)
+                List<Object> userIds = receiverIds.stream()
+                        .map(Object::toString)
                         .collect(Collectors.toList());
-                List<String> serverIds = stringRedisTemplate.opsForValue().multiGet(keys);
+
+                // Hash 批量查询：同一个HashKey，批量取多个field
+                List<Object> serverIdsObjects = stringRedisTemplate.opsForHash().multiGet(
+                        USER_CLUSTER_MAPPING_KEY,
+                        userIds
+                );
+
+                List<String> serverIds = (serverIdsObjects == null ? Collections.<Object>emptyList() : serverIdsObjects).stream()
+                        .map(obj -> obj != null ? obj.toString() : null)
+                        .collect(Collectors.toList());
 
                 // 遍历处理投递
                 for (int i = 0; i < receiverIds.size(); i++) {

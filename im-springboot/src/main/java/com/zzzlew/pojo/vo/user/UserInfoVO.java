@@ -28,7 +28,4 @@ public class UserInfoVO implements Serializable {
     private Integer gender;
 
     private String phone;
-
-    // 是否在线 0-不在线 1-在线
-    private Integer onLine;
 }

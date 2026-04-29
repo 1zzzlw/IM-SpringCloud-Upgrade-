@@ -4,6 +4,11 @@ spring:
       base-url: http://localhost:11434
       chat:
         model: qwen2.5:14b
+    zhipuai:
+      api-key: fa1904a793bd4795a35e6c0f6b93e80d.jhoLkILDZL9kNBht
+      chat:
+        options:
+          model: glm-5.1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/zzz-im-server?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true

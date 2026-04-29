@@ -35,8 +35,10 @@ import java.util.List;
 @Service
 public class AIMessageServiceImpl implements AIMessageService {
 
-    @Resource
-    private ChatClient OllamaChatClient;
+    @Resource(name = "ollamaChatClient")
+    private ChatClient ollamaChatClient;
+    @Resource(name = "zhipuChatClient")
+    private ChatClient zhipuChatClient;
     @Resource
     private AIMessageMapper aiMessageMapper;
     @Resource
@@ -89,7 +91,7 @@ public class AIMessageServiceImpl implements AIMessageService {
         }
 
         // 返回ai思考的消息，并保存到数据库
-        return OllamaChatClient.prompt().system(personalityPrompt).messages(historyMessages).user(content).stream().content().doOnNext(chunk -> {
+        return zhipuChatClient.prompt().system(personalityPrompt).messages(historyMessages).user(content).stream().content().doOnNext(chunk -> {
             // 每个chunk追加到完整内容
             fullContent.append(chunk);
         }).doOnComplete(() -> {
